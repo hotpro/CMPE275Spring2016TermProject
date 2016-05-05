@@ -6,50 +6,88 @@ angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
-
-        //this array should get from database as array, then display in the page
         $scope.items = [{
             "id": 001,
             "name": "Wang Lao Ji",
             "price": 3.00,
             "calories": "100",
-            "url": "image/wanglaoji.jpg"
+            "url": "image/wanglaoji.jpg",
         }, {
             "id": 002,
             "name": "Wang Lao Ji",
             "price": 3.00,
             "calories": "100",
-            "url": "image/wanglaoji.jpg"
+            "url": "image/pepsi.png",
         }, {
             "id": 003,
             "name": "Wang Lao Ji",
             "price": 3.00,
             "calories": "100",
-            "url": "image/wanglaoji.jpg"
+            "url": "image/wanglaoji.jpg",
         }, {
             "id": 004,
             "name": "Wang Lao Ji",
             "price": 3.00,
             "calories": "100",
-            "url": "image/wanglaoji.jpg"
+            "url": "image/pepsi.png",
         }, {
             "id": 005,
             "name": "Wang Lao Ji",
             "price": 3.00,
             "calories": "100",
-            "url": "image/wanglaoji.jpg"
+            "url": "image/wanglaoji.jpg",
         }, {
             "id": 006,
             "name": "Wang Lao Ji",
             "price": 3.00,
             "calories": "100",
-            "url": "image/wanglaoji.jpg"
-        }]
-        $scope.addToCart = function (item) {
-            $scope.totalPrice += item.price;
-            $scope.itemNumber++;
+            "url": "image/pepsi.png",
+        }, {
+            "id": 005,
+            "name": "Wang Lao Ji",
+            "price": 3.00,
+            "calories": "100",
+            "url": "image/wanglaoji.jpg",
+        }, {
+            "id": 006,
+            "name": "Wang Lao Ji",
+            "price": 3.00,
+            "calories": "100",
+            "url": "image/pepsi.png",
+        }];
 
-        }
+        //initial items
+        initItems($scope.items);
 
+        //min 1 item
+        $scope.min = function (item) {
+            if (item.amount == 0) {
+                return;
+            } else {
+                item.amount--;
+                $scope.totalPrice -= item.price;
+                $scope.itemNumber--;
+            }
+        };
+
+        //plus 1 item
+        $scope.plus = function (item) {
+            if (item.amount >= 100) {
+                return;
+            }
+            else {
+                item.amount++;
+                $scope.totalPrice += item.price;
+                $scope.itemNumber++;
+            }
+
+        };
 
     });
+
+//add an value to items obj for counting amount
+function initItems(items) {
+    for (var i = 0; i < items.length; i++) {
+        items[i].amount = 0;
+    }
+}
