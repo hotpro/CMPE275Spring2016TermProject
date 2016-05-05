@@ -1,0 +1,9 @@
+# vim
+*.swp
+
+#intellij
+.idea
+*.iml
+
+# maven
+target
