@@ -19,6 +19,8 @@ public class User {
 	private boolean active;
 	
 	private String role;
+	
+	private String activeCode;
 
     public User() {
 
@@ -64,5 +66,16 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+
+	public String getActiveCode() {
+		return activeCode;
+	}
+
+
+	public void setActiveCode(String activeCode) {
+		this.activeCode = activeCode;
+	}
+	
 	
 }
