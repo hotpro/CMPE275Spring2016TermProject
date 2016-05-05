@@ -18,7 +18,7 @@ public class User {
 	
 	private boolean active;
 	
-	private String role;
+	private String role = "USER";
 	
 	private String activeCode;
 

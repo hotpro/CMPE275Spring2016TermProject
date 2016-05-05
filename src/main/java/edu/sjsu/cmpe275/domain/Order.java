@@ -1,23 +1,34 @@
 package edu.sjsu.cmpe275.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Order {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ManyToOne
 	private User user;
 	
 	private Date pickUpTime;
 	
 	private Date orderTime;
 	
-	private BigDecimal totalPrice;
+	private double totalPrice;
 	
 	private int totalTime;
 	
+	@OneToMany(mappedBy = "order")
 	private List<OrderItem> itemList;
 
 	public Long getId() {
@@ -52,11 +63,12 @@ public class Order {
 		this.orderTime = orderTime;
 	}
 
-	public BigDecimal getTotalPrice() {
+
+	public double getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {
+	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 

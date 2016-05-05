@@ -3,13 +3,27 @@ package edu.sjsu.cmpe275.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class OrderItem {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ManyToOne
 	private User user;
 	
+	@ManyToOne
 	private Order order;
+	
+	@ManyToOne
+	private MenuItem item;
 	
 	private Date pickUpTime;
 	
@@ -73,6 +87,14 @@ public class OrderItem {
 
 	public void setTotalTime(int totalTime) {
 		this.totalTime = totalTime;
+	}
+
+	public MenuItem getItem() {
+		return item;
+	}
+
+	public void setItem(MenuItem item) {
+		this.item = item;
 	}
 	
 }
