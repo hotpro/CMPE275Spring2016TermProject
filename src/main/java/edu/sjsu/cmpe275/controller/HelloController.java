@@ -9,7 +9,12 @@ public class HelloController {
 
 	@RequestMapping("/")
 	public String index() {
-		return "index";
+		return "hello";
+	}
+	
+	@RequestMapping("/login")
+	public String loginView() {
+		return "hello";
 	}
 	
 }

@@ -1,18 +1,24 @@
 package edu.sjsu.cmpe275.domain;
 
-import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class MenuItem {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private byte category;
 	
 	private String name;
 	
-	private String pictureDir;
+	private String pictureURL;
 	
-	private BigDecimal unitPrice;
+	private double unitPrice;
 	
 	private int calories;
 	
@@ -42,19 +48,19 @@ public class MenuItem {
 		this.name = name;
 	}
 
-	public String getPictureDir() {
-		return pictureDir;
+	public String getPictureURL() {
+		return pictureURL;
 	}
 
-	public void setPictureDir(String pictureDir) {
-		this.pictureDir = pictureDir;
+	public void setPictureURL(String pictureURL) {
+		this.pictureURL = pictureURL;
 	}
 
-	public BigDecimal getUnitPrice() {
+	public double getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(BigDecimal unitPrice) {
+	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
