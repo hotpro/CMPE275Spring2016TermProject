@@ -6,6 +6,8 @@ angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
+
+        //this array should get from database as array, then display in the page
         $scope.items = [{
             "id": 001,
             "name": "Wang Lao Ji",
