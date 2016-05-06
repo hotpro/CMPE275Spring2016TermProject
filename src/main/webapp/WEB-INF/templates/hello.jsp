@@ -40,7 +40,8 @@ div.one {
 }
 
 body {
-	background: url(static_res/image/background5.jpg) repeat-y center center fixed;
+	background: url(static_res/image/background5.jpg) repeat-y center center
+		fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -56,6 +57,45 @@ p.item {
 a:hover {
 	color: blue;
 }
+
+.main-content {
+	margin-top: 30px;
+	background-color: rgba(220, 220, 220, 0.7);
+	border-bottom-left-radius: 20px;
+	border-top-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.menu-content {
+	border-bottom-left-radius: 20px;
+	border-top-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.menu-nav {
+	border-bottom-left-radius: 20px;
+	border-top-left-radius: 20px;
+}
+
+.menu-item-list {
+	border-bottom-right-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+-moz-selection {
+	color: #fff;
+	color: rgba(255, 255, 255, 0.85);
+	background: #ea4c89
+}
+
+::selection {
+	color: #fff;
+	color: rgba(255, 255, 255, 0.85);
+	background: #ea4c89
+}
+
 </style>
 </head>
 
@@ -134,8 +174,7 @@ a:hover {
 	</header>
 
 	<!-- Page Content -->
-	<div class="container"
-		style="margin-top: 30px; background-color: Gainsboro;">
+	<div class="container main-content">
 
 		<div class="row">
 			<div class="col-lg-9">
@@ -178,9 +217,9 @@ a:hover {
 			</div>
 		</div>
 
-		<div class="row one"
+		<div class="row one menu-content"
 			style="width: 100%; margin-left: 0px; margin-right: 0px;">
-			<div class="col-lg-2"
+			<div class="col-lg-2 menu-nav"
 				style="background-color: black; height: 100%; overflow: auto; padding-top: 20px;">
 				<ul class="nav nav-stacked"
 					style="text-align: center; color: white;">
@@ -191,14 +230,15 @@ a:hover {
 				</ul>
 			</div>
 
-			<div class="col-lg-10"
+			<div class="col-lg-10 menu-item-list"
 				style="background-color: white; opacity: 0.9; height: 100%; overflow: auto; margin-bottom: 30px;">
 				<div class="tab-content">
 					<div id="drink" class="tab-pane fade in active">
 						<div class="row" style="margin: 10px 0px 0px 10px">
 							<div class="col-lg-3" ng-repeat="item in items">
-								<img ng-src="{{'static_res/' + item.pictureURL}}" class="img-thumbnail"
-									alt="{{item.name}}" style="width: 100%; height: 100%;">
+								<img ng-src="{{'static_res/' + item.pictureURL}}"
+									class="img-thumbnail" alt="{{item.name}}"
+									style="width: 100%; height: 100%;">
 								<p class="item">
 									{{item.name}}<br> Calories : {{item.calories}}<br>
 									Unit Price : ${{item.unitPrice}}
