@@ -236,8 +236,9 @@ a:hover {
 	</div>
 
 	</div>
+	<!--
 	<hr>
-
+	  -->
 	<!-- Footer -->
 
 	<footer style="text-align: center;">
