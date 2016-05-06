@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by yutao on 5/5/16.
  */
 @RequestMapping("/dashboard")
-public class DashboardControlller {
+public class DashboardController {
     public void addMenuItem() {
 
     }
@@ -16,6 +16,6 @@ public class DashboardControlller {
     }
 
     public void addImage() {
-        
+
     }
 }
