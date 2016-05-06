@@ -15,14 +15,25 @@ import java.util.List;
 @Controller
 @RequestMapping("/menuitems")
 public class MenuItemController {
-
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
     List<MenuItem> getMenuItems() {
         List<MenuItem> list = new ArrayList<>();
-        MenuItem item = new MenuItem();
-        item.setName("ha");
-        list.add(item);
+        MenuItem item1 = new MenuItem();
+        item1.setName("wang lao ji");
+        item1.setUnitPrice(3.00);
+        item1.setPictureURL("image/wanglaoji.jpg");
+        item1.setCalories(100);
+        item1.setId(1L);
+
+        MenuItem item2 = new MenuItem();
+        item2.setName("pepsi");
+        item2.setUnitPrice(3.00);
+        item2.setPictureURL("image/pepsi.jpg");
+        item2.setCalories(200);
+        item2.setId(2L);
+        list.add(item1);
+        list.add(item2);
         return list;
     }
 }

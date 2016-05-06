@@ -6,58 +6,33 @@ angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
-        $scope.items = [{
-            "id": 001,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/wanglaoji.jpg",
-        }, {
-            "id": 002,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/pepsi.png",
-        }, {
-            "id": 003,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/wanglaoji.jpg",
-        }, {
-            "id": 004,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/pepsi.png",
-        }, {
-            "id": 005,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/wanglaoji.jpg",
-        }, {
-            "id": 006,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/pepsi.png",
-        }, {
-            "id": 005,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/wanglaoji.jpg",
-        }, {
-            "id": 006,
-            "name": "Wang Lao Ji",
-            "price": 3.00,
-            "calories": "100",
-            "url": "image/pepsi.png",
-        }];
+        // $scope.items = [{
+        //     "id": 001,
+        //     "name": "Wang Lao Ji",
+        //     "price": 3.00,
+        //     "calories": "100",
+        //     "url": "image/wanglaoji.jpg",
+        // }, {
+        //     "id": 002,
+        //     "name": "Wang Lao Ji",
+        //     "price": 3.00,
+        //     "calories": "100",
+        //     "url": "image/pepsi.png",
+        // }];
 
-        //initial items
-        initItems($scope.items);
+        $http({
+            method : "GET",
+            url : '/menuitems',
+        }).success(function(data, status) {
+            
+            $scope.items = data;
+            //initial items
+            initItems($scope.items);
+
+        }).error(function(data, status) {
+        });
+
+
 
         //min 1 item
         $scope.min = function (item) {
