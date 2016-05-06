@@ -3,11 +3,15 @@ package edu.sjsu.cmpe275.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class OrderItem {
@@ -16,18 +20,27 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "pickUpTime")
+	private Date pickUpTime;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "orderTime")
+	private Date orderTime;
+	
 	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@ManyToOne
+	@JoinColumn(name = "order_id")
 	private Order order;
 	
 	@ManyToOne
+	@JoinColumn(name = "item_id")
 	private MenuItem item;
 	
-	private Date pickUpTime;
-	
-	private Date orderTime;
 	
 	private BigDecimal price;
 	
@@ -47,14 +60,6 @@ public class OrderItem {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
 	}
 
 	public Date getPickUpTime() {
@@ -95,6 +100,14 @@ public class OrderItem {
 
 	public void setItem(MenuItem item) {
 		this.item = item;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 	
 }
