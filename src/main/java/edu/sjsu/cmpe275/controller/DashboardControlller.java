@@ -14,4 +14,8 @@ public class DashboardControlller {
     public void removeMenuItem() {
 
     }
+
+    public void addImage() {
+        
+    }
 }
