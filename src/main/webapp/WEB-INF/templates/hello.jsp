@@ -33,6 +33,20 @@
 <script src="static_res/js/home_angular.js"></script>
 <![endif]-->
 <style>
+
+@font-face {font-family: "Bodoni SvtyTwo ITC TT";
+    src: url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.eot");
+    src: url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.eot?#iefix") format("embedded-opentype"),
+    url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.woff2") format("woff2"),
+    url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.woff") format("woff"),
+    url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.ttf") format("truetype"),
+    url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.svg#Bodoni SvtyTwo ITC TT") format("svg");
+}
+
+body {
+	font-family: "Bodoni SvtyTwo ITC TT";
+}
+
 div.one {
 	border: 1px darkgrey solid;
 	height: 650px;
