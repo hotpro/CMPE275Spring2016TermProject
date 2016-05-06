@@ -13,8 +13,8 @@ import java.util.List;
  * Created by yutao on 5/5/16.
  */
 @Controller
-@RequestMapping("/menuitems")
-public class MenuItemController {
+@RequestMapping("/menu")
+public class MenuController {
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
