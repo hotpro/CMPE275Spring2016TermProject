@@ -31,7 +31,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                     .antMatchers("/", "/index").permitAll()
                     .antMatchers("/static_res/**").permitAll()
-                    .anyRequest().authenticated()
+                    //.anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
