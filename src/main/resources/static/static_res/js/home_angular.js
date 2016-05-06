@@ -10,9 +10,8 @@ angular.module('homeApp').controller('homeCtrl',
         
         $http({
             method : "GET",
-            url : '/menuitems',
+            url : '/menu',
         }).success(function(data, status) {
-            console.log("im here");
             $scope.items = data;
             initItems($scope.items);
 
@@ -27,7 +26,7 @@ angular.module('homeApp').controller('homeCtrl',
                 return;
             } else {
                 item.amount--;
-                $scope.totalPrice -= item.price;
+                $scope.totalPrice -= item.unitPrice;
                 $scope.itemNumber--;
             }
         };
@@ -39,7 +38,7 @@ angular.module('homeApp').controller('homeCtrl',
             }
             else {
                 item.amount++;
-                $scope.totalPrice += item.price;
+                $scope.totalPrice += item.unitPrice;
                 $scope.itemNumber++;
             }
 

@@ -197,11 +197,11 @@ a:hover {
 					<div id="drink" class="tab-pane fade in active">
 						<div class="row" style="margin: 10px 0px 0px 10px">
 							<div class="col-lg-3" ng-repeat="item in items">
-								<img src="{{'static_res/' + item.url}}" class="img-thumbnail"
+								<img ng-src="{{'static_res/' + item.pictureURL}}" class="img-thumbnail"
 									alt="{{item.name}}" style="width: 100%; height: 100%;">
 								<p class="item">
 									{{item.name}}<br> Calories : {{item.calories}}<br>
-									Unit Price : ${{item.price}}
+									Unit Price : ${{item.unitPrice}}
 								</p>
 								<div align="center">
 									<button type="button" class="btn btn-warning" id="min"
