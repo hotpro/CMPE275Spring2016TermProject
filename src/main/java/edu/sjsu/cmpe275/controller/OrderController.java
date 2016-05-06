@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by yutao on 5/5/16.
@@ -15,14 +16,14 @@ import java.time.LocalDateTime;
 @RequestMapping("/order")
 public class OrderController {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody PickupTime getEarliestPickupTime() {
+    @RequestMapping(value = "/getEarliestPickupTime", method = RequestMethod.GET)
+    public @ResponseBody PickupTime getEarliestPickupTime(@RequestBody List<OrderVO> orderVOList) {
         LocalDateTime now = LocalDateTime.now();
         return new PickupTime(1, now.getNano() / 1000);
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public @ResponseBody String submitOrder(@RequestBody OrderVO orderVO) {
+    public @ResponseBody String submitOrder(@RequestBody List<OrderVO> orderVOList) {
         return "";
     }
 
