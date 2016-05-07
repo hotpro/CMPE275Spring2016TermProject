@@ -1,9 +1,24 @@
 package edu.sjsu.cmpe275;
 
+import edu.sjsu.cmpe275.dao.OrderDao;
+import edu.sjsu.cmpe275.dao.OrderItemDao;
+import edu.sjsu.cmpe275.dao.UserDao;
+import edu.sjsu.cmpe275.domain.MenuItem;
+import edu.sjsu.cmpe275.domain.Order;
+import edu.sjsu.cmpe275.domain.OrderItem;
+import edu.sjsu.cmpe275.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class Cmpe275Spring2016TermProjectApplication {
