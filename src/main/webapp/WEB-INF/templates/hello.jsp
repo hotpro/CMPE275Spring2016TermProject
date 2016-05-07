@@ -217,16 +217,18 @@
             <p>You can order various Chinese food on our website, and pickup
                 your order when you are convenient.</p>
         </div>
+        
         <div id="popoverMenu">
             <table style="width:100%" ng-repeat="preview in items">
                 <tr>
-                    <td ng-if="preview.amount != 0">{{pv.name}}</td>
-                    <td ng-if="preview.amount != 0">{{pv.amount}}</td>
+                    <td ng-if="preview.amount != 0">{{preview.name}}</td>
+                    <td ng-if="preview.amount != 0">{{preview.amount}}</td>
                 </tr>
             </table>
             Total:<span>{{totalPrice}}</span><br>
             <button type="button" class="btn btn-primary">Check Out</button>
         </div>
+        
         <div class="col-lg-3" style="margin-top: 35px;">
             <a ui-sref="site.cart" style="padding: 5px 0 0 0; width: 150px">
                 <ngcart-summary class="ng-isolate-scope">
