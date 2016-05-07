@@ -6,18 +6,18 @@ angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
-        $scope.items=[];
-        
+        $scope.items = [];
+        $scope.preview = [];
+
         $http({
-            method : "GET",
-            url : '/menu',
-        }).success(function(data, status) {
+            method: "GET",
+            url: '/menu',
+        }).success(function (data, status) {
             $scope.items = data;
             initItems($scope.items);
 
-        }).error(function(data, status) {
+        }).error(function (data, status) {
         });
-
 
 
         //min 1 item
@@ -44,7 +44,8 @@ angular.module('homeApp').controller('homeCtrl',
 
         };
 
-    });
+
+});
 
 //add an value to items obj for counting amount
 function initItems(items) {
@@ -52,3 +53,15 @@ function initItems(items) {
         items[i].amount = 0;
     }
 }
+$(function () {
+    $('[data-toggle=popover]').click(function() {
+        $('[data-toggle=popover]').popover({
+
+            content: $('#popoverMenu').html(),
+            html: true
+
+        })
+        $(this).popover('show');
+    });
+});
+

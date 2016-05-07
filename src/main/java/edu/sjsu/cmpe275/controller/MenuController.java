@@ -2,6 +2,7 @@ package edu.sjsu.cmpe275.controller;
 
 import edu.sjsu.cmpe275.domain.MenuItem;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,4 +37,8 @@ public class MenuController {
         list.add(item2);
         return list;
     }
+//
+//    @RequestMapping(value="/preCheckout", method = RequestMethod.GET)
+//    public  @ResponseBody String comfirmOrder(@RequestBody List<Order> order)
+
 }
