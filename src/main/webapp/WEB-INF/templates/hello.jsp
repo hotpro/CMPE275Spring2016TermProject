@@ -221,8 +221,8 @@
             <a ui-sref="site.cart" style="padding: 5px 0 0 0; width: 150px">
                 <ngcart-summary class="ng-isolate-scope">
                     <div class="row">
-                        <div uib-popover-template="popover.url" popover-title="Cart"
-                             class="col-md-2 col-md-offset-5 text-right">
+                        <div popover-placement="bottom" uib-popover-template="popover.url" popover-title="Cart"
+                             class="col-md-2 col-md-offset-5 text-right" ng-click="preview()">
                             <svg version="1.1" class="icon"
                                  xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink" width="30px"
@@ -257,14 +257,14 @@
                     <td ng-if="preview.amount != 0" align="right">X</td>
                     <td ng-if="preview.amount != 0" align="right">{{item.amount}}</td>
                     <td ng-if="preview.amount != 0" align="right">
-                        <button type="button" class="btn btn-xs btn-danger" ng-click="delete(item)">x</button>
+                        <button type="button" class="btn btn-xs btn-danger" ng-click="deleteItem(item)">x</button>
                     </td>
                 </tr>
             </table>
         </div>
         <div>Total:<span>{{totalPrice}}</span></div>
         <div>
-            <button type="button" class="btn btn-primary">Check Out</button>
+            <button type="button" class="btn  btn-sm btn-primary" ng-click="checkOut()">Check Out</button>
         </div>
     </script>
 
