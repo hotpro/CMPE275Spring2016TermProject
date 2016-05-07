@@ -1,8 +1,9 @@
 package edu.sjsu.cmpe275.controller;
 
+import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,9 +17,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/menu")
 public class MenuController {
+
+    @Autowired
+    private MenuItemDao menuItemDao;
+
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
     List<MenuItem> getMenuItems() {
+        //get MenuItem from database then return the list
+        //List<MenuItem> list = menuItemDao.findAll();
+
         List<MenuItem> list = new ArrayList<>();
         MenuItem item1 = new MenuItem();
         item1.setName("wang lao ji");

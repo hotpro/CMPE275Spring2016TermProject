@@ -1,21 +1,26 @@
 package edu.sjsu.cmpe275.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.dao.OrderDao;
 import edu.sjsu.cmpe275.domain.Order;
+import org.aspectj.weaver.ast.Or;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
+
 
 /**
  * Created by yutao on 5/5/16.
@@ -24,17 +29,24 @@ import java.util.TimeZone;
 @RequestMapping("/order")
 public class OrderController {
 
+    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+
     /** ONE_DAY_WORK is 15 hours long. unit is millisecond*/
     private static final long ONE_DAY_WORK = (21 - 6) * 60 * 60 * 1000;
 
     @Autowired
     private OrderDao orderDao;
+
+    @Autowired
     private MenuItemDao menuItemDao;
 
-    @RequestMapping(value = "/getEarliestPickupTime", method = RequestMethod.GET)
+    @RequestMapping(value = "/getEarliestPickupTime", method = RequestMethod.POST)
     public @ResponseBody
-    PickupTimeTO getEarliestPickupTime(@RequestBody List<OrderTO> orderTOList) {
+    PickupTimeTO getEarliestPickupTime(@RequestBody String body) throws IOException {
+        logger.debug("body: {}", body);
 
+
+        List<OrderTO> orderTOList = new ObjectMapper().readValue(body, new TypeReference<List<OrderTO>>(){});
 
         /*
         test case:
@@ -132,7 +144,7 @@ public class OrderController {
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public @ResponseBody String submitOrder(@RequestBody List<OrderTO> orderTOList) {
-        return "NO";
+        return "SUCCESS";
     }
 
 
@@ -141,7 +153,10 @@ public class OrderController {
         long menuId;
         int count;
 
-        public OrderTO(long menuId, int count) {
+        public OrderTO() {
+        }
+
+        public OrderTO(int menuId, int count) {
             this.menuId = menuId;
             this.count = count;
         }
@@ -164,6 +179,9 @@ public class OrderController {
     }
 
     static class PickupTimeTO {
+        public PickupTimeTO() {
+        }
+
         public PickupTimeTO(long earliestPickupTime, String errorMsg) {
             this.earliestPickupTime = earliestPickupTime;
             this.errorMsg = errorMsg;
@@ -171,5 +189,21 @@ public class OrderController {
 
         private long earliestPickupTime;
         private String errorMsg;
+
+        public long getEarliestPickupTime() {
+            return earliestPickupTime;
+        }
+
+        public void setEarliestPickupTime(long earliestPickupTime) {
+            this.earliestPickupTime = earliestPickupTime;
+        }
+
+        public String getErrorMsg() {
+            return errorMsg;
+        }
+
+        public void setErrorMsg(String errorMsg) {
+            this.errorMsg = errorMsg;
+        }
     }
 }
