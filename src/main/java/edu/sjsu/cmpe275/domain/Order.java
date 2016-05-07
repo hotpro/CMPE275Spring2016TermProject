@@ -1,8 +1,5 @@
 package edu.sjsu.cmpe275.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -27,13 +24,19 @@ public class Order {
 	
 	private int totalTime;
 
-	@Fetch(FetchMode.JOIN)
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	private List<OrderItem> itemList;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
+    private int chiefId;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "startPrepareTime")
+    private Date startPrepareTime;
+
 
 	public Long getId() {
 		return id;
@@ -91,5 +94,20 @@ public class Order {
 	public void setItemList(List<OrderItem> itemList) {
 		this.itemList = itemList;
 	}
-	
+
+    public int getChiefId() {
+        return chiefId;
+    }
+
+    public void setChiefId(int chiefId) {
+        this.chiefId = chiefId;
+    }
+
+    public Date getStartPrepareTime() {
+        return startPrepareTime;
+    }
+
+    public void setStartPrepareTime(Date startPrepareTime) {
+        this.startPrepareTime = startPrepareTime;
+    }
 }
