@@ -7,4 +7,6 @@ import org.springframework.data.repository.CrudRepository;
  * Created by yutao on 5/5/16.
  */
 public interface OrderDao extends CrudRepository<Order, Long> {
+//    Iterable<Order> findByStartPrepareTimeGreaterThanEqual(long )
+
 }

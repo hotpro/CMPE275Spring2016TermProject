@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
 
 /**
  * Created by yutao on 5/5/16.
@@ -18,7 +17,7 @@ public class Chief {
 
     private String name;
 
-    private List<Order> orderList;
+//    private List<Order> orderList;
 
     public Chief(String name) {
         this.name = name;

@@ -35,6 +35,12 @@ public class OrderController {
     public @ResponseBody
     PickupTimeTO getEarliestPickupTime(@RequestBody List<OrderTO> orderTOList) {
 
+
+        /*
+        test case:
+        1. empty order. 1. order before 6am. 2. order after 6am before 9pm. 3. order after 9pm
+         */
+
         int totalTime = 0;
         for (OrderTO orderTO : orderTOList) {
             totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime();
@@ -71,7 +77,7 @@ public class OrderController {
         long startTime1 = findEarliestStartTime(now, totalTime, order1);
         long startTime2 = findEarliestStartTime(now, totalTime, order2);
 
-        return new PickupTimeTO(Math.min(Math.min(startTime0, startTime1), startTime2), "");
+        return new PickupTimeTO(Math.min(Math.min(startTime0, startTime1), startTime2) + totalTime, "");
     }
 
     /**
