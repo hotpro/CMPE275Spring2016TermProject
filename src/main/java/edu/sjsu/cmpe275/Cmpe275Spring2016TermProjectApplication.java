@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe275;
 
+import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.dao.OrderDao;
 import edu.sjsu.cmpe275.dao.OrderItemDao;
 import edu.sjsu.cmpe275.dao.UserDao;
@@ -37,50 +38,53 @@ public class Cmpe275Spring2016TermProjectApplication {
 	}
 
 
-//    @Bean
-//    public CommandLineRunner insertOrderData(OrderDao orderDao, UserDao userDao, OrderItemDao orderItemDao) {
-//        return (args) -> {
-//            Date pickupTime  = Calendar.getInstance().getTime();
-//            Date orderTime = pickupTime;
-//
-//            User user = new User(
-//                    "a@a.com",
-//                    "password",
-//                    true,
-//                    "User",
-//                    "123"
-//            );
-//            userDao.save(user);
-//
-//            MenuItem item = new MenuItem();
-//            BigDecimal price = BigDecimal.valueOf(1.0);
-//
-//            List<OrderItem> itemList = new ArrayList<>();
-//            Date startPrepareTime = pickupTime;
-//            Order order = new Order(
-//                    pickupTime,
-//                    orderTime,
-//                    20.0,
-//                    10,
-//                    itemList,
-//                    user,
-//                    0,
-//                    startPrepareTime
-//            );
-//            OrderItem orderItem = new OrderItem(
-//                    pickupTime,
-//                    orderTime,
-//                    user,
-//                    order,
-//                    item,
-//                    price,
-//                    10
-//                    );
-//
-//            itemList.add(orderItem);
-//            orderItemDao.save(orderItem);
-//            orderDao.save(order);
-//
-//        };
-//    }
+    @Bean
+    public CommandLineRunner insertOrderData(OrderDao orderDao, UserDao userDao, OrderItemDao orderItemDao,
+                                             MenuItemDao menuItemDao) {
+        return (args) -> {
+            Date pickupTime  = Calendar.getInstance().getTime();
+            Date orderTime = pickupTime;
+
+            User user = new User(
+                    "a@a.com",
+                    "password",
+                    true,
+                    "User",
+                    "123"
+            );
+            userDao.save(user);
+
+            MenuItem item = new MenuItem((byte)1, "Food", "dfaf", 1.0, 1, 1);
+            menuItemDao.save(item);
+
+            BigDecimal price = BigDecimal.valueOf(1.0);
+
+            List<OrderItem> itemList = new ArrayList<>();
+            Date startPrepareTime = pickupTime;
+            Order order = new Order(
+                    pickupTime,
+                    orderTime,
+                    20.0,
+                    10,
+                    itemList,
+                    user,
+                    0,
+                    startPrepareTime
+            );
+            OrderItem orderItem = new OrderItem(
+                    pickupTime,
+                    orderTime,
+                    user,
+                    order,
+                    item,
+                    price,
+                    10
+                    );
+
+            itemList.add(orderItem);
+            orderDao.save(order);
+            orderItemDao.save(orderItem);
+
+        };
+    }
 }

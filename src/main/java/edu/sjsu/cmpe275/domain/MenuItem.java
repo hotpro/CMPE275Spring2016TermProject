@@ -24,7 +24,19 @@ public class MenuItem {
 	
 	private int preparationTime;
 
-	public Long getId() {
+	public MenuItem() {
+	}
+
+    public MenuItem(byte category, String name, String pictureURL, double unitPrice, int calories, int preparationTime) {
+        this.category = category;
+        this.name = name;
+        this.pictureURL = pictureURL;
+        this.unitPrice = unitPrice;
+        this.calories = calories;
+        this.preparationTime = preparationTime;
+    }
+
+    public Long getId() {
 		return id;
 	}
 
