@@ -37,8 +37,21 @@ public class Order {
     @Column(name = "startPrepareTime")
     private Date startPrepareTime;
 
+    public Order() {
+    }
 
-	public Long getId() {
+    public Order(Date pickUpTime, Date orderTime, double totalPrice, int totalTime, List<OrderItem> itemList, User user, int chiefId, Date startPrepareTime) {
+        this.pickUpTime = pickUpTime;
+        this.orderTime = orderTime;
+        this.totalPrice = totalPrice;
+        this.totalTime = totalTime;
+        this.itemList = itemList;
+        this.user = user;
+        this.chiefId = chiefId;
+        this.startPrepareTime = startPrepareTime;
+    }
+
+    public Long getId() {
 		return id;
 	}
 

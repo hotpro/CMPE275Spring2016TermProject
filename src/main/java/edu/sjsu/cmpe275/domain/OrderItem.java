@@ -1,17 +1,8 @@
 package edu.sjsu.cmpe275.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class OrderItem {
@@ -46,7 +37,20 @@ public class OrderItem {
 	
 	private int totalTime;
 
-	public Long getId() {
+    public OrderItem() {
+    }
+
+    public OrderItem(Date pickUpTime, Date orderTime, User user, Order order, MenuItem item, BigDecimal price, int totalTime) {
+        this.pickUpTime = pickUpTime;
+        this.orderTime = orderTime;
+        this.user = user;
+        this.order = order;
+        this.item = item;
+        this.price = price;
+        this.totalTime = totalTime;
+    }
+
+    public Long getId() {
 		return id;
 	}
 

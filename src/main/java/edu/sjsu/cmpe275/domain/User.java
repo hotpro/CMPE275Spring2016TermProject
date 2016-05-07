@@ -26,8 +26,15 @@ public class User {
 
     }
 
+    public User(String email, String password, boolean active, String role, String activeCode) {
+        this.email = email;
+        this.password = password;
+        this.active = active;
+        this.role = role;
+        this.activeCode = activeCode;
+    }
 
-	public Long getId() {
+    public Long getId() {
 		return id;
 	}
 
