@@ -8,12 +8,14 @@ import edu.sjsu.cmpe275.dao.OrderItemDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
-import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -49,6 +51,7 @@ public class OrderController {
     public @ResponseBody
     PickupTimeTO getEarliestPickupTime(@RequestBody String body) throws IOException {
         logger.debug("body: {}", body);
+        logger.debug("type:{}",body.getClass().getName());
 
 
         List<OrderTO> orderTOList = new ObjectMapper().readValue(body, new TypeReference<List<OrderTO>>(){});
@@ -128,6 +131,7 @@ public class OrderController {
         int totalTime = 0;
         for (OrderTO orderTO : orderTOList) {
             totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime();
+            logger.debug("prepareTime:{}",menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime());
         }
         return totalTime * 60 * 1000;
     }
