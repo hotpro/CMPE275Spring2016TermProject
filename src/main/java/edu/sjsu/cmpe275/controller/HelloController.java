@@ -16,5 +16,10 @@ public class HelloController {
     public String loginView() {
         return "hello";
     }
+    
+    @RequestMapping("/admin")
+    public String admin() {
+        return "dashboard";
+    }
 
 }

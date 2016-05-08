@@ -38,7 +38,7 @@ public class Cmpe275Spring2016TermProjectApplication {
 	}
 
 
-    @Bean
+//    @Bean
     public CommandLineRunner insertOrderData(OrderDao orderDao, UserDao userDao, OrderItemDao orderItemDao,
                                              MenuItemDao menuItemDao) {
         return (args) -> {
