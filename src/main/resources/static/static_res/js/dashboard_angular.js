@@ -1,5 +1,5 @@
 /**
- * Created by Lee on 5/5/16.
+ * Created by Xiaofeng on 5/5/16.
  */
 angular.module('App', ['ngAnimate','ngFileUpload']);
 angular.module('App').controller('dashboardCtrl', ['$scope', '$http', 'Upload', 
