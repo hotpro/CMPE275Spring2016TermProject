@@ -9,6 +9,7 @@ angular.module('homeApp').controller('homeCtrl',
         $scope.totalPrice = 0.00;
         $scope.items = [];
         $scope.cart = [];
+        $scope.pickupTime = new Date();
 
         //get data from controller
         $http({
@@ -85,16 +86,24 @@ angular.module('homeApp').controller('homeCtrl',
             }
         };
         //preview for getting earliest pick up time then let client choose a time
-        // $scope.preview = function () {
-        //     $http({
-        //         method: "POST",
-        //         url: '/preview',
-        //         data: {"cart": $scope.cart}
-        //     }).success(function (data, status) {
-        //         //wait for Order Controller
-        //     }).error(function (data, status) {
-        //     });
-        // }
+        $scope.getEarliestPickupTime = function () {
+            var tmpCart = [];
+            for (var i = 0; i < $scope.cart.length; i++) {
+                var tmp = {};
+                tmp.menuId = $scope.cart[i].id;
+                tmp.count = $scope.cart[i].amount;
+                tmpCart.push(tmp);
+            }
+
+            $http({
+                method: "POST",
+                url: '/order/getEarliestPickupTime',
+                data: tmpCart
+            }).success(function (data, status) {
+               $scope.pickupTime = data.earliestPickupTime;
+            }).error(function (data, status) {
+            });
+        }
 
 
         // //wait for Order Controller
