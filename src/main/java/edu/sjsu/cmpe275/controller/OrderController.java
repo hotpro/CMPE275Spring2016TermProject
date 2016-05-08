@@ -222,7 +222,8 @@ public class OrderController {
         for (OrderTO orderTO : orderTOList) {
             MenuItem menuItem = menuItemDao.findOne(orderTO.getMenuId());
             OrderItem orderItem = new OrderItem(new Date(earliestPickupTime), orderTime, null, order, menuItem,
-                    new BigDecimal(menuItem.getUnitPrice()), menuItem.getPreparationTime() * orderTO.getCount());
+                    new BigDecimal(menuItem.getUnitPrice()), menuItem.getPreparationTime() * orderTO.getCount(),
+                    orderTO.getCount());
             orderItemDao.save(orderItem);
         }
 

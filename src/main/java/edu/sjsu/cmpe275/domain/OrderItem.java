@@ -42,7 +42,8 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Date pickUpTime, Date orderTime, User user, Order order, MenuItem item, BigDecimal price, int totalTime) {
+    public OrderItem(Date pickUpTime, Date orderTime, User user, Order order, MenuItem item, BigDecimal price,
+					 int totalTime, int count) {
         this.pickUpTime = pickUpTime;
         this.orderTime = orderTime;
         this.user = user;
@@ -50,7 +51,8 @@ public class OrderItem {
         this.item = item;
         this.price = price;
         this.totalTime = totalTime;
-    }
+		this.count = count;
+	}
 
     public Long getId() {
 		return id;

@@ -97,7 +97,8 @@ public class Cmpe275Spring2016TermProjectApplication {
                 order,
                 item,
                 price,
-                10
+                10,
+                1
         );
         OrderItem orderItem1 = new OrderItem(
                 pickupTime,
@@ -106,7 +107,8 @@ public class Cmpe275Spring2016TermProjectApplication {
                 order,
                 item,
                 price,
-                10
+                10,
+                1
         );
 
         itemList.add(orderItem);
