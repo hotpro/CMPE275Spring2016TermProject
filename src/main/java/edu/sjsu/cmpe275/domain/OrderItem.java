@@ -36,6 +36,8 @@ public class OrderItem {
 	private BigDecimal price;
 	
 	private int totalTime;
+	
+	private int count;
 
     public OrderItem() {
     }
@@ -112,6 +114,14 @@ public class OrderItem {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 }
