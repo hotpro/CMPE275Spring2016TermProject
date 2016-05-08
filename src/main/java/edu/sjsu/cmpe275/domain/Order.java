@@ -37,10 +37,15 @@ public class Order {
     @Column(name = "startPrepareTime")
     private Date startPrepareTime;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "finishTime")
+	private Date finishTime;
+
     public Order() {
     }
 
-    public Order(Date pickUpTime, Date orderTime, double totalPrice, int totalTime, List<OrderItem> itemList, User user, int chiefId, Date startPrepareTime) {
+    public Order(Date pickUpTime, Date orderTime, double totalPrice, int totalTime, List<OrderItem> itemList, User user,
+                 int chiefId, Date startPrepareTime, Date finishTime) {
         this.pickUpTime = pickUpTime;
         this.orderTime = orderTime;
         this.totalPrice = totalPrice;
@@ -49,6 +54,7 @@ public class Order {
         this.user = user;
         this.chiefId = chiefId;
         this.startPrepareTime = startPrepareTime;
+        this.finishTime = finishTime;
     }
 
     public Long getId() {
@@ -122,5 +128,13 @@ public class Order {
 
     public void setStartPrepareTime(Date startPrepareTime) {
         this.startPrepareTime = startPrepareTime;
+    }
+
+    public Date getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
     }
 }

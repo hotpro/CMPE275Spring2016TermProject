@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.dao.OrderDao;
+import edu.sjsu.cmpe275.dao.OrderItemDao;
+import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
+import edu.sjsu.cmpe275.domain.OrderItem;
 import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.TimeZone;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 /**
@@ -40,6 +42,9 @@ public class OrderController {
     @Autowired
     private MenuItemDao menuItemDao;
 
+    @Autowired
+    private OrderItemDao orderItemDao;
+
     @RequestMapping(value = "/getEarliestPickupTime", method = RequestMethod.POST)
     public @ResponseBody
     PickupTimeTO getEarliestPickupTime(@RequestBody String body) throws IOException {
@@ -53,20 +58,37 @@ public class OrderController {
         1. empty order. 1. order before 6am. 2. order after 6am before 9pm. 3. order after 9pm
          */
 
-        int totalTime = 0;
-        for (OrderTO orderTO : orderTOList) {
-            totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime();
-        }
+        int totalTime = calculateTotalTime(orderTOList);
 
         // order take too long time
         if (totalTime > ONE_DAY_WORK) {
             // TODO:
         }
 
+        List<List<Order>> orderListOfAllChef = getOrderListOfAllChef(orderDao, Calendar.getInstance().getTime().getTime());
+
+        // TODO: need to consider the case that order start after 30 days
+        long earliestStartTime = Long.MAX_VALUE;
+        long now = LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+        for (List<Order> list : orderListOfAllChef) {
+            long startTime = findEarliestStartTime(now, totalTime, list);
+            earliestStartTime = Math.min(earliestStartTime, startTime);
+        }
+        long earliestPickupTime = earliestStartTime + totalTime;
+        logger.debug("getEarliestPickupTime earliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", earliestStartTime,
+                totalTime, earliestPickupTime);
+        logger.debug("getEarliestPickupTime earliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", timestampToString(earliestStartTime),
+                totalTime, timestampToString(earliestPickupTime));
+
+        return new PickupTimeTO(earliestPickupTime, "");
+    }
+
+    private List<List<Order>> getOrderListOfAllChef(OrderDao orderDao, long startTime) {
         List<Order> order0 = new ArrayList<>();
         List<Order> order1 = new ArrayList<>();
         List<Order> order2 = new ArrayList<>();
-        for (Order order : orderDao.findAll()) {
+        List<Order> allOrderList = orderDao.findByFinishTimeGreaterThanEqual(new Date(startTime));
+        for (Order order : allOrderList) {
             switch (order.getChiefId()) {
                 case 0:
                     order0.add(order);
@@ -83,13 +105,31 @@ public class OrderController {
             }
         }
 
-        // TODO: need to consider the case that order start after 30 days
-        long now = LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
-        long startTime0 = findEarliestStartTime(now, totalTime, order0);
-        long startTime1 = findEarliestStartTime(now, totalTime, order1);
-        long startTime2 = findEarliestStartTime(now, totalTime, order2);
+        List<List<Order>> orderListOfAllChef = new ArrayList<>();
+        orderListOfAllChef.add(order0);
+        orderListOfAllChef.add(order1);
+        orderListOfAllChef.add(order2);
+        return orderListOfAllChef;
+    }
+    private static long localDateTimeToTimeStamp(LocalDateTime localDateTime) {
+        return LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+    }
 
-        return new PickupTimeTO(Math.min(Math.min(startTime0, startTime1), startTime2) + totalTime, "");
+    private LocalDateTime timestampToLocalDateTime(long timestamp) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), TimeZone.getDefault().toZoneId());
+    }
+
+    private String timestampToString(long timestamp) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), TimeZone.getDefault().toZoneId()).format(formatter);
+    }
+
+    private int calculateTotalTime(List<OrderTO> orderTOList) {
+        int totalTime = 0;
+        for (OrderTO orderTO : orderTOList) {
+            totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime();
+        }
+        return totalTime * 60 * 1000;
     }
 
     /**
@@ -143,11 +183,80 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public @ResponseBody String submitOrder(@RequestBody List<OrderTO> orderTOList) {
-        return "SUCCESS";
+    public @ResponseBody SubmitOrderResult submit(@RequestBody SubmitOrderTO submitOrderTO) {
+        Date orderTime = Calendar.getInstance().getTime();
+        List<OrderTO> orderTOList = submitOrderTO.getOrderTOList();
+        int totalTime = calculateTotalTime(orderTOList);
+        LocalDateTime idealEarliestStartTime = timestampToLocalDateTime(submitOrderTO.getPickupTime())
+                .minusHours(1).minusSeconds(totalTime / 1000);
+
+        List<List<Order>> orderListOfAllChef = getOrderListOfAllChef(orderDao, localDateTimeToTimeStamp(idealEarliestStartTime));
+
+        // TODO: need to consider the case that order start after 30 days
+        long earliestStartTime = Long.MAX_VALUE;
+        int chefId = 0;
+        for (int i = 0; i < 3; i++) {
+            List<Order> list = orderListOfAllChef.get(i);
+            long startTimeForThisChef = findEarliestStartTime(localDateTimeToTimeStamp(idealEarliestStartTime), totalTime, list);
+            if (startTimeForThisChef < earliestStartTime) {
+                chefId = i;
+                earliestStartTime = startTimeForThisChef;
+            }
+        }
+        long earliestPickupTime = earliestStartTime + totalTime;
+        logger.debug("submit chefId: {}, earliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", chefId, earliestStartTime,
+                totalTime, earliestPickupTime);
+        logger.debug("submit echefId: {}, arliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", chefId,
+                timestampToString(earliestStartTime),
+                totalTime, timestampToString(earliestPickupTime));
+
+        double totalPrice = 0.0;
+        for (OrderTO orderTO : orderTOList) {
+            totalPrice += menuItemDao.findOne(orderTO.getMenuId()).getUnitPrice() * orderTO.getCount();
+        }
+        List<OrderItem> orderItemList = new ArrayList<>();
+        Order order = new Order(new Date(earliestPickupTime), orderTime, totalPrice, totalTime, orderItemList, null, chefId,
+                new Date(earliestStartTime), new Date(earliestStartTime + totalTime));
+        orderDao.save(order);
+
+        for (OrderTO orderTO : orderTOList) {
+            MenuItem menuItem = menuItemDao.findOne(orderTO.getMenuId());
+            OrderItem orderItem = new OrderItem(new Date(earliestPickupTime), orderTime, null, order, menuItem,
+                    new BigDecimal(menuItem.getUnitPrice()), menuItem.getPreparationTime() * orderTO.getCount());
+            orderItemDao.save(orderItem);
+        }
+
+        return new SubmitOrderResult(0, "We've received your order. Have a nice day :)");
     }
 
+    static class SubmitOrderTO {
+        private List<OrderTO> orderTOList;
+        private long pickupTime;
 
+        public SubmitOrderTO() {
+        }
+
+        public SubmitOrderTO(List<OrderTO> orderTOList, long pickupTime) {
+            this.orderTOList = orderTOList;
+            this.pickupTime = pickupTime;
+        }
+
+        public List<OrderTO> getOrderTOList() {
+            return orderTOList;
+        }
+
+        public void setOrderTOList(List<OrderTO> orderTOList) {
+            this.orderTOList = orderTOList;
+        }
+
+        public long getPickupTime() {
+            return pickupTime;
+        }
+
+        public void setPickupTime(long pickupTime) {
+            this.pickupTime = pickupTime;
+        }
+    }
 
     static class OrderTO {
         long menuId;
@@ -175,6 +284,35 @@ public class OrderController {
 
         public void setCount(int count) {
             this.count = count;
+        }
+    }
+
+    static class SubmitOrderResult {
+        int code;
+        String message;
+
+        public SubmitOrderResult() {
+        }
+
+        public SubmitOrderResult(int code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 

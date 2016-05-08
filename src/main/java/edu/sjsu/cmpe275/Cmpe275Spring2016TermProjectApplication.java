@@ -42,49 +42,76 @@ public class Cmpe275Spring2016TermProjectApplication {
     public CommandLineRunner insertOrderData(OrderDao orderDao, UserDao userDao, OrderItemDao orderItemDao,
                                              MenuItemDao menuItemDao) {
         return (args) -> {
-            Date pickupTime  = Calendar.getInstance().getTime();
-            Date orderTime = pickupTime;
-
-            User user = new User(
-                    "a@a.com",
-                    "password",
-                    true,
-                    "User",
-                    "123"
-            );
-            userDao.save(user);
-
-            MenuItem item = new MenuItem((byte)1, "Food", "dfaf", 1.0, 1, 1);
-            menuItemDao.save(item);
-
-            BigDecimal price = BigDecimal.valueOf(1.0);
-
-            List<OrderItem> itemList = new ArrayList<>();
-            Date startPrepareTime = pickupTime;
-            Order order = new Order(
-                    pickupTime,
-                    orderTime,
-                    20.0,
-                    10,
-                    itemList,
-                    user,
-                    0,
-                    startPrepareTime
-            );
-            OrderItem orderItem = new OrderItem(
-                    pickupTime,
-                    orderTime,
-                    user,
-                    order,
-                    item,
-                    price,
-                    10
-                    );
-
-            itemList.add(orderItem);
-            orderDao.save(order);
-            orderItemDao.save(orderItem);
-
+//            addData(orderDao, userDao, orderItemDao, menuItemDao);
+//            addFinishTime(orderDao);
         };
+    }
+
+    private static void addFinishTime(OrderDao orderDao) {
+        for (Order order : orderDao.findAll()) {
+            Date startTime = order.getStartPrepareTime();
+            Date finishTime = new Date(startTime.getTime() + order.getTotalTime());
+            order.setFinishTime(finishTime);
+            orderDao.save(order);
+        }
+    }
+
+    private static void addData(OrderDao orderDao, UserDao userDao, OrderItemDao orderItemDao,
+                                MenuItemDao menuItemDao) {
+        Date pickupTime  = Calendar.getInstance().getTime();
+        Date orderTime = pickupTime;
+
+        User user = new User(
+                "a@a.com",
+                "password",
+                true,
+                "User",
+                "123"
+        );
+        userDao.save(user);
+
+        MenuItem item = new MenuItem((byte)1, "Food", "dfaf", 1.0, 1, 1);
+        menuItemDao.save(item);
+
+        BigDecimal price = BigDecimal.valueOf(1.0);
+
+        List<OrderItem> itemList = new ArrayList<>();
+        Date startPrepareTime = pickupTime;
+        int totalTime = 10;
+        Date finishTime = new Date(startPrepareTime.getTime() + totalTime);
+        Order order = new Order(
+                pickupTime,
+                orderTime,
+                20.0,
+                totalTime,
+                itemList,
+                user,
+                0,
+                startPrepareTime,
+                finishTime
+        );
+        OrderItem orderItem = new OrderItem(
+                pickupTime,
+                orderTime,
+                user,
+                order,
+                item,
+                price,
+                10
+        );
+        OrderItem orderItem1 = new OrderItem(
+                pickupTime,
+                orderTime,
+                user,
+                order,
+                item,
+                price,
+                10
+        );
+
+        itemList.add(orderItem);
+        orderDao.save(order);
+        orderItemDao.save(orderItem);
+        orderItemDao.save(orderItem1);
     }
 }
