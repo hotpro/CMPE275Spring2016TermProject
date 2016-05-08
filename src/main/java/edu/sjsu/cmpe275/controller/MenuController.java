@@ -32,6 +32,7 @@ public class MenuController {
         item1.setName("wang lao ji");
         item1.setUnitPrice(3.00);
         item1.setPictureURL("image/wanglaoji.jpg");
+        item1.setCategory((byte)0);
         item1.setCalories(100);
         item1.setId(1L);
 
@@ -39,10 +40,31 @@ public class MenuController {
         item2.setName("pepsi");
         item2.setUnitPrice(3.00);
         item2.setPictureURL("image/pepsi.png");
+        item2.setCategory((byte)2);
         item2.setCalories(200);
         item2.setId(2L);
+
+
+        MenuItem item3 = new MenuItem();
+        item3.setName("wang lao ji");
+        item3.setUnitPrice(3.00);
+        item3.setPictureURL("image/wanglaoji.jpg");
+        item3.setCategory((byte)2);
+        item3.setCalories(100);
+        item3.setId(1L);
+
+        MenuItem item4 = new MenuItem();
+        item4.setName("wang lao ji");
+        item4.setUnitPrice(3.00);
+        item4.setPictureURL("image/wanglaoji.jpg");
+        item4.setCategory((byte)1);
+        item4.setCalories(100);
+        item4.setId(1L);
+
         list.add(item1);
         list.add(item2);
+        list.add(item3);
+        list.add(item4);
         return list;
     }
 //

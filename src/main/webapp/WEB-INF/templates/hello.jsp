@@ -279,12 +279,10 @@
         </div>
     </script>
 
-    <div class="row one menu-content"
-         style="width: 100%; margin-left: 0px; margin-right: 0px;">
+    <div class="row one menu-content" style="width: 100%; margin-left: 0px; margin-right: 0px;">
         <div class="col-lg-2 menu-nav"
              style="background-color: black; height: 100%; overflow: auto; padding-top: 20px;">
-            <ul class="nav nav-stacked"
-                style="text-align: center; color: white;">
+            <ul class="nav nav-stacked" style="text-align: center; color: white;">
                 <li class="active"><a data-toggle="pill" href="#drink">Drink</a></li>
                 <li><a data-toggle="pill" href="#appetizier">Appetizier</a></li>
                 <li><a data-toggle="pill" href="#main_course">Main Course</a></li>
@@ -297,7 +295,7 @@
             <div class="tab-content">
                 <div id="drink" class="tab-pane fade in active">
                     <div class="row" style="margin: 10px 0px 0px 10px">
-                        <div class="col-lg-3" ng-repeat="item in items">
+                        <div class="col-lg-3" ng-if="item.category == 0" ng-repeat="item in items">
                             <img ng-src="{{'static_res/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 100%; height: 100%;">
@@ -315,31 +313,80 @@
                                 </button>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-            </div>
-            <div id="appetizier" class="tab-pane fade">
-                <h3>Menu 1</h3>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-            <div id="main_course" class="tab-pane fade">
-                <h3>Menu 2</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-            </div>
-            <div id="dessert" class="tab-pane fade">
-                <h3>Menu 3</h3>
-                <p>Eaque ipsa quae ab illo inventore veritatis et quasi
-                    architecto beatae vitae dicta sunt explicabo.</p>
+
+                <div id="appetizier" class="tab-pane fade">
+                    <div class="row" style="margin: 10px 0px 0px 10px">
+                        <div class="col-lg-3" ng-if="item.category == 1" ng-repeat="item in items">
+                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                                 class="img-thumbnail" alt="{{item.name}}"
+                                 style="width: 100%; height: 100%;">
+                            <p class="item">
+                                {{item.name}}<br> Calories : {{item.calories}}<br>
+                                Unit Price : $ {{item.unitPrice}}
+                            </p>
+                            <div align="center">
+                                <button type="button" class="btn btn-warning" id="min"
+                                        ng-click="min(item)">-
+                                </button>
+                                <span ng-bind="item.amount"></span>
+                                <button type="button" class="btn btn-primary" id="plus"
+                                        ng-click="plus(item)">+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main_course" class="tab-pane fade">
+                    <div class="row" style="margin: 10px 0px 0px 10px">
+                        <div class="col-lg-3" ng-if="item.category == 2" ng-repeat="item in items">
+                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                                 class="img-thumbnail" alt="{{item.name}}"
+                                 style="width: 100%; height: 100%;">
+                            <p class="item">
+                                {{item.name}}<br> Calories : {{item.calories}}<br>
+                                Unit Price : $ {{item.unitPrice}}
+                            </p>
+                            <div align="center">
+                                <button type="button" class="btn btn-warning" id="min"
+                                        ng-click="min(item)">-
+                                </button>
+                                <span ng-bind="item.amount"></span>
+                                <button type="button" class="btn btn-primary" id="plus"
+                                        ng-click="plus(item)">+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="dessert" class="tab-pane fade">
+                    <div class="row" style="margin: 10px 0px 0px 10px">
+                        <div class="col-lg-3" ng-if="item.category == 3" ng-repeat="item in items">
+                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                                 class="img-thumbnail" alt="{{item.name}}"
+                                 style="width: 100%; height: 100%;">
+                            <p class="item">
+                                {{item.name}}<br> Calories : {{item.calories}}<br>
+                                Unit Price : $ {{item.unitPrice}}
+                            </p>
+                            <div align="center">
+                                <button type="button" class="btn btn-warning" id="min"
+                                        ng-click="min(item)">-
+                                </button>
+                                <span ng-bind="item.amount"></span>
+                                <button type="button" class="btn btn-primary" id="plus"
+                                        ng-click="plus(item)">+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-</div>
 <!--
 <hr>
   -->
