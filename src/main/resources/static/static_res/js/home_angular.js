@@ -10,6 +10,12 @@ angular.module('homeApp').controller('homeCtrl',
         $scope.items = [];
         $scope.cart = [];
         $scope.pickupTime = new Date();
+        $scope.popup = {
+            opened: false
+        };
+        $scope.open = function () {
+            $scope.popup.opened = true;
+        };
 
         //get data from controller
         $http({
