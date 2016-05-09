@@ -23,8 +23,6 @@ angular.module('App').controller('dashboardCtrl', ['$scope', '$http', 'Upload',
     				    console.log("success");
     				    if (response && angular.isArray(response.data)) {
     				    	$scope.menuItemList = response.data;
-    				    	
-    				    	console.log(angular.toJson(response.data));
     				    }
     				}, function errorCallback(response) {
     				    console.log("error");
@@ -91,6 +89,23 @@ angular.module('App').controller('dashboardCtrl', ['$scope', '$http', 'Upload',
 		    
 		    $scope.selectCategory = function(category) {
 		    	$scope.selectedCategory = category;
+		    }
+		    
+		    $scope.removeItem = function(item) {
+		    	if (item) {
+		    		var v = confirm("Do you want to delete Item : " + item.name);
+		    		if (v) {
+		    			$http.get('/dashboard/removeItem/' + item.id)
+		    				.then(function successCallback(response) {
+		    				    console.log("success");
+		    				    if (response && angular.isArray(response.data)) {
+		    				    	$scope.menuItemList = response.data;
+		    				    }
+		    				}, function errorCallback(response) {
+		    				    console.log("error");
+		    				});
+		    		}
+		    	}
 		    }
 		    
 }]);

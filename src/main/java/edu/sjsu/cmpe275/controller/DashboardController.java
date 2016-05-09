@@ -59,7 +59,7 @@ public class DashboardController {
 	@ResponseBody
     public Object removeItem(@PathVariable Long id) {
 		this.menuItemDao.delete(id);
-		return null;
+		return listItems();
     }
 
 	@RequestMapping(value = "/addImage", method = RequestMethod.POST)
