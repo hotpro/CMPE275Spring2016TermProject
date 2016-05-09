@@ -19,7 +19,7 @@
 
 <div class="container">
 
-    <form role="form" method="POST" action="/user/signup/">
+    <form role="form" method="POST" action="/user/signup">
         <h3>Sign Up</h3>
         <hr />
         <div class="form-group">
@@ -35,17 +35,11 @@
             <input type="password" class="form-control" id="id_password" placeholder="Enter password">
         </div>
         <p></p>
-        <button type="button" class="btn btn-default">Sign Up</button>
+        <button type="submit" class="btn btn-default">Sign Up</button>
     </form>
 </div>
 
-
-
-    <!-- SCRIPTS -->
-    <script src="static_res/angular/angular.js"></script>
-    <script src="static_res/angular/angular-animate.js"></script>
-    <script src="static_res/js/dashboard_angular.js"></script>
-    <script src="static_res/angular/ng-file-upload-shim.min.js"></script>
-    <script src="static_res/angular/ng-file-upload.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static_res/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
