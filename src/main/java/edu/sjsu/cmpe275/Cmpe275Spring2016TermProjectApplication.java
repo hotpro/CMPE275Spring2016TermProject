@@ -42,7 +42,7 @@ public class Cmpe275Spring2016TermProjectApplication {
     public CommandLineRunner insertOrderData(OrderDao orderDao, UserDao userDao, OrderItemDao orderItemDao,
                                              MenuItemDao menuItemDao) {
         return (args) -> {
-            addData(orderDao, userDao, orderItemDao, menuItemDao);
+//            addData(orderDao, userDao, orderItemDao, menuItemDao);
 //            addFinishTime(orderDao);
         };
     }
