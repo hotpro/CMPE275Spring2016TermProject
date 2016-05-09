@@ -315,7 +315,7 @@
                 <div id="drink" class="tab-pane fade in active">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 0" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 100%; height: 100%;">
                             <p class="item">
@@ -338,7 +338,7 @@
                 <div id="appetizier" class="tab-pane fade">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 1" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 100%; height: 100%;">
                             <p class="item">
@@ -360,7 +360,7 @@
                 <div id="main_course" class="tab-pane fade">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 2" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 100%; height: 100%;">
                             <p class="item">
@@ -382,7 +382,7 @@
                 <div id="dessert" class="tab-pane fade">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 3" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 100%; height: 100%;">
                             <p class="item">
