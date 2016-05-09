@@ -45,7 +45,11 @@ public class UserController {
         List<User> existEmails = userDao.findByEmail(signupFormTO.getEmail());
         if (existEmails != null && existEmails.size() > 0) {
             // error
+            return "redirect:/signupform?error=Email%20exist";
         }
+
+        // password equal, check in front end
+
         String md5 = Util.md5(signupFormTO.getPassword() + Constant.SALT);
         String uuid = UUID.randomUUID().toString();
         User newUser = new User(signupFormTO.getEmail(), md5, false, uuid);
