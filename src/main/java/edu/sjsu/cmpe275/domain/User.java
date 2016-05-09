@@ -26,11 +26,10 @@ public class User {
 
     }
 
-    public User(String email, String password, boolean active, String role, String activeCode) {
+    public User(String email, String password, boolean active, String activeCode) {
         this.email = email;
         this.password = password;
         this.active = active;
-        this.role = role;
         this.activeCode = activeCode;
     }
 
@@ -83,6 +82,16 @@ public class User {
 	public void setActiveCode(String activeCode) {
 		this.activeCode = activeCode;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", active=" + active +
+				", role='" + role + '\'' +
+				", activeCode='" + activeCode + '\'' +
+				'}';
+	}
 }

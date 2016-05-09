@@ -23,16 +23,17 @@
         <h3>Sign Up</h3>
         <hr />
         <div class="form-group">
-            <label for="id_username">Username</label>
-            <input type="text" class="form-control" id="id_username" name="username" placeholder="Enter username">
-        </div>
-        <div class="form-group">
             <label for="id_email">Email</label>
             <input type="email" class="form-control" id="id_email" name="email" placeholder="Enter email">
         </div>
         <div>
             <label for="id_password">Password</label>
             <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter password">
+        </div>
+        <div class="form-group">
+            <label for="id_confirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="id_confirmPassword" name="confirmPassword"
+                   placeholder="Confirm Password">
         </div>
         <p></p>
         <button type="submit" class="btn btn-default">Sign Up</button>
