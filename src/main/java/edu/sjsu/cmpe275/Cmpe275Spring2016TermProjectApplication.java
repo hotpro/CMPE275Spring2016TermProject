@@ -65,7 +65,6 @@ public class Cmpe275Spring2016TermProjectApplication {
                 "a@a.com",
                 "password",
                 true,
-                "User",
                 "123"
         );
         userDao.save(user);
