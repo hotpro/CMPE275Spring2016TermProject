@@ -17,9 +17,8 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public void signup(@RequestBody(required = false) String signupFormTO) {
+    public void signup(@RequestBody SignupFormTO signupFormTO) {
         logger.debug("signup from: {}", signupFormTO.toString());
-
     }
 
     static class SignupFormTO {

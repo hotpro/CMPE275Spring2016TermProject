@@ -24,15 +24,15 @@
         <hr />
         <div class="form-group">
             <label for="id_username">Username</label>
-            <input type="text" class="form-control" id="id_username" placeholder="Enter username">
+            <input type="text" class="form-control" id="id_username" name="username" placeholder="Enter username">
         </div>
         <div class="form-group">
             <label for="id_email">Email</label>
-            <input type="email" class="form-control" id="id_email" placeholder="Enter email">
+            <input type="email" class="form-control" id="id_email" name="email" placeholder="Enter email">
         </div>
         <div>
             <label for="id_password">Password</label>
-            <input type="password" class="form-control" id="id_password" placeholder="Enter password">
+            <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter password">
         </div>
         <p></p>
         <button type="submit" class="btn btn-default">Sign Up</button>
