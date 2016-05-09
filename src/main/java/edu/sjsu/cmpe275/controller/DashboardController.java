@@ -1,26 +1,16 @@
 package edu.sjsu.cmpe275.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import edu.sjsu.cmpe275.dao.MenuItemDao;
+import edu.sjsu.cmpe275.domain.MenuItem;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.sjsu.cmpe275.dao.MenuItemDao;
-import edu.sjsu.cmpe275.domain.MenuItem;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.security.MessageDigest;
 
 /**
  * Created by yutao on 5/5/16.
@@ -29,7 +19,7 @@ import edu.sjsu.cmpe275.domain.MenuItem;
 @RequestMapping("/dashboard")
 public class DashboardController {
 	
-	private static final String UPLOAD_IMAGES_PATH = "/Users/xiaofengli/documents/upload/upload_images";
+	private static final String UPLOAD_IMAGES_PATH = "/Users/Lee/Documents/img/upload_images";
 	
 	@Autowired
     private MenuItemDao menuItemDao;

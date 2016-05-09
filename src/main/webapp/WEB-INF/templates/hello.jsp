@@ -280,13 +280,13 @@
             <span class="input-group">
                 <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="pickupTime"
                        is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
-                       alt-input-formats="altInputFormats"/>
+                       alt-input-formats="altInputFormats" ng-change="selectedPickupTime(pickupTime)"/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open()"><i
                     class="glyphicon glyphicon-calendar"></i></button>
           </span>
             </span>
-            <uib-timepicker ng-model="pickupTime" show-meridian="false"></uib-timepicker>
+            <uib-timepicker ng-model="pickupTime" show-meridian="false" ng-change="selectedPickupTime(pickupTime)"></uib-timepicker>
         </div>
         <div>Total:<span>{{totalPrice}}</span></div>
         <div>
