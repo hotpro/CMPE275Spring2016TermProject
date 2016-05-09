@@ -26,8 +26,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 
 /**
  * Created by yutao on 5/5/16.
@@ -239,21 +237,25 @@ public class OrderController {
         return new SubmitOrderResult(0, "We've received your order. Have a nice day :)");
     }
 
-    @RequestMapping(value = "/getOrderHistory", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    OrderHistory orderHistory(@RequestBody long body) {
-        long orderId = orderDao.findOne(body).getId();
-        String itemName = orderItemDao.findOne(orderId).getItem().getName();
-        int count = orderItemDao.findOne(orderId).getCount();
-        double totalPrice = orderDao.findOne(orderId).getTotalPrice();
-        Date pickupTime = orderDao.findOne(orderId).getPickUpTime();
-        long now = LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
-        
-
-
-        return orderHistory(orderId, itemName, count, totalPrice, pickupTime, status);
-    }
+//    @RequestMapping(value = "/getOrderHistory", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    OrderHistory orderHistory(@RequestBody long body) {
+//        long orderId = orderDao.findOne(body).getId();
+//        List<ItemAndCount> itemAndCount;
+//
+//
+//
+//        String itemName = orderItemDao.findOne(orderId).getItem().getName();
+//        int count = orderItemDao.findOne(orderId).getCount();
+//        double totalPrice = orderDao.findOne(orderId).getTotalPrice();
+//
+//        Date pickupTime = orderDao.findOne(orderId).getPickUpTime();
+//        long now = LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+//
+//
+//        return orderHistory(orderId, itemAndCount, totalPrice, pickupTime, status);
+//    }
 
 
     static class SubmitOrderTO {
@@ -372,17 +374,44 @@ public class OrderController {
         }
     }
 
+    static class ItemAndCount {
+        String itemName;
+        int count;
+
+        public ItemAndCount(String itemName, int count) {
+            this.itemName = itemName;
+            this.count = count;
+        }
+
+        public String getItemName() {
+            return itemName;
+        }
+
+        public void setItemName(String itemName) {
+            this.itemName = itemName;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+    }
+
     static class OrderHistory {
         long orderId;
-        String itemName;
+        List<ItemAndCount> itemAndCount;
         int count;
         double totalPrice;
         Date pickupTime;
         int status;
 
-        public OrderHistory(long orderId, String itemName, int count, double totalPrice, Date pickupTime, int status) {
+        public OrderHistory(long orderId, List<OrderController.ItemAndCount> itemAndCount, int count, double totalPrice, Date pickupTime, int status) {
+
             this.orderId = orderId;
-            this.itemName = itemName;
+            this.itemAndCount = itemAndCount;
             this.count = count;
             this.totalPrice = totalPrice;
             this.pickupTime = pickupTime;
@@ -397,12 +426,12 @@ public class OrderController {
             this.orderId = orderId;
         }
 
-        public String getItemName() {
-            return itemName;
+        public List<OrderController.ItemAndCount> getItemAndCount() {
+            return itemAndCount;
         }
 
-        public void setItemName(String itemName) {
-            this.itemName = itemName;
+        public void setItemAndCount(List<OrderController.ItemAndCount> itemAndCount) {
+            this.itemAndCount = itemAndCount;
         }
 
         public int getCount() {
