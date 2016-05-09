@@ -8,7 +8,6 @@ import edu.sjsu.cmpe275.dao.OrderItemDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
-import edu.sjsu.cmpe275.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static javax.swing.text.html.CSS.getAttribute;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 
 /**
@@ -240,6 +239,23 @@ public class OrderController {
         return new SubmitOrderResult(0, "We've received your order. Have a nice day :)");
     }
 
+    @RequestMapping(value = "/getOrderHistory", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    OrderHistory orderHistory(@RequestBody long body) {
+        long orderId = orderDao.findOne(body).getId();
+        String itemName = orderItemDao.findOne(orderId).getItem().getName();
+        int count = orderItemDao.findOne(orderId).getCount();
+        double totalPrice = orderDao.findOne(orderId).getTotalPrice();
+        Date pickupTime = orderDao.findOne(orderId).getPickUpTime();
+        long now = LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+        
+
+
+        return orderHistory(orderId, itemName, count, totalPrice, pickupTime, status);
+    }
+
+
     static class SubmitOrderTO {
         private List<OrderTO> orderTOList;
         private long pickupTime;
@@ -355,4 +371,71 @@ public class OrderController {
             this.errorMsg = errorMsg;
         }
     }
+
+    static class OrderHistory {
+        long orderId;
+        String itemName;
+        int count;
+        double totalPrice;
+        Date pickupTime;
+        int status;
+
+        public OrderHistory(long orderId, String itemName, int count, double totalPrice, Date pickupTime, int status) {
+            this.orderId = orderId;
+            this.itemName = itemName;
+            this.count = count;
+            this.totalPrice = totalPrice;
+            this.pickupTime = pickupTime;
+            this.status = status;
+        }
+
+        public long getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(long orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getItemName() {
+            return itemName;
+        }
+
+        public void setItemName(String itemName) {
+            this.itemName = itemName;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public double getTotalPrice() {
+            return totalPrice;
+        }
+
+        public void setTotalPrice(double totalPrice) {
+            this.totalPrice = totalPrice;
+        }
+
+        public Date getPickupTime() {
+            return pickupTime;
+        }
+
+        public void setPickupTime(Date pickupTime) {
+            this.pickupTime = pickupTime;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+    }
+
 }

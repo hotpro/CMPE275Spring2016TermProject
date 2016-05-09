@@ -317,7 +317,7 @@
                         <div class="col-lg-3" ng-if="item.category == 0" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -340,7 +340,7 @@
                         <div class="col-lg-3" ng-if="item.category == 1" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -362,7 +362,7 @@
                         <div class="col-lg-3" ng-if="item.category == 2" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -384,7 +384,7 @@
                         <div class="col-lg-3" ng-if="item.category == 3" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
