@@ -124,10 +124,7 @@
                                         </a>
                                     </div>
                                     <ul class="tools group" style="visibility: visible;">
-                                        <li class="fav">
-                                            <a>Delete</a>
-                                        </li>
-                                        <li class="fav">
+                                        <li class="fav" ng-click="removeItem(m)">
                                             <a>Delete</a>
                                         </li>
                                     </ul>
