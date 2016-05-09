@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
+    @RequestMapping("/signupform")
+    public String signupForm() {
+        return "signupform";
+    }
+
+    @RequestMapping("signup")
     public void signup() {
 
     }
