@@ -219,8 +219,8 @@
         </div>
         
         <div id="popoverMenu">
-            <table style="width:100%" ng-repeat="preview in items">
-                <tr>
+            <table style="width:100%">
+                <tr ng-repeat="preview in items">
                     <td ng-if="preview.amount != 0">{{preview.name}}</td>
                     <td ng-if="preview.amount != 0">{{preview.amount}}</td>
                 </tr>
@@ -280,13 +280,13 @@
             <span class="input-group">
                 <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="pickupTime"
                        is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
-                       alt-input-formats="altInputFormats"/>
+                       alt-input-formats="altInputFormats" ng-change="selectedPickupTime(pickupTime)"/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open()"><i
                     class="glyphicon glyphicon-calendar"></i></button>
           </span>
             </span>
-            <uib-timepicker ng-model="pickupTime" show-meridian="false"></uib-timepicker>
+            <uib-timepicker ng-model="pickupTime" show-meridian="false" ng-change="selectedPickupTime(pickupTime)"></uib-timepicker>
         </div>
         <div>Total:<span>{{totalPrice}}</span></div>
         <div>
@@ -315,9 +315,9 @@
                 <div id="drink" class="tab-pane fade in active">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 0" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -338,9 +338,9 @@
                 <div id="appetizier" class="tab-pane fade">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 1" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -360,9 +360,9 @@
                 <div id="main_course" class="tab-pane fade">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 2" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -382,9 +382,9 @@
                 <div id="dessert" class="tab-pane fade">
                     <div class="row" style="margin: 10px 0px 0px 10px">
                         <div class="col-lg-3" ng-if="item.category == 3" ng-repeat="item in items">
-                            <img ng-src="{{'static_res/' + item.pictureURL}}"
+                            <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}

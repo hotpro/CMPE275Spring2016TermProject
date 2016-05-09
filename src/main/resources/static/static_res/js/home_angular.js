@@ -18,6 +18,12 @@ angular.module('homeApp').controller('homeCtrl',
             $scope.popup.opened = true;
         };
 
+        $scope.selectedPickupTime = function (pickupTime) {
+            $scope.pickupTime = pickupTime;
+
+        }
+
+
         //get data from controller
         $http({
             method: "GET",
