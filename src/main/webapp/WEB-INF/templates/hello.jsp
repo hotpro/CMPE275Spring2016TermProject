@@ -219,8 +219,8 @@
         </div>
         
         <div id="popoverMenu">
-            <table style="width:100%" ng-repeat="preview in items">
-                <tr>
+            <table style="width:100%">
+                <tr ng-repeat="preview in items">
                     <td ng-if="preview.amount != 0">{{preview.name}}</td>
                     <td ng-if="preview.amount != 0">{{preview.amount}}</td>
                 </tr>

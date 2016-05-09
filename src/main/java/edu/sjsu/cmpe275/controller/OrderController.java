@@ -240,7 +240,7 @@ public class OrderController {
 //    @RequestMapping(value = "/getOrderHistory", method = RequestMethod.POST)
 //    public
 //    @ResponseBody
-//    OrderHistory orderHistory(@RequestBody long body) {
+//    OrderHistory orderHistory.jsp(@RequestBody long body) {
 //        long orderId = orderDao.findOne(body).getId();
 //        List<ItemAndCount> itemAndCount;
 //
@@ -254,7 +254,7 @@ public class OrderController {
 //        long now = LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
 //
 //
-//        return orderHistory(orderId, itemAndCount, totalPrice, pickupTime, status);
+//        return orderHistory.jsp(orderId, itemAndCount, totalPrice, pickupTime, status);
 //    }
 
 
@@ -403,16 +403,14 @@ public class OrderController {
     static class OrderHistory {
         long orderId;
         List<ItemAndCount> itemAndCount;
-        int count;
         double totalPrice;
         Date pickupTime;
         int status;
 
-        public OrderHistory(long orderId, List<OrderController.ItemAndCount> itemAndCount, int count, double totalPrice, Date pickupTime, int status) {
+        public OrderHistory(long orderId, List<OrderController.ItemAndCount> itemAndCount, double totalPrice, Date pickupTime, int status) {
 
             this.orderId = orderId;
             this.itemAndCount = itemAndCount;
-            this.count = count;
             this.totalPrice = totalPrice;
             this.pickupTime = pickupTime;
             this.status = status;
@@ -432,14 +430,6 @@ public class OrderController {
 
         public void setItemAndCount(List<OrderController.ItemAndCount> itemAndCount) {
             this.itemAndCount = itemAndCount;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
         }
 
         public double getTotalPrice() {

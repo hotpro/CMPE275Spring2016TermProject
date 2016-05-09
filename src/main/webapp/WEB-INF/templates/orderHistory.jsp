@@ -14,16 +14,16 @@
     <title>YummyTeam9.Food -- home</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="static_res/css/half-slider.css" rel="stylesheet">
+    <link href="/static_res/css/half-slider.css" rel="stylesheet">
 
     <!-- jQuery -->
-    <script src="static_res/js/jquery.js"></script>
+    <script src="/static_res/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="static_res/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static_res/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,11 +31,12 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <!--angular JS-->
-    <script src="static_res/angular/angular.js"></script>
-    <script src="static_res/angular/angular-animate.js"></script>
-    <script src="static_res/angular/ui-bootstrap-tpls-0.13.4.min.js"></script>
-    <script src="static_res/angular/ui-bootstrap-tpls-0.14.2.min.js"></script>
-    <script src="static_res/js/home_angular.js"></script>
+    <script src="/static_res/angular/angular.js"></script>
+    <script src="/static_res/angular/angular-animate.js"></script>
+    <script src="/static_res/angular/ui-bootstrap-tpls-0.13.4.min.js"></script>
+    <script src="/static_res/angular/ui-bootstrap-tpls-1.3.2.js"></script>
+    <script src="/static_res/angular/ui-bootstrap-tpls-0.14.2.min.js"></script>
+    <script src="/static_res/js/orderHistory_angular.js"></script>
     <!-- Script to Activate the Carousel
     <!-- <script>
         $('#myCarousel').carousel({
@@ -67,7 +68,7 @@
         }
 
         body {
-            background: url(static_res/image/background5.jpg) repeat-y center center fixed;
+            background: url(/static_res/image/background5.jpg) repeat-y center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -177,7 +178,7 @@
         <div class="item active">
             <!-- Set the first background image using inline CSS below. -->
             <div class="fill"
-                 style="background-image: url('static_res/image/chinesefood.jpg');"></div>
+                 style="background-image: url('/static_res/image/chinesefood.jpg');"></div>
             <div class="carousel-caption">
                 <h2>Delicious Chinese Food</h2>
             </div>
@@ -185,7 +186,7 @@
         <div class="item">
             <!-- Set the second background image using inline CSS below. -->
             <div class="fill"
-                 style="background-image: url('static_res/image/appetizer.jpg');"></div>
+                 style="background-image: url('/static_res/image/appetizer.jpg');"></div>
             <div class="carousel-caption">
                 <h2>Chinese Traditional Appetizer</h2>
             </div>
@@ -193,7 +194,7 @@
         <div class="item">
             <!-- Set the third background image using inline CSS below. -->
             <div class="fill"
-                 style="background-image: url('static_res/image/dessert.jpg');"></div>
+                 style="background-image: url('/static_res/image/dessert.jpg');"></div>
             <div class="carousel-caption">
                 <h2>Delicate Desserts</h2>
             </div>
@@ -209,6 +210,50 @@
     </a>
 
 </header>
+<!-- content -->
+<div align="center ">
+    <table class="table table-condensed" style="width:60%; margin:0 auto;" ng-model="orderHistory">
+        <thead>
+        <tr>
+            <th align="left">Order ID</th>
+            <th align="left">Items</th>
+            <th align="left">Pickup Time</th>
+            <th align="left">Total Price</th>
+            <th align="left">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="historyItem in orderHistory">
+            <td align="left">{{historyItem.orderId}}</td>
+            <td align="left" style="width: 200px">
+                <table class="table table-hover" style="width: 100%">
+                    <tr ng-repeat="item in historyItem.itemAndCount">
+                        <td align="left">{{item.itemName}}</td>
+                        <td align="center">x {{item.count}}</td>
+                    </tr>
+                </table>
+            </td>
+            <td align="left">{{historyItem.pickupTime}}</td>
+            <td align="left">$ {{historyItem.totalPrice}}</td>
+            <td align="left" style="width: 150px;">
+                <div ng-if="historyItem.status == 0">
+                    <uib-progressbar class="progress-striped" value="40"
+                                     type="warning">Not Start Yet</uib-progressbar>
+                </div>
+                <div ng-if="historyItem.status == 1">
+                    <uib-progressbar class="progress-striped" value="70"
+                                     type="info"> Processing</uib-progressbar>
+                </div>
+                <div ng-if="historyItem.status == 2">
+                    <uib-progressbar class="progress-striped"
+                                     type="success">Done</uib-progressbar>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 
 <!-- Footer -->
 
@@ -222,7 +267,6 @@
 </footer>
 
 <!-- /.container -->
-
 
 
 </body>
