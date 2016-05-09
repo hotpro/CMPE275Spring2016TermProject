@@ -5,10 +5,10 @@ angular.module('App', ['ngAnimate','ngFileUpload']);
 angular.module('App').controller('dashboardCtrl', ['$scope', '$http', 'Upload', 
 		function ($scope, $http, Upload) {
 
-			$scope.menuCategories = [{"id": 1, "name": "Drink"}, 
-			                         {"id": 2, "name": "Appetizer"}, 
-			                         {"id": 3, "name": "Main course"}, 
-			                         {"id": 4, "name": "Desert"},];
+			$scope.menuCategories = [{"id": 0, "name": "Drink"}, 
+			                         {"id": 1, "name": "Appetizer"}, 
+			                         {"id": 2, "name": "Main course"}, 
+			                         {"id": 3, "name": "Desert"},];
 			
 			$scope.ajaxImageUrl = null;
 			
