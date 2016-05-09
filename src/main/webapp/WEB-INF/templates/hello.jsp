@@ -261,6 +261,7 @@
         </div>
     </div>
     <script type="text/ng-template" id="myPopover">
+        <div ng-hide="submitSuccess">
         <div>
             <table style="width:100%; table-layout: fixed;" ng-repeat="item in cart">
                 <tr>
@@ -274,6 +275,8 @@
             </table>
         </div>
         <div>
+            <br>
+            <p>Earliest Pick up Time, You Can Satisfy to Your Own Time </p>
             <span class="input-group">
                 <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="pickupTime"
                        is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
@@ -288,6 +291,10 @@
         <div>Total:<span>{{totalPrice}}</span></div>
         <div>
             <button type="button" class="btn  btn-sm btn-primary" ng-click="checkOut()">Check Out</button>
+        </div>
+        </div>
+        <div ng-show="submitSuccess">
+            <h1 ng-model="submitConfirmation"> {{submitConfirmation}}</h1>
         </div>
     </script>
 

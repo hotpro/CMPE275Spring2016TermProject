@@ -4,6 +4,7 @@
 angular.module('homeApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
+        $scope.submitSuccess = false;
         $scope.popover = {"url": "myPopover"};
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
@@ -112,17 +113,31 @@ angular.module('homeApp').controller('homeCtrl',
         }
 
 
-        // //wait for Order Controller
-        // $scope.checkOut = function () {
-        //     $http({
-        //         method: "POST",
-        //         url: '/submit',
-        //         data: {"cart": $scope.cart}
-        //     }).success(function (data, status) {
-        //         //wait for Order Controller
-        //     }).error(function (data, status) {
-        //     });
-        // }
+        //wait for Order Controller
+        $scope.checkOut = function () {
+            var checkOut = {};
+            var tmpCart = [];
+            for (var i = 0; i < $scope.cart.length; i++) {
+                var tmp = {};
+                tmp.menuId = $scope.cart[i].id;
+                tmp.count = $scope.cart[i].amount;
+                tmpCart.push(tmp);
+            }
+            checkOut.orderTOList = tmpCart;
+            checkOut.pickupTime = $scope.pickupTime
+            $http({
+                method: "POST",
+                url: '/order/submit',
+                data: checkOut
+            }).success(function (data, status) {
+                console.log(data);
+                if (data.code == 0) {
+                    $scope.submitSuccess = true;
+                    $scope.submitConfirmation = data.message;
+                }
+            }).error(function (data, status) {
+            });
+        }
 });
 
 //add an value to items obj for counting amount
