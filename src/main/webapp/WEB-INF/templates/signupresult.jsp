@@ -13,6 +13,8 @@
     <title>YummyTeam9.Food -- Sign up</title>
     <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <script src="static_res/js/jquery.js"></script>
+    <script src="static_res/bootstrap/js/bootstrap.min.js"></script>
 
 </head>
 <body>
