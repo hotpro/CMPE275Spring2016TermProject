@@ -414,7 +414,8 @@
   -->
 <!-- Footer -->
 
-<footer style="text-align: center;">
+<footer style="text-align: center; position: fixed;margin-bottom: 10px;bottom: 0px; left: 50%;-webkit-transform: translate(-50%);">
+
     <div class="row">
         <div class="col-lg-12">
             <p>Copyright &copy; CMPE275 -- Project Group 9</p>

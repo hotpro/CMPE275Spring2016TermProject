@@ -57,11 +57,6 @@
             url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.ttf") format("truetype"),
             url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.svg#Bodoni SvtyTwo ITC TT") format("svg");
         }
-
-        body {
-            font-family: 'Oswald', sans-serif;
-        }
-
         div.one {
             border: 1px darkgrey solid;
             height: 650px;
@@ -69,6 +64,7 @@
         }
 
         body {
+            font-family: 'Oswald', sans-serif;
             background: url(/static_res/image/background5.jpg) repeat-y center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
@@ -208,7 +204,8 @@
             <td align="left" style="width: 150px;">
                 <div ng-if="historyItem.status == 'warning'">
                     <uib-progressbar class="progress-striped active" value="40"
-                                     type="warning">Not Start Yet</uib-progressbar>
+                                     type="warning">Preparing
+                    </uib-progressbar>
                 </div>
                 <div ng-if="historyItem.status == 'info'">
                     <uib-progressbar class="progress-striped active" value="70"
@@ -243,7 +240,7 @@
 
 <!-- Footer -->
 
-<footer style="text-align: center;">
+<footer style="text-align: center; position: fixed;margin-bottom: 10px;bottom: 0px; left: 50%;-webkit-transform: translate(-50%);">
     <div class="row">
         <div class="col-lg-12">
             <p>Copyright &copy; CMPE275 -- Project Group 9</p>
