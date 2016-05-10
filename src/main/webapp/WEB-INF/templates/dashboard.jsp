@@ -11,9 +11,17 @@
     </title>
     <meta name="theme-color" content="#333333">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <!-- font family -->
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
     <!--[if gte IE 7]><!-->
     <link rel="stylesheet" media="screen, projection" href="static_res/css/admin.css">
     <!-- <![endif]-->
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif;
+        }
+    </style>
 </head>
 
 <body id="shots" class="logged-out not-pro not-self not-team grid-small grid-with-meta" ng-controller="dashboardCtrl">

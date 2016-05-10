@@ -12,7 +12,8 @@
     <meta name="author" content="">
 
     <title>YummyTeam9.Food -- home</title>
-
+    <!-- font family -->
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <!-- Bootstrap Core CSS -->
     <link href="/static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -56,11 +57,6 @@
             url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.ttf") format("truetype"),
             url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.svg#Bodoni SvtyTwo ITC TT") format("svg");
         }
-
-        body {
-            font-family: "Bodoni SvtyTwo ITC TT";
-        }
-
         div.one {
             border: 1px darkgrey solid;
             height: 650px;
@@ -68,6 +64,7 @@
         }
 
         body {
+            font-family: 'Oswald', sans-serif;
             background: url(/static_res/image/background5.jpg) repeat-y center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
@@ -138,7 +135,7 @@
 <body ng-controller="orderHistoryCtrl">
 
 <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 130px;">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -148,10 +145,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Create Account</a></li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle"
+            <li style="width: 15%"><a href="home.html">Home</a></li>
+            <li style="width: 15%"><a href="#">Login</a></li>
+            <li style="width: 35%"><a href="#">Create Account</a></li>
+            <li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"
                                     data-toggle="dropdown">About Us<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Contacts</a></li>
@@ -159,94 +156,83 @@
                 </ul>
             </li>
         </ul>
+        <div align="center">
+            <h2 style="color: #fff;">Order History</h2>
+        </div>
     </div>
+    <div align="center">
+        <table class="table" style="width:80%; margin:0 auto;">
+            <tbody style="font-size: x-large;">
+            <tr>
+                <th align="left" style="width: 100px"><font color="#fff">Order ID</font></th>
+                <th align="left" style="width: 200px"><font color="#fff">Items</font></th>
+                <th align="left" style="width: 200px"><font color="#fff">Pickup Time</font></th>
+                <th align="left" style="width: 100px"><font color="#fff">Total Price</font></th>
+                <th align="left" style="width: 150px"><font color="#fff">Status</font></th>
+                <th style="width: 100px;"><font color="#fff">Cancel</font></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
     <!-- /.navbar-collapse -->
     <!-- /.container -->
 </nav>
 
-<!-- Half Page Image Background Carousel Header -->
-<header id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators" ng-non-bindable>
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!-- Wrapper for Slides -->
-    <div class="carousel-inner" ng-non-bindable>
-        <div class="item active">
-            <!-- Set the first background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('/static_res/image/chinesefood.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Delicious Chinese Food</h2>
-            </div>
-        </div>
-        <div class="item">
-            <!-- Set the second background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('/static_res/image/appetizer.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Chinese Traditional Appetizer</h2>
-            </div>
-        </div>
-        <div class="item">
-            <!-- Set the third background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('/static_res/image/dessert.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Delicate Desserts</h2>
-            </div>
-        </div>
-    </div>
-
-    <!-- Controls -->
-    <a class="left carousel-control" href="#myCarousel" ng-non-bindable data-slide="prev"> <i
-            class="glyphicon glyphicon-chevron-left"></i>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" ng-non-bindable data-slide="next"> <span
-            class="glyphicon glyphicon-chevron-right"></span>
-    </a>
-
-</header>
 <!-- content -->
-<div align="center ">
-    <table class="table table-condensed" style="width:60%; margin:0 auto;" ng-model="orderHistory">
-        <thead>
-        <tr>
-            <th align="left">Order ID</th>
-            <th align="left">Items</th>
-            <th align="left">Pickup Time</th>
-            <th align="left">Total Price</th>
-            <th align="left">Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="historyItem in orderHistory">
-            <td align="left">{{historyItem.orderId}}</td>
+<div align="center" style="margin-top: 130px; min-height: 100%; margin-bottom: -142px;">
+    <table class="table" style="width:80%; margin:0 auto;" ng-model="orderHistory">
+        <tbody ng-model="trStatus" style="font-size: larger;">
+        <tr ng-repeat="historyItem in orderHistory" class="{{historyItem.status}}">
+            <td align="left" style="width: 100px">{{historyItem.orderId}}</td>
             <td align="left" style="width: 200px">
-                <table class="table table-hover" style="width: 100%">
+                <button popover-placement="bottom" uib-popover-template="itemsInOrder" popover-title="Order in Items"
+                        type="button"
+                        class="btn btn-default">Click yo See Details
+                </button>
+                <script type="text/ng-template" id="itemsInOrder">
+                    <div>
+                        <table class="table table-hover" style="width: 100%">
                     <tr ng-repeat="item in historyItem.itemAndCount">
                         <td align="left">{{item.itemName}}</td>
                         <td align="center">x {{item.count}}</td>
                     </tr>
-                </table>
+                        </table>
+                    </div>
+                </script>
             </td>
-            <td align="left">{{historyItem.pickupTime}}</td>
-            <td align="left">$ {{historyItem.totalPrice}}</td>
+            <td align="left" style="width: 200px">{{historyItem.pickupTime}}</td>
+            <td align="left" style="width: 100px">$ {{historyItem.totalPrice}}</td>
             <td align="left" style="width: 150px;">
-                <div ng-if="historyItem.status == 0">
-                    <uib-progressbar class="progress-striped" value="40"
-                                     type="warning">Not Start Yet</uib-progressbar>
+                <div ng-if="historyItem.status == 'warning'">
+                    <uib-progressbar class="progress-striped active" value="40"
+                                     type="warning">Preparing
+                    </uib-progressbar>
                 </div>
-                <div ng-if="historyItem.status == 1">
-                    <uib-progressbar class="progress-striped" value="70"
+                <div ng-if="historyItem.status == 'info'">
+                    <uib-progressbar class="progress-striped active" value="70"
                                      type="info"> Processing</uib-progressbar>
                 </div>
-                <div ng-if="historyItem.status == 2">
-                    <uib-progressbar class="progress-striped"
+                <div ng-if="historyItem.status == 'success'">
+                    <uib-progressbar class="progress-striped active"
                                      type="success">Done</uib-progressbar>
+                </div>
+            </td>
+            <td style="width: 100px;">
+                <div ng-if="historyItem.status == 'warning'">
+                    <button type="button" class="btn btn-danger active" ng-click="cancelOrder(historyItem)">Cancel
+                    </button>
+                </div>
+                <div ng-if="historyItem.status == 'info'">
+                    <button uib-popover="Cannot cancel because order is processing" popover-trigger="mouseenter"
+                            type="button" class="btn btn-danger disabled">Cancel
+                    </button>
+                </div>
+                <div ng-if="historyItem.status == 'success'">
+                    <button uib-popover="Cannot cancel because order is done" popover-trigger="mouseenter"
+                            type="button" class="btn btn-danger disabled">Cancel
+                    </button>
                 </div>
             </td>
         </tr>
@@ -256,14 +242,10 @@
 </div>
 
 <!-- Footer -->
-
-<footer style="text-align: center;">
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; CMPE275 -- Project Group 9</p>
-        </div>
+<footer class="footer">
+    <div align="center" class="container">
+        <p class="text-muted">copyright &copy; CMPE275 -- Project Group 9</p>
     </div>
-    <!-- /.row -->
 </footer>
 
 <!-- /.container -->

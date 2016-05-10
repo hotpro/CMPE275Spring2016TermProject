@@ -23,6 +23,8 @@ public class MenuItem {
 	private int calories;
 	
 	private int preparationTime;
+	
+	private boolean deleted;
 
 	public MenuItem() {
 	}
@@ -90,6 +92,14 @@ public class MenuItem {
 
 	public void setPreparationTime(int preparationTime) {
 		this.preparationTime = preparationTime;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 }

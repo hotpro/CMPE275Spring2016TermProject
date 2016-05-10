@@ -19,7 +19,7 @@ import java.security.MessageDigest;
 @RequestMapping("/dashboard")
 public class DashboardController {
 	
-	private static final String UPLOAD_IMAGES_PATH = "/Users/Lee/Documents/img/upload_images";
+	private static final String UPLOAD_IMAGES_PATH = "/Users/xiaofengli/documents/upload/upload_images";
 	
 	@Autowired
     private MenuItemDao menuItemDao;
@@ -41,14 +41,16 @@ public class DashboardController {
 	@RequestMapping("/listItems")
 	@ResponseBody
     public Object listItems() {
-		Iterable<MenuItem> list = this.menuItemDao.findAll();
+		Iterable<MenuItem> list = this.menuItemDao.findByDeletedIs(false);
     	return list;
     }
 
 	@RequestMapping("/removeItem/{id}")
 	@ResponseBody
     public Object removeItem(@PathVariable Long id) {
-		this.menuItemDao.delete(id);
+		MenuItem mi = this.menuItemDao.findOne(id);
+		mi.setDeleted(true);
+		this.menuItemDao.save(mi);
 		return listItems();
     }
 

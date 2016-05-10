@@ -16,6 +16,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- font family -->
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
     <!-- Custom CSS -->
     <link href="static_res/css/half-slider.css" rel="stylesheet">
 
@@ -57,7 +60,7 @@
         }
 
         body {
-            font-family: "Bodoni SvtyTwo ITC TT";
+            font-family: 'Oswald', sans-serif;
         }
 
         div.one {
@@ -143,10 +146,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Create Account</a></li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle"
+            <li style="width: 15%"><a href="home.html">Home</a></li>
+            <li style="width: 15%"><a href="#">Login</a></li>
+            <li style="width: 35%"><a href="#">Create Account</a></li>
+            <li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"
                                     data-toggle="dropdown">About Us<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Contacts</a></li>
@@ -410,14 +413,10 @@
 <hr>
   -->
 <!-- Footer -->
-
-<footer style="text-align: center;">
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; CMPE275 -- Project Group 9</p>
-        </div>
+<footer class="footer">
+    <div align="center" class="container">
+        <p class="text-muted">copyright &copy; CMPE275 -- Project Group 9</p>
     </div>
-    <!-- /.row -->
 </footer>
 
 <!-- /.container -->

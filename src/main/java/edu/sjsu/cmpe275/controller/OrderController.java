@@ -276,8 +276,10 @@ public class OrderController {
         return res;
     }
 
-    @RequestMapping(value = "/{orderId}", method = RequestMethod.DELETE)
-    @ResponseBody BaseResultTO deleteOrder(@PathVariable long orderId) {
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    BaseResultTO cancelOrder(@RequestBody Long orderId) {
         logger.debug("Delete OrderId: {}", orderId);
         Order order = orderDao.findOne(orderId);
         if (order == null) {
@@ -287,7 +289,6 @@ public class OrderController {
         if (order.getStartPrepareTime().getTime() <= now) {
             return new BaseResultTO(1, "Order is in progress, cann't be canceled.");
         }
-
         List<OrderItem> orderItemList = order.getItemList();
         orderItemDao.delete(orderItemList);
         orderDao.delete(order);

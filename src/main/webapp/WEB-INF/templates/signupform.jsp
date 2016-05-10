@@ -9,10 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- font family -->
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
     <title>YummyTeam9.Food -- Sign up</title>
     <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif;
+        }
+    </style>
 
 </head>
 <body>

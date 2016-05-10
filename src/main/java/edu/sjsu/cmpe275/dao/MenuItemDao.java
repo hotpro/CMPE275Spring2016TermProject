@@ -1,6 +1,9 @@
 package edu.sjsu.cmpe275.dao;
 
 import edu.sjsu.cmpe275.domain.MenuItem;
+
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MenuItemDao extends CrudRepository<MenuItem, Long> {
+	
+	List<MenuItem> findByDeletedIs(boolean deleted);
+	
 }
