@@ -161,92 +161,61 @@
             </li>
         </ul>
     </div>
+    <div align="center">
+        <h2 style="color: #fff;">Order History</h2>
+        <table class="table" style="width:80%; margin:0 auto;">
+            <tbody style="font-size: x-large;">
+            <tr>
+                <th align="left" style="width: 100px"><font color="#fff">Order ID</font></th>
+                <th align="left" style="width: 200px"><font color="#fff">Items</font></th>
+                <th align="left" style="width: 200px"><font color="#fff">Pickup Time</font></th>
+                <th align="left" style="width: 100px"><font color="#fff">Total Price</font></th>
+                <th align="left" style="width: 150px"><font color="#fff">Status</font></th>
+                <th style="width: 100px;"><font color="#fff">Cancel</font></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
     <!-- /.navbar-collapse -->
     <!-- /.container -->
 </nav>
 
-<!-- Half Page Image Background Carousel Header -->
-<header id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators" ng-non-bindable>
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!-- Wrapper for Slides -->
-    <div class="carousel-inner" ng-non-bindable>
-        <div class="item active">
-            <!-- Set the first background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('/static_res/image/chinesefood.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Delicious Chinese Food</h2>
-            </div>
-        </div>
-        <div class="item">
-            <!-- Set the second background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('/static_res/image/appetizer.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Chinese Traditional Appetizer</h2>
-            </div>
-        </div>
-        <div class="item">
-            <!-- Set the third background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('/static_res/image/dessert.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Delicate Desserts</h2>
-            </div>
-        </div>
-    </div>
-
-    <!-- Controls -->
-    <a class="left carousel-control" href="#myCarousel" ng-non-bindable data-slide="prev"> <i
-            class="glyphicon glyphicon-chevron-left"></i>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" ng-non-bindable data-slide="next"> <span
-            class="glyphicon glyphicon-chevron-right"></span>
-    </a>
-
-</header>
 <!-- content -->
-<div align="center ">
-    <table class="table" style="width:80%; margin:0 auto; font-family:  " ng-model="orderHistory">
-        <thead style="font-size: x-large;">
-        <tr>
-            <th align="left">Order ID</th>
-            <th align="left">Items</th>
-            <th align="left">Pickup Time</th>
-            <th align="left">Total Price</th>
-            <th align="left">Status</th>
-        </tr>
-        </thead>
+<div align="center" style="margin-top: 170px">
+    <table class="table" style="width:80%; margin:0 auto;" ng-model="orderHistory">
         <tbody ng-model="trStatus" style="font-size: larger;">
         <tr ng-repeat="historyItem in orderHistory" class="{{historyItem.status}}">
             <td align="left" style="width: 100px">{{historyItem.orderId}}</td>
             <td align="left" style="width: 200px">
-                <table class="table table-hover" style="width: 100%">
+                <button popover-placement="bottom" uib-popover-template="itemsInOrder" popover-title="Order in Items"
+                        type="button"
+                        class="btn btn-default">Click yo See Details
+                </button>
+                <script type="text/ng-template" id="itemsInOrder">
+                    <div>
+                        <table class="table table-hover" style="width: 100%">
                     <tr ng-repeat="item in historyItem.itemAndCount">
                         <td align="left">{{item.itemName}}</td>
                         <td align="center">x {{item.count}}</td>
                     </tr>
-                </table>
+                        </table>
+                    </div>
+                </script>
             </td>
             <td align="left" style="width: 200px">{{historyItem.pickupTime}}</td>
             <td align="left" style="width: 100px">$ {{historyItem.totalPrice}}</td>
             <td align="left" style="width: 150px;">
                 <div ng-if="historyItem.status == 'warning'">
-                    <uib-progressbar class="progress-striped" value="40"
+                    <uib-progressbar class="progress-striped active" value="40"
                                      type="warning">Not Start Yet</uib-progressbar>
                 </div>
                 <div ng-if="historyItem.status == 'info'">
-                    <uib-progressbar class="progress-striped" value="70"
+                    <uib-progressbar class="progress-striped active" value="70"
                                      type="info"> Processing</uib-progressbar>
                 </div>
                 <div ng-if="historyItem.status == 'success'">
-                    <uib-progressbar class="progress-striped"
+                    <uib-progressbar class="progress-striped active"
                                      type="success">Done</uib-progressbar>
                 </div>
             </td>

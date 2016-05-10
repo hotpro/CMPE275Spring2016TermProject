@@ -4,6 +4,7 @@
 angular.module('orderHistoryApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('orderHistoryApp').controller('orderHistoryCtrl',
     function ($scope, $http) {
+        $scope.itemsInOrder = "itemsInOrder";
         var time = new Date();
         $scope.orderHistory = [{
             "orderId": "001",
@@ -115,7 +116,7 @@ angular.module('orderHistoryApp').controller('orderHistoryCtrl',
                 url: '/cancelOrder',
                 data: historyItem.orderId
             }).success(function (data, status) {
-                
+
             }).error(function (data, status) {
             });
 
