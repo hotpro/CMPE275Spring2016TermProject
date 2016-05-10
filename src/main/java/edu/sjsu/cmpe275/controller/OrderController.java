@@ -14,10 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -27,6 +24,8 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static com.sun.tools.javac.jvm.ByteCodes.ret;
 
 /**
  * Created by yutao on 5/5/16.
@@ -192,8 +191,9 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public @ResponseBody SubmitOrderResult submit(@RequestBody SubmitOrderTO submitOrderTO,
-                                                  HttpSession httpSession) {
+    public @ResponseBody
+    BaseResultTO submit(@RequestBody SubmitOrderTO submitOrderTO,
+                        HttpSession httpSession) {
 //        User user = (User)httpSession.getAttribute("USER");
         Date orderTime = Calendar.getInstance().getTime();
         List<OrderTO> orderTOList = submitOrderTO.getOrderTOList();
@@ -238,7 +238,7 @@ public class OrderController {
             orderItemDao.save(orderItem);
         }
 
-        return new SubmitOrderResult(0, "We've received your order. Have a nice day :)");
+        return new BaseResultTO(0, "We've received your order. Have a nice day :)");
     }
 
 
@@ -276,7 +276,24 @@ public class OrderController {
         return res;
     }
 
-
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    BaseResultTO cancelOrder(@RequestBody Long orderId) {
+        logger.debug("Delete OrderId: {}", orderId);
+        Order order = orderDao.findOne(orderId);
+        if (order == null) {
+            return new BaseResultTO(1, "Can find this order.");
+        }
+        long now = Instant.now().toEpochMilli();
+        if (order.getStartPrepareTime().getTime() <= now) {
+            return new BaseResultTO(1, "Order is in progress, cann't be canceled.");
+        }
+        List<OrderItem> orderItemList = order.getItemList();
+        orderItemDao.delete(orderItemList);
+        orderDao.delete(order);
+        return new BaseResultTO(0, "Your order is canceled");
+    }
 
     static class SubmitOrderTO {
         private List<OrderTO> orderTOList;
@@ -336,14 +353,14 @@ public class OrderController {
         }
     }
 
-    static class SubmitOrderResult {
+    static class BaseResultTO {
         int code;
         String message;
 
-        public SubmitOrderResult() {
+        public BaseResultTO() {
         }
 
-        public SubmitOrderResult(int code, String message) {
+        public BaseResultTO(int code, String message) {
             this.code = code;
             this.message = message;
         }
