@@ -12,7 +12,8 @@
     <meta name="author" content="">
 
     <title>YummyTeam9.Food -- home</title>
-
+    <!-- font family -->
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <!-- Bootstrap Core CSS -->
     <link href="/static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -58,7 +59,7 @@
         }
 
         body {
-            font-family: "Bodoni SvtyTwo ITC TT";
+            font-family: 'Oswald', sans-serif;
         }
 
         div.one {
@@ -212,8 +213,8 @@
 </header>
 <!-- content -->
 <div align="center ">
-    <table class="table table-condensed" style="width:60%; margin:0 auto;" ng-model="orderHistory">
-        <thead>
+    <table class="table" style="width:80%; margin:0 auto; font-family:  " ng-model="orderHistory">
+        <thead style="font-size: x-large;">
         <tr>
             <th align="left">Order ID</th>
             <th align="left">Items</th>
@@ -222,9 +223,9 @@
             <th align="left">Status</th>
         </tr>
         </thead>
-        <tbody>
-        <tr ng-repeat="historyItem in orderHistory">
-            <td align="left">{{historyItem.orderId}}</td>
+        <tbody ng-model="trStatus" style="font-size: larger;">
+        <tr ng-repeat="historyItem in orderHistory" class="{{historyItem.status}}">
+            <td align="left" style="width: 100px">{{historyItem.orderId}}</td>
             <td align="left" style="width: 200px">
                 <table class="table table-hover" style="width: 100%">
                     <tr ng-repeat="item in historyItem.itemAndCount">
@@ -233,20 +234,36 @@
                     </tr>
                 </table>
             </td>
-            <td align="left">{{historyItem.pickupTime}}</td>
-            <td align="left">$ {{historyItem.totalPrice}}</td>
+            <td align="left" style="width: 200px">{{historyItem.pickupTime}}</td>
+            <td align="left" style="width: 100px">$ {{historyItem.totalPrice}}</td>
             <td align="left" style="width: 150px;">
-                <div ng-if="historyItem.status == 0">
+                <div ng-if="historyItem.status == 'warning'">
                     <uib-progressbar class="progress-striped" value="40"
                                      type="warning">Not Start Yet</uib-progressbar>
                 </div>
-                <div ng-if="historyItem.status == 1">
+                <div ng-if="historyItem.status == 'info'">
                     <uib-progressbar class="progress-striped" value="70"
                                      type="info"> Processing</uib-progressbar>
                 </div>
-                <div ng-if="historyItem.status == 2">
+                <div ng-if="historyItem.status == 'success'">
                     <uib-progressbar class="progress-striped"
                                      type="success">Done</uib-progressbar>
+                </div>
+            </td>
+            <td style="width: 100px;">
+                <div ng-if="historyItem.status == 'warning'">
+                    <button type="button" class="btn btn-danger active" ng-click="cancelOrder(historyItem)">Cancel
+                    </button>
+                </div>
+                <div ng-if="historyItem.status == 'info'">
+                    <button uib-popover="Cannot cancel because order is processing" popover-trigger="mouseenter"
+                            type="button" class="btn btn-danger disabled">Cancel
+                    </button>
+                </div>
+                <div ng-if="historyItem.status == 'success'">
+                    <button uib-popover="Cannot cancel because order is done" popover-trigger="mouseenter"
+                            type="button" class="btn btn-danger disabled">Cancel
+                    </button>
                 </div>
             </td>
         </tr>

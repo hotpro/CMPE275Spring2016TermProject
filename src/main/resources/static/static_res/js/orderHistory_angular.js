@@ -95,5 +95,30 @@ angular.module('orderHistoryApp').controller('orderHistoryCtrl',
             "pickupTime": time,
             "totalPrice": 15.00,
             "status": 0
-        }]
+        }];
+        for (var i = 0; i < $scope.orderHistory.length; i++) {
+            switch ($scope.orderHistory[i].status) {
+                case 0:
+                    $scope.orderHistory[i].status = "warning";
+                    break;
+                case 1:
+                    $scope.orderHistory[i].status = "info";
+                    break;
+                case 2:
+                    $scope.orderHistory[i].status = "success";
+                    break;
+            }
+        }
+        $scope.cancelOrder = function (historyItem) {
+            $http({
+                method: "GET",
+                url: '/cancelOrder',
+                data: historyItem.orderId
+            }).success(function (data, status) {
+                
+            }).error(function (data, status) {
+            });
+
+        }
+
     });

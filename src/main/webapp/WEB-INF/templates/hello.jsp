@@ -16,6 +16,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- font family -->
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
     <!-- Custom CSS -->
     <link href="static_res/css/half-slider.css" rel="stylesheet">
 
@@ -57,7 +60,7 @@
         }
 
         body {
-            font-family: "Bodoni SvtyTwo ITC TT";
+            font-family: 'Oswald', sans-serif;
         }
 
         div.one {
