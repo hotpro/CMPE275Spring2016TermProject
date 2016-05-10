@@ -26,6 +26,11 @@ public class MenuController {
 
         return list;
     }
+
+    @RequestMapping(value = "/orderHistory", method = RequestMethod.GET)
+    public String getOrderHistory() {
+        return "orderHistory";
+    }
 //
 //    @RequestMapping(value="/preCheckout", method = RequestMethod.GET)
 //    public  @ResponseBody String comfirmOrder(@RequestBody List<Order> order)

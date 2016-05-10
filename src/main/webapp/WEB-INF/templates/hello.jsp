@@ -16,6 +16,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- font family -->
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
     <!-- Custom CSS -->
     <link href="static_res/css/half-slider.css" rel="stylesheet">
 
@@ -39,7 +42,7 @@
         <!-- Script to Activate the Carousel
         <!-- <script>
             $('#myCarousel').carousel({
-                interval: 3000
+                interval: 2000
                 //changes the speed
             })
         </script> -->
@@ -57,7 +60,7 @@
         }
 
         body {
-            font-family: "Bodoni SvtyTwo ITC TT";
+            font-family: 'Oswald', sans-serif;
         }
 
         div.one {
@@ -219,8 +222,8 @@
         </div>
         
         <div id="popoverMenu">
-            <table style="width:100%" ng-repeat="preview in items">
-                <tr>
+            <table style="width:100%">
+                <tr ng-repeat="preview in items">
                     <td ng-if="preview.amount != 0">{{preview.name}}</td>
                     <td ng-if="preview.amount != 0">{{preview.amount}}</td>
                 </tr>
@@ -317,7 +320,7 @@
                         <div class="col-lg-3" ng-if="item.category == 0" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -340,7 +343,7 @@
                         <div class="col-lg-3" ng-if="item.category == 1" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -362,7 +365,7 @@
                         <div class="col-lg-3" ng-if="item.category == 2" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -384,7 +387,7 @@
                         <div class="col-lg-3" ng-if="item.category == 3" ng-repeat="item in items">
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
-                                 style="width: 100%; height: 100%;">
+                                 style="width: 190px; height: 180px;">
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}

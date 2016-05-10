@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.dao.OrderDao;
 import edu.sjsu.cmpe275.dao.OrderItemDao;
+import edu.sjsu.cmpe275.dao.UserDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
@@ -27,9 +28,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static javax.swing.text.html.CSS.getAttribute;
-
-
 /**
  * Created by yutao on 5/5/16.
  */
@@ -50,6 +48,9 @@ public class OrderController {
 
     @Autowired
     private OrderItemDao orderItemDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @RequestMapping(value = "/getEarliestPickupTime", method = RequestMethod.POST)
     public @ResponseBody
@@ -240,6 +241,43 @@ public class OrderController {
         return new SubmitOrderResult(0, "We've received your order. Have a nice day :)");
     }
 
+
+    @RequestMapping(value = "/getOrderHistory", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<OrderHistory> orderHistory() {
+//        User user = (User)httpSession.getAttribute("USER");
+        User user = userDao.findOne(1L);
+        List<Order> orderList = orderDao.findByUser(user);
+
+        List<OrderHistory> res = new ArrayList<>();
+        for (Order order : orderList) {
+            List<ItemAndCount> itemAndCountList = new ArrayList<>();
+            for (OrderItem orderItem : order.getItemList()) {
+                ItemAndCount itemAndCount = new ItemAndCount(orderItem.getItem().getName(), orderItem.getCount());
+                itemAndCountList.add(itemAndCount);
+            }
+            int status = 0;
+            long now = Instant.now().toEpochMilli();
+            long startTime = order.getStartPrepareTime().getTime();
+            long finishTime = order.getFinishTime().getTime();
+            if (now < startTime) {
+                startTime = 0;
+            } else if (now >= startTime && now <= finishTime) {
+                status = 1;
+            } else {
+                status = 2;
+            }
+            OrderHistory orderHistory = new OrderHistory(order.getId(), itemAndCountList, order.getTotalPrice(),
+                    order.getPickUpTime(), status);
+            res.add(orderHistory);
+        }
+
+        return res;
+    }
+
+
+
     static class SubmitOrderTO {
         private List<OrderTO> orderTOList;
         private long pickupTime;
@@ -355,4 +393,93 @@ public class OrderController {
             this.errorMsg = errorMsg;
         }
     }
+
+    static class ItemAndCount {
+        String itemName;
+        int count;
+
+        public ItemAndCount(String itemName, int count) {
+            this.itemName = itemName;
+            this.count = count;
+        }
+
+        public String getItemName() {
+            return itemName;
+        }
+
+        public void setItemName(String itemName) {
+            this.itemName = itemName;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+    }
+
+    static class OrderHistory {
+        long orderId;
+        List<ItemAndCount> itemAndCount;
+        double totalPrice;
+        Date pickupTime;
+
+        /**
+         * 0 not start, 1 processing,  2 done
+         */
+        int status;
+
+
+        public OrderHistory(long orderId, List<OrderController.ItemAndCount> itemAndCount,
+                            double totalPrice, Date pickupTime, int status) {
+            this.orderId = orderId;
+            this.itemAndCount = itemAndCount;
+            this.totalPrice = totalPrice;
+            this.pickupTime = pickupTime;
+            this.status = status;
+        }
+
+        public long getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(long orderId) {
+            this.orderId = orderId;
+        }
+
+        public List<OrderController.ItemAndCount> getItemAndCount() {
+            return itemAndCount;
+        }
+
+        public void setItemAndCount(List<OrderController.ItemAndCount> itemAndCount) {
+            this.itemAndCount = itemAndCount;
+        }
+
+        public double getTotalPrice() {
+            return totalPrice;
+        }
+
+        public void setTotalPrice(double totalPrice) {
+            this.totalPrice = totalPrice;
+        }
+
+        public Date getPickupTime() {
+            return pickupTime;
+        }
+
+        public void setPickupTime(Date pickupTime) {
+            this.pickupTime = pickupTime;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+    }
+
 }
