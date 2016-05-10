@@ -146,10 +146,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Create Account</a></li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle"
+            <li style="width: 15%"><a href="home.html">Home</a></li>
+            <li style="width: 15%"><a href="#">Login</a></li>
+            <li style="width: 35%"><a href="#">Create Account</a></li>
+            <li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"
                                     data-toggle="dropdown">About Us<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Contacts</a></li>
@@ -413,15 +413,10 @@
 <hr>
   -->
 <!-- Footer -->
-
-<footer style="text-align: center; position: fixed;margin-bottom: 10px;bottom: 0px; left: 50%;-webkit-transform: translate(-50%);">
-
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; CMPE275 -- Project Group 9</p>
-        </div>
+<footer class="footer">
+    <div align="center" class="container">
+        <p class="text-muted">copyright &copy; CMPE275 -- Project Group 9</p>
     </div>
-    <!-- /.row -->
 </footer>
 
 <!-- /.container -->

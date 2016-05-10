@@ -7,6 +7,114 @@ angular.module('orderHistoryApp').controller('orderHistoryCtrl',
         $scope.itemsInOrder = "itemsInOrder";
         var time = new Date();
         $scope.orderHistory = [{
+            "orderId": "002",
+            "itemAndCount": [{
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }],
+            "pickupTime": time,
+            "totalPrice": 15.00,
+            "status": 0
+        }, {
+            "orderId": "001",
+            "itemAndCount": [{
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }],
+            "pickupTime": time,
+            "totalPrice": 15.00,
+            "status": 0
+        }, {
+            "orderId": "001",
+            "itemAndCount": [{
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }],
+            "pickupTime": time,
+            "totalPrice": 15.00,
+            "status": 0
+        }, {
+            "orderId": "001",
+            "itemAndCount": [{
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }],
+            "pickupTime": time,
+            "totalPrice": 15.00,
+            "status": 0
+        }, {
+            "orderId": "001",
+            "itemAndCount": [{
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }],
+            "pickupTime": time,
+            "totalPrice": 15.00,
+            "status": 0
+        }, {
+            "orderId": "001",
+            "itemAndCount": [{
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }, {
+                "itemName": "wanglaoji",
+                "count": 5
+            }],
+            "pickupTime": time,
+            "totalPrice": 15.00,
+            "status": 0
+        }, {
             "orderId": "001",
             "itemAndCount": [{
                 "itemName": "wanglaoji",
