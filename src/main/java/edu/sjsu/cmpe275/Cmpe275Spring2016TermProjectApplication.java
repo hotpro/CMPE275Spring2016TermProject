@@ -8,12 +8,6 @@ import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
 import edu.sjsu.cmpe275.domain.User;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -26,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import edu.sjsu.cmpe275.domain.MenuItem;
-import edu.sjsu.cmpe275.domain.Order;
 
 @SpringBootApplication
 public class Cmpe275Spring2016TermProjectApplication {
