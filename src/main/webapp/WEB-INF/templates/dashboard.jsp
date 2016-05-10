@@ -32,7 +32,7 @@
             </div>
             <ul id="nav">
                 <li id="t-signup">
-                    <a href="#">Logout</a>
+                    <a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
