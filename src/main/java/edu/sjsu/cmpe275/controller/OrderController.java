@@ -276,6 +276,16 @@ public class OrderController {
         return res;
     }
 
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String cancelOrder(@RequestBody Long body) {
+        logger.debug("body:{}", body);
+        //orderDao.delete(body);
+        return "success";
+    }
+
+
 
 
     static class SubmitOrderTO {

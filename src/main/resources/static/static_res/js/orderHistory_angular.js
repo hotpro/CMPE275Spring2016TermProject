@@ -10,7 +10,15 @@ angular.module('orderHistoryApp').controller('orderHistoryCtrl',
             method: "GET",
             url: '/order/getOrderHistory'
         }).success(function (data, status) {
-            $scope.orderHistory = data
+            $scope.orderHistory = data;
+            var tmp = {
+                "orderId": 2,
+                "itemAndCount": [{"itemName": "wanglaoji", "count": 20}],
+                "totalPrice": 30.00,
+                "picuptime": 12389718294,
+                "status": 0
+            }
+            $scope.orderHistory.push(tmp);
             for (var i = 0; i < $scope.orderHistory.length; i++) {
                 var time = new Date($scope.orderHistory[i].pickupTime);
                 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -38,16 +46,18 @@ angular.module('orderHistoryApp').controller('orderHistoryCtrl',
                         break;
                 }
             }
+
         }).error(function (data, status) {
             console.log(data);
         });
 
         $scope.cancelOrder = function (historyItem) {
             $http({
-                method: "GET",
-                url: '/cancelOrder',
+                method: "POST",
+                url: '/order/cancel',
                 data: historyItem.orderId
             }).success(function (data, status) {
+                console.log(data);
 
             }).error(function (data, status) {
             });
