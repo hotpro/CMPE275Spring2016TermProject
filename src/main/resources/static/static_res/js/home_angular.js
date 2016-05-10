@@ -130,7 +130,9 @@ angular.module('homeApp').controller('homeCtrl',
                 tmpCart.push(tmp);
             }
             checkOut.orderTOList = tmpCart;
-            checkOut.pickupTime = $scope.pickupTime
+            console.log($scope.pickupTime);
+            checkOut.pickupTime = Date.parse($scope.pickupTime);
+            console.log(checkOut.pickupTime);
             $http({
                 method: "POST",
                 url: '/order/submit',
