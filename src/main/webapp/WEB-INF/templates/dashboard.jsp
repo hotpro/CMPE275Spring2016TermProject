@@ -1,230 +1,164 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en" ng-app="orderHistoryApp">
+<!-- saved from url=(0021)https://dribbble.com/ -->
+<html lang="en" ng-app="App">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>YummyTeam9.Food -- home</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="static_res/css/half-slider.css" rel="stylesheet">
-
-    <!-- jQuery -->
-    <script src="static_res/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="static_res/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <!--angular JS-->
-    <script src="static_res/angular/angular.js"></script>
-    <script src="static_res/angular/angular-animate.js"></script>
-    <script src="static_res/angular/ui-bootstrap-tpls-0.13.4.min.js"></script>
-    <script src="static_res/angular/ui-bootstrap-tpls-0.14.2.min.js"></script>
-    <script src="static_res/js/home_angular.js"></script>
-    <!-- Script to Activate the Carousel
-    <!-- <script>
-        $('#myCarousel').carousel({
-            interval: 3000
-            //changes the speed
-        })
-    </script> -->
-    <![endif]-->
-    <style>
-
-        @font-face {
-            font-family: "Bodoni SvtyTwo ITC TT";
-            src: url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.eot");
-            src: url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.eot?#iefix") format("embedded-opentype"),
-            url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.woff2") format("woff2"),
-            url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.woff") format("woff"),
-            url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.ttf") format("truetype"),
-            url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.svg#Bodoni SvtyTwo ITC TT") format("svg");
-        }
-
-        body {
-            font-family: "Bodoni SvtyTwo ITC TT";
-        }
-
-        div.one {
-            border: 1px darkgrey solid;
-            height: 650px;
-            margin: 10px 10px 10px 10px;
-        }
-
-        body {
-            background: url(static_res/image/background5.jpg) repeat-y center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
-
-        p.item {
-            text-align: center;
-            color: black;
-            margin-bottom: 5px;
-        }
-
-        a:hover {
-            color: blue;
-        }
-
-        .main-content {
-            margin-top: 30px;
-            background-color: rgba(220, 220, 220, 0.7);
-            border-bottom-left-radius: 20px;
-            border-top-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            border-top-right-radius: 20px;
-        }
-
-        .menu-content {
-            border-bottom-left-radius: 20px;
-            border-top-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            border-top-right-radius: 20px;
-        }
-
-        .menu-nav {
-            border-bottom-left-radius: 20px;
-            border-top-left-radius: 20px;
-        }
-
-        .menu-item-list {
-            border-bottom-right-radius: 20px;
-            border-top-right-radius: 20px;
-        }
-
-        -moz-selection {
-            color: #fff;
-            color: rgba(255, 255, 255, 0.85);
-            background: #ea4c89
-        }
-
-        ::selection {
-            color: #fff;
-            color: rgba(255, 255, 255, 0.85);
-            background: #ea4c89
-        }
-
-        #popoverMenu {
-            display: none;
-            float: right;
-        }
-
-        .popover {
-            width: 700px;
-        }
-
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+        Yummy Group 9
+    </title>
+    <meta name="theme-color" content="#333333">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <!--[if gte IE 7]><!-->
+    <link rel="stylesheet" media="screen, projection" href="static_res/css/admin.css">
+    <!-- <![endif]-->
 </head>
 
-<body ng-controller="orderHistoryCtrl">
-
-<!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <a class="navbar-brand" href="home.html"
-               style="font-family: Kokonor;">YummyTeam9.Food</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Create Account</a></li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle"
-                                    data-toggle="dropdown">About Us<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Contacts</a></li>
-                    <li><a href="locations.html">Locations</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <!-- /.navbar-collapse -->
-    <!-- /.container -->
-</nav>
-
-<!-- Half Page Image Background Carousel Header -->
-<header id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators" ng-non-bindable>
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!-- Wrapper for Slides -->
-    <div class="carousel-inner" ng-non-bindable>
-        <div class="item active">
-            <!-- Set the first background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('static_res/image/chinesefood.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Delicious Chinese Food</h2>
+<body id="shots" class="logged-out not-pro not-self not-team grid-small grid-with-meta" ng-controller="dashboardCtrl">
+    <div id="header" style="position: fixed;" >
+        <div id="header-inner">
+            <div id="logo">
+                <h1>YummyTeam 9</h1>
             </div>
-        </div>
-        <div class="item">
-            <!-- Set the second background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('static_res/image/appetizer.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Chinese Traditional Appetizer</h2>
-            </div>
-        </div>
-        <div class="item">
-            <!-- Set the third background image using inline CSS below. -->
-            <div class="fill"
-                 style="background-image: url('static_res/image/dessert.jpg');"></div>
-            <div class="carousel-caption">
-                <h2>Delicate Desserts</h2>
-            </div>
+            <ul id="nav">
+                <li id="t-signup">
+                    <a href="#">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
+    <!-- /header -->
+    <hr>
+    <div id="wrap" style="padding-top: 56px;">
+        <div class="full-pitch group">
+            <h1 class="compact">
+              
+              <div style="margin-right:30px; display: block; float: right; width: 120px;text-align: right;">
+                <img alt="IMAGE" ng-if="ajaxImageUrl" ng-src="/upload_images/{{ajaxImageUrl.url}}" width="100px" height="75px">
+                <img alt="IMAGE" ng-if="!ajaxImageUrl">
+              </div>
 
-    <!-- Controls -->
-    <a class="left carousel-control" href="#myCarousel" ng-non-bindable data-slide="prev"> <i
-            class="glyphicon glyphicon-chevron-left"></i>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" ng-non-bindable data-slide="next"> <span
-            class="glyphicon glyphicon-chevron-right"></span>
-    </a>
+              <div style="margin-right:20px; display: block; float: right; width: 320px;text-align: right;">
+                <div style="padding: 0px 10px 10px 0px;">
+                  <strong>Prep Time : </strong>
+                  <input class="search-text" type="number" step="1" max="15" min="1" placeholder="1" ng-model="menuItem.preparationTime"/>
+                </div>
+                
+                <div style="padding: 0px 10px 10px 0px;">
+                  <strong>Photo : </strong>
+                  <input type="file" name="file" ngf-select="upload($file)" ngf-accept="'image/*'"/>
+                </div>
+                <div style="padding: 0px 10px 10px 0px;">
+                  <input type="button" value="SUBMIT" style="font-size: 20px;" ng-click="submit()"/>
+                </div>
+                
+              </div>
 
-</header>
 
-<!-- Footer -->
+              <div style="margin-right:50px; display: block; float: right; width: 250px;text-align: right;">
+                <div style="padding: 0px 10px 10px 0px;">
+                  <strong>Price : </strong>
+                  <input class="search-text" type="number" step="0.1" max="999" min="0" placeholder="0" ng-model="menuItem.unitPrice"/>
+                </div>
+                
+                <div style="padding: 0px 10px 10px 0px;">
+                  <strong>Category : </strong>
+                  <select ng-options="item as item.name for item in menuCategories track by item.id" ng-model="menuItem.category"></select>
+                  <!-- 
+                  <select>
+                    <option value="1">Drink</option>
+                    <option value="2">Appetizer</option>
+                    <option value="3">Main course</option>
+                    <option value="4">Desert</option>
+                  </select>
+                   -->
+                </div>
+              </div>
 
-<footer style="text-align: center;">
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; CMPE275 -- Project Group 9</p>
+              <div style="margin-right:50px; display: block; float: right; width: 250px;text-align: right;">
+                <div style="padding: 0px 10px 10px 0px;">
+                  <strong>Name : </strong>
+                  <input class="search-text" type="text" ng-model="menuItem.name"/>
+                </div>
+                
+                <div style="padding: 0px 10px 10px 0px;">
+                  <strong>Calories : </strong>
+                  <input class="search-text" type="number" step="1" min="0" placeholder="0" ng-model="menuItem.calories"/>
+                </div>
+              </div>
+            </h1>
+        </div>
+        <div id="wrap-inner">
+            <div style="position: fixed; top: 218px;">
+                <div>
+                    <ul id="side-fixed-nav">
+                        <div style="text-align: center; margin-bottom: 10px;"><strong>Menu</strong></div>
+                        <li class="{{selectedCategory == c ? 'active' : ''}}" ng-repeat="c in menuCategories" ng-click="selectCategory(c)"><a ng-bind="c.name"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="content">
+                <div id="main" class="main-full">
+                    <ol class="dribbbles group">
+                        <!-- ITEM -->
+                        <li id="screenshot-{{m.id}}" class="group " ng-repeat="m in menuItemFilterByCategory()">
+                            <div class="dribbble">
+                                <div class="dribbble-shot">
+                                    <div class="dribbble-img">
+                                        <a class="dribbble-link">
+                                            <div data-picture="" data-alt="Codex">
+                                                <img alt="Codex" src="/upload_images/{{m.pictureURL}}">
+                                            </div>
+                                        </a>
+                                        <a class="dribbble-over">
+                                            <strong ng-bind="m.name"></strong>
+                                            <div class="comment">
+                                                Unit Price : {{m.unitPrice | currency:"USD $"}}
+                                            </div>
+                                            <div class="comment">
+                                                Calories : {{m.calories}}
+                                            </div>
+                                            <em class="timestamp">Yummy!</em>
+                                        </a>
+                                    </div>
+                                    <ul class="tools group" style="visibility: visible;">
+                                        <li class="fav" ng-click="removeItem(m)">
+                                            <a>Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h2 class="attribution hover-card-parent">
+                              <span class="attribution-user">
+                              <a class="url hoverable" rel="contact">{{m.name}} </a>
+                              </span>
+                            </h2>
+                        </li>
+                        <!-- END ITEM -->
+                    </ol>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- /.row -->
-</footer>
-
-<!-- /.container -->
-
-
-
+    <hr>
+    <div id="footer">
+        <div id="footer-inner">
+            <h4 id="pixels-total" class="group">
+              <strong>Yummy</strong> Group 9
+            </h4>
+            <p>Copyright © 2016 Yummy Group 9.</p>
+        </div>
+    </div>
+    <!-- /footer -->
+    
+    <!-- SCRIPTS -->
+    <script src="static_res/angular/angular.js"></script>
+    <script src="static_res/angular/angular-animate.js"></script>
+    <script src="static_res/js/dashboard_angular.js"></script>
+    <script src="static_res/angular/ng-file-upload-shim.min.js"></script>
+    <script src="static_res/angular/ng-file-upload.min.js"></script>
 </body>
 
 </html>

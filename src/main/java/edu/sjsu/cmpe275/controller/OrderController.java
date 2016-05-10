@@ -240,7 +240,7 @@ public class OrderController {
 
         return new SubmitOrderResult(0, "We've received your order. Have a nice day :)");
     }
-    
+
 
     @RequestMapping(value = "/getOrderHistory", method = RequestMethod.GET)
     public
