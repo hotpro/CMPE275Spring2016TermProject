@@ -14,6 +14,12 @@ angular.module('homeApp').controller('homeCtrl',
         $scope.popup = {
             opened: false
         };
+        $scope.categoryCount = {
+            "drink": 0,
+            "appetizier": 0,
+            "MainCourse": 0,
+            "Dessert": 0
+        };
         $scope.open = function () {
             $scope.popup.opened = true;
         };
@@ -31,6 +37,22 @@ angular.module('homeApp').controller('homeCtrl',
         }).success(function (data, status) {
             $scope.items = data;
             initItems($scope.items);
+            for (var i = 0; i < $scope.items.length; i++) {
+                switch ($scope.items[i].category) {
+                    case 0:
+                        $scope.categoryCount.drink += 1;
+                        break;
+                    case 1:
+                        $scope.categoryCount.appetizier += 1;
+                        break;
+                    case 2:
+                        $scope.categoryCount.MainCourse += 1;
+                        break;
+                    case 3:
+                        $scope.categoryCount.Dessert += 1;
+                        break;
+                }
+            }
 
         }).error(function (data, status) {
         });
@@ -152,6 +174,24 @@ angular.module('homeApp').controller('homeCtrl',
 function initItems(items) {
     for (var i = 0; i < items.length; i++) {
         items[i].amount = 0;
+    }
+};
+function getCategoryCount(items) {
+    for (var i = 0; i < items.length; i++) {
+        switch (items[i].category) {
+            case 0:
+                $scope.categoryCount.drink += 1;
+                break;
+            case 1:
+                $scope.categoryCount.appetizier += 1;
+                break;
+            case 2:
+                $scope.categoryCount.MainCourse += 1;
+                break;
+            case 3:
+                $scope.categoryCount.Dessert += 1;
+                break;
+        }
     }
 };
 

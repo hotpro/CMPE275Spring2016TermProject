@@ -305,10 +305,14 @@
         <div class="col-lg-2 menu-nav"
              style="background-color: black; height: 100%; overflow: auto; padding-top: 20px;">
             <ul class="nav nav-stacked" style="text-align: center; color: white;">
-                <li class="active"><a data-toggle="pill" href="#drink">Drink</a></li>
-                <li><a data-toggle="pill" href="#appetizier">Appetizier</a></li>
-                <li><a data-toggle="pill" href="#main_course">Main Course</a></li>
-                <li><a data-toggle="pill" href="#dessert">Dessert</a></li>
+                <li class="active"><a data-toggle="pill" href="#drink">Drink<span
+                        class="badge">{{categoryCount.drink}}</span></a></li>
+                <li><a data-toggle="pill" href="#appetizier">Appetizier<span
+                        class="badge">{{categoryCount.appitizier}}</span></a></li>
+                <li><a data-toggle="pill" href="#main_course">Main Course<span class="badge">{{categoryCount.mainCourse}}</span></a>
+                </li>
+                <li><a data-toggle="pill" href="#dessert">Dessert<span
+                        class="badge">{{categoryCount.dessert}}</span></a></li>
             </ul>
         </div>
 
