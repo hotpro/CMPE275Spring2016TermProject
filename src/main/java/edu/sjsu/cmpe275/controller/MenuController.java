@@ -26,7 +26,6 @@ public class MenuController {
 
         return list;
     }
-
     @RequestMapping(value = "/orderHistory", method = RequestMethod.GET)
     public String getOrderHistory() {
         return "orderHistory";

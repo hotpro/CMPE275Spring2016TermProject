@@ -59,10 +59,6 @@
             url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.svg#Bodoni SvtyTwo ITC TT") format("svg");
         }
 
-        body {
-            font-family: 'Oswald', sans-serif;
-        }
-
         div.one {
             border: 1px darkgrey solid;
             height: 650px;
@@ -70,6 +66,7 @@
         }
 
         body {
+            font-family: 'Oswald', sans-serif;
             background: url(static_res/image/background5.jpg) repeat-y center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
@@ -304,28 +301,24 @@
     <div class="row one menu-content" style="width: 100%; margin-left: 0px; margin-right: 0px;">
         <div class="col-lg-2 menu-nav"
              style="background-color: black; height: 100%; overflow: auto; padding-top: 20px;">
-            <ul class="nav nav-stacked" style="text-align: left; color: white;">
-                <li class="active"><a href="#drink">
+            <ul class="nav nav-stacked" style="color: white;">
+                <li class="active"><a data-toggle="pill" href="#drink">
                     Drink<span class="badge">{{categoryCount.drink}}</span>
-                    <span style="float: right"
-                          class="glyphicon glyphicon-glass" aria-hidden="true"></span>
-                </a>
+                    <span style="float: right" class="glyphicon glyphicon-glass" aria-hidden="true"></span></a>
                 </li>
-                <li><a href="#appetizier">
-                    Appetizier<span
-                        class="badge">{{categoryCount.appitizier}}</span>
-                <span style="float: right"
-                      class="glyphicon glyphicon-apple" aria-hidden="true"></span></a>
+                <li><a data-toggle="pill" href="#appetizier">
+                    Appetzier<span class="badge">{{categoryCount.appitizier}}</span>
+                    <span style="float: right" class="glyphicon glyphicon-apple" aria-hidden="true"></span></a>
                 </li>
-                <li><a href="#main_course">Main Course<span
-                        class="badge">{{categoryCount.mainCourse}}</span>
-                <span style="float: right"
-                      class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></a>
+                <li><a data-toggle="pill" href="#main_course">
+                    Main Course<span class="badge">{{categoryCount.mainCourse}}</span>
+                    <span style="float: right" class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></a>
                 </li>
-                <li><a href="#dessert">Dessert<span
-                        class="badge">{{categoryCount.dessert}}</span>
-                    <span style="float: right"
-                          class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span></a></li>
+                <li><a data-toggle="pill" href="#dessert">
+                    Dessert<span class="badge">{{categoryCount.dessert}}</span>
+                    <span style="float: right" class="glyphicon glyphicon-ice-lolly-tasted"
+                          aria-hidden="true"></span></a>
+                </li>
             </ul>
         </div>
 
@@ -343,11 +336,11 @@
                                 Unit Price : $ {{item.unitPrice}}
                             </p>
                             <div align="center">
-                                <button type="button" class="btn btn-warning" id="min"
+                                <button type="button" class="btn btn-warning"
                                         ng-click="min(item)">-
                                 </button>
                                 <span ng-bind="item.amount"></span>
-                                <button type="button" class="btn btn-primary" id="plus"
+                                <button type="button" class="btn btn-primary"
                                         ng-click="plus(item)">+
                                 </button>
                             </div>
@@ -366,11 +359,11 @@
                                 Unit Price : $ {{item.unitPrice}}
                             </p>
                             <div align="center">
-                                <button type="button" class="btn btn-warning" id="min"
+                                <button type="button" class="btn btn-warning"
                                         ng-click="min(item)">-
                                 </button>
                                 <span ng-bind="item.amount"></span>
-                                <button type="button" class="btn btn-primary" id="plus"
+                                <button type="button" class="btn btn-primary"
                                         ng-click="plus(item)">+
                                 </button>
                             </div>
@@ -388,11 +381,11 @@
                                 Unit Price : $ {{item.unitPrice}}
                             </p>
                             <div align="center">
-                                <button type="button" class="btn btn-warning" id="min"
+                                <button type="button" class="btn btn-warning"
                                         ng-click="min(item)">-
                                 </button>
                                 <span ng-bind="item.amount"></span>
-                                <button type="button" class="btn btn-primary" id="plus"
+                                <button type="button" class="btn btn-primary"
                                         ng-click="plus(item)">+
                                 </button>
                             </div>
