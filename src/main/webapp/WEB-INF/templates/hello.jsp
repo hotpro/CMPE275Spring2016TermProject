@@ -311,25 +311,25 @@
         </div>
         <div>Total:<span>{{totalPrice}}</span></div>
         <div>
-            <span ng-show="submitFailed" style="color:red">{{submitConfirmation}}</span>
+            <span ng-show="submitFailed" style="color:red">*{{submitConfirmation}}</span>
             <button type="button" class="btn  btn-sm btn-primary" ng-click="checkOut()">Check Out</button>
         </div>
         </div>
         <div ng-show="submitSuccess">
-            <h1 ng-model="submitConfirmation"> {{submitConfirmation}}</h1>
+            <p class="text-center" ng-model="submitConfirmation"> {{submitConfirmation}}</p>
         </div>
     </script>
 
     <div class="row one menu-content" style="width: 100%; margin-left: 0px; margin-right: 0px;">
         <div class="col-lg-2 menu-nav"
              style="background-color: black; height: 100%; overflow: auto; padding-top: 20px;">
-            <ul class="nav nav-stacked" style="color: white;">
+            <ul class="nav nav-stacked" style="color: white;" ng-model="categoryCount">
                 <li class="active"><a data-toggle="pill" href="#drink">
                     Drink<span class="badge">{{categoryCount.drink}}</span>
                     <span style="float: right" class="glyphicon glyphicon-glass" aria-hidden="true"></span></a>
                 </li>
                 <li><a data-toggle="pill" href="#appetizier">
-                    Appetzier<span class="badge">{{categoryCount.appitizier}}</span>
+                    Appetzier<span class="badge">{{categoryCount.appetizier}}</span>
                     <span style="float: right" class="glyphicon glyphicon-apple" aria-hidden="true"></span></a>
                 </li>
                 <li><a data-toggle="pill" href="#main_course">
