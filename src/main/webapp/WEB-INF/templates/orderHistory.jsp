@@ -140,7 +140,7 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="home.html"
+            <a class="navbar-brand" href="/"
                style="font-family: Kokonor;">YummyTeam9.Food</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
