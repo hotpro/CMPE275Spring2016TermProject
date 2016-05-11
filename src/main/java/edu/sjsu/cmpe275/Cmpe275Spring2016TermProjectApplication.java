@@ -60,10 +60,10 @@ public class Cmpe275Spring2016TermProjectApplication {
                                 MenuItemDao menuItemDao) {
         Date pickupTime  = Calendar.getInstance().getTime();
         Date orderTime = pickupTime;
-
+        String md5password = Util.md5("password" + "{" + Constant.SALT + "}");
         User user = new User(
                 "a@a.com",
-                "password",
+                md5password,
                 true,
                 "123"
         );
