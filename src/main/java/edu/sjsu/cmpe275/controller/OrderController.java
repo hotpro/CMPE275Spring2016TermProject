@@ -304,7 +304,8 @@ public class OrderController {
     @RequestMapping(value = "/cancel", method = RequestMethod.POST)
     public
     @ResponseBody
-    BaseResultTO cancelOrder(@RequestBody Long orderId) {
+    BaseResultTO cancelOrder(@RequestBody Long orderId, HttpSession httpSession) {
+        User user = (User)httpSession.getAttribute("USER");
         logger.debug("Delete OrderId: {}", orderId);
         Order order = orderDao.findOne(orderId);
         if (order == null) {
