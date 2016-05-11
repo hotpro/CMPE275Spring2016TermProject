@@ -1,7 +1,10 @@
 package edu.sjsu.cmpe275.controller;
 
 import edu.sjsu.cmpe275.dao.MenuItemDao;
+import edu.sjsu.cmpe275.dao.OrderDao;
+import edu.sjsu.cmpe275.dao.OrderItemDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
+import edu.sjsu.cmpe275.domain.OrderItem;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,12 @@ public class DashboardController {
 	
 	@Autowired
     private MenuItemDao menuItemDao;
+
+	@Autowired
+	private OrderDao orderDao;
+
+	@Autowired
+	private OrderItemDao orderItemDao;
 	
 	public void setMenuItemDao(MenuItemDao menuItemDao) {
 		this.menuItemDao = menuItemDao;
@@ -74,6 +83,14 @@ public class DashboardController {
 		}  
         return image;
     }
+
+	@RequestMapping(value = "/resetOrder", method = RequestMethod.POST)
+	@ResponseBody
+	public OrderController.BaseResultTO resetOrder() {
+		orderItemDao.deleteAll();
+        orderDao.deleteAll();
+		return new OrderController.BaseResultTO(0, "Reset success");
+	}
 	
 	public static class ImageVO {
 		private String url;
