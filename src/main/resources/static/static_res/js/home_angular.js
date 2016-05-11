@@ -123,6 +123,8 @@ angular.module('homeApp').controller('homeCtrl',
         };
         //preview for getting earliest pick up time then let client choose a time
         $scope.getEarliestPickupTime = function () {
+            $scope.submitSuccess = false;
+            $scope.submitFailed = false;
             var tmpCart = [];
             for (var i = 0; i < $scope.cart.length; i++) {
                 var tmp = {};
@@ -165,6 +167,8 @@ angular.module('homeApp').controller('homeCtrl',
                 if (data.code == 0) {
                     $scope.submitSuccess = true;
                     $scope.submitConfirmation = data.message;
+                    $scope.cart = [];
+                    initItems($scope.items);
                 } else if (data.code == 1) {
                     $scope.submitFailed = true;
                     $scope.submitConfirmation = data.message;
