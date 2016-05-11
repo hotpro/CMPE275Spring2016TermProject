@@ -50,7 +50,8 @@ public class UserController {
 
         // password equal, check in front end
 
-        String md5 = Util.md5(signupFormTO.getPassword() + Constant.SALT);
+        //String md5 = Util.md5(signupFormTO.getPassword() + Constant.SALT);
+        String md5 = Util.md5(signupFormTO.getPassword());
         String uuid = UUID.randomUUID().toString();
         User newUser = new User(signupFormTO.getEmail(), md5, false, uuid);
         userDao.save(newUser);
