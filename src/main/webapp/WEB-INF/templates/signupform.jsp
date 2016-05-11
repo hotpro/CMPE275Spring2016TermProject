@@ -92,7 +92,9 @@
 <div class="container main" style="width:100%;">
     <div class="col-lg-6">
         <form class="form-horizontal register-form-1" id="signupForm" role="form" method="POST" action="/user/signup">
-        <h3>Sign Up to <span style="color:#f2f2f2; text-shadow: 2px 2px 4px #000000; font-family:Chalkboard;font-size:30px;margin-left:15px;">YummyTeam9<span></h3>
+            <h3>Sign Up to <span
+                    style="color:#f2f2f2; text-shadow: 2px 2px 4px #000000; font-family:Chalkboard;font-size:30px;margin-left:15px;">YummyTeam9</span>
+            </h3>
         <hr />
         <div class="form-group">
             <label for="id_email" >Email</label>
