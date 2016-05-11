@@ -302,9 +302,9 @@ public class OrderController {
 
         StringBuilder sb = new StringBuilder();
         sb.append("You've ordered ");
-        for (OrderItem orderItem : orderItemList) {
-            MenuItem menuItem = menuItemDao.findOne(orderItem.getItem().getId());
-            sb.append(orderItem.getCount()).append(" ").append(menuItem.getName()).append(", ");
+        for (OrderTO orderTO : orderTOList) {
+            MenuItem menuItem = menuItemDao.findOne(orderTO.getMenuId());
+            sb.append(orderTO.getCount()).append(" ").append(menuItem.getName()).append(", ");
         }
         String subject = "YummyTeam9.Food Email Order Confirmation";
         mailService.send("chrishou1109@gmail.com", user.getEmail(), subject, sb.toString());
