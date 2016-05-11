@@ -10,6 +10,7 @@ import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
 import edu.sjsu.cmpe275.domain.User;
+import edu.sjsu.cmpe275.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class OrderController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private OrderService orderService;
+
     @RequestMapping(value = "/getEarliestPickupTime", method = RequestMethod.POST)
     public @ResponseBody
     PickupTimeTO getEarliestPickupTime(@RequestBody String body) throws IOException {
@@ -72,8 +76,15 @@ public class OrderController {
         // order take too long time
         if (totalTime > ONE_DAY_WORK) {
             // TODO:
+            return new PickupTimeTO(0L, "You order too much");
         }
 
+        long earliestPickupTime = getEarliestPickupTime(totalTime);
+
+        return new PickupTimeTO(earliestPickupTime, "");
+    }
+
+    private long getEarliestPickupTime(int totalTime) {
         List<List<Order>> orderListOfAllChef = getOrderListOfAllChef(orderDao, Calendar.getInstance().getTime().getTime());
 
         // TODO: need to consider the case that order start after 30 days
@@ -88,8 +99,7 @@ public class OrderController {
                 totalTime, earliestPickupTime);
         logger.debug("getEarliestPickupTime earliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", timestampToString(earliestStartTime),
                 totalTime, timestampToString(earliestPickupTime));
-
-        return new PickupTimeTO(earliestPickupTime, "");
+        return earliestPickupTime;
     }
 
     private List<List<Order>> getOrderListOfAllChef(OrderDao orderDao, long startTime) {
@@ -218,6 +228,12 @@ public class OrderController {
 
         List<OrderTO> orderTOList = submitOrderTO.getOrderTOList();
         int totalTime = calculateTotalTime(orderTOList);
+
+        long earliestPickupTime = getEarliestPickupTime(totalTime);
+        if (submitOrderTO.getPickupTime() < earliestPickupTime) {
+            return new BaseResultTO(1, "Your pickup time is too early");
+        }
+
         LocalDateTime idealEarliestStartTime = timestampToLocalDateTime(submitOrderTO.getPickupTime())
                 .minusHours(1).minusSeconds(totalTime / 1000);
 

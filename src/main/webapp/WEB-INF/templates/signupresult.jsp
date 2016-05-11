@@ -13,7 +13,7 @@
     <!-- font family -->
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
-    <title>YummyTeam9.Food -- Sign up</title>
+    <title>YummyTeam9.Food -- Sign up Result</title>
     <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="static_res/js/jquery.js"></script>
@@ -28,7 +28,17 @@
 <body>
 
 <div class="container">
-    <h3>Please verify your email</h3>
+    <div class="col-lg-6" style="position:relative;top:250px;left:300px;"">
+    <form action="/" role="form">
+    <div class="panel panel-info">
+          <div class="panel-heading">Congratulations</div>
+          <div class="panel-body">Welcome to join us! We have sent you an email, please verify your email.</div>
+          <br>
+          <br>
+    </div>
+        <button type="submit" class="btn btn-info" style="float:right;position:relative;bottom:70px;right:40px;">Back</button>
+    </form>
+</div>
 </div>
 
     <!-- Bootstrap Core JavaScript -->

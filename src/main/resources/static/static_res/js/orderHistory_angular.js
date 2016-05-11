@@ -61,7 +61,7 @@ angular.module('orderHistoryApp').controller('orderHistoryCtrl',
                 data: historyItem.orderId
             }).success(function (data, status) {
                 console.log(data);
-                if (data.code == 1) {
+                if (data.code == 0) {
                     location.reload();
                 }
             }).error(function (data, status) {
