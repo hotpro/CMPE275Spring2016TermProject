@@ -31,7 +31,7 @@
         	border-radius: 8px;
         	color: rgb(197,197,197);
         	width: 550px;
-        	margin: 110px auto 50px 360px;
+        	margin: 110px auto 50px 315px;
         	padding: 10px 30px 30px 30px;
         }
         .register-form-1 h1, .register-form-1 p { color: rgb(255,255,255); }
