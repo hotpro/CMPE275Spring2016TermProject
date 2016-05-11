@@ -152,7 +152,8 @@
             	<li style="width: 60%"><a href="/signupform">Create Account</a></li>
             <% } else { %>
             	<li><a>Welcome  <%=user.getEmail() %></a></li>
-            	<li style="width: 15%"><a href="/logout">logout</a></li>
+                <li><a href="/menu/orderHistory">Order History</a></li>
+            	<li><a href="/logout">logout</a></li>
             <% } %>
             <!-- <li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"
                                     data-toggle="dropdown">About Us<b class="caret"></b></a>
