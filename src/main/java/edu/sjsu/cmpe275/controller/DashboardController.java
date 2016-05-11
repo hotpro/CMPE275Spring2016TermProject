@@ -19,7 +19,7 @@ import java.security.MessageDigest;
 @RequestMapping("/dashboard")
 public class DashboardController {
 	
-	private static final String UPLOAD_IMAGES_PATH = "/Users/xiaofengli/documents/upload/upload_images";
+	private static final String UPLOAD_IMAGES_PATH = "/Users/Lee/Documents/img/upload_images";
 	
 	@Autowired
     private MenuItemDao menuItemDao;

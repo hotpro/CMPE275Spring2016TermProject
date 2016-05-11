@@ -19,36 +19,38 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource dataSource;
 	
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("user@qw.com").password("password").roles("USER");
+//    }
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests()
-                    .antMatchers("/", "/index").permitAll()
+        
+        http.authorizeRequests().antMatchers("/", "/index", "/upload_images/*").permitAll()
                     .antMatchers("/static_res/**").permitAll()
                     .antMatchers("/upload_images/**").permitAll()
-                    //.anyRequest().authenticated()
+                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
-                    .loginPage("/login")
+                    .loginPage("/signin")
+                    .defaultSuccessUrl("/")
+                    .successHandler(new DispatchAuthenticationSuccessHandler())
                     .permitAll()
+                    .loginProcessingUrl("/login")
                     .and()
-                .logout()
+                .logout().logoutSuccessUrl("/?logout")
                     .permitAll();
-
     }
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
 			.usersByUsernameQuery("select email as username, password, active as enabled from user where email=?")
-			.authoritiesByUsernameQuery("select email as username username, role from user where email=?");
+			.authoritiesByUsernameQuery("select email as username, role from user where email=?");
 	}
     
     
