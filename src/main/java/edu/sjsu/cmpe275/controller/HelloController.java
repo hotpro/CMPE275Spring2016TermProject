@@ -27,4 +27,9 @@ public class HelloController {
     public String signupForm() {
         return "signupform";
     }
+
+    @RequestMapping("/locations")
+    public String location() {
+        return "locations";
+    }
 }
