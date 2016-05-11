@@ -39,6 +39,8 @@ public class OrderController {
     /** ONE_DAY_WORK is 15 hours long. unit is millisecond*/
     private static final long ONE_DAY_WORK = (21 - 6) * 60 * 60 * 1000;
 
+    private static final long MAX_TIME = 30L * 24 * 60 * 60 * 1000;
+
     @Autowired
     private OrderDao orderDao;
 
@@ -91,10 +93,23 @@ public class OrderController {
     }
 
     private List<List<Order>> getOrderListOfAllChef(OrderDao orderDao, long startTime) {
+        List<Order> allOrderList = orderDao.findByFinishTimeGreaterThan(new Date(startTime));
+
+        return splitOrderByChef(allOrderList);
+    }
+
+    private List<List<Order>> getOrderListOfAllChefByRange(OrderDao orderDao, long start, long end) {
+        List<Order> allOrderList = orderDao.findByFinishTimeGreaterThanAndStartPrepareTimeLessThanEqual(
+                new Date(start), new Date(end));
+
+        return splitOrderByChef(allOrderList);
+    }
+
+    private List<List<Order>> splitOrderByChef(List<Order> allOrderList) {
+        List<List<Order>> orderListOfAllChef = new ArrayList<>();
         List<Order> order0 = new ArrayList<>();
         List<Order> order1 = new ArrayList<>();
         List<Order> order2 = new ArrayList<>();
-        List<Order> allOrderList = orderDao.findByFinishTimeGreaterThanEqual(new Date(startTime));
         for (Order order : allOrderList) {
             switch (order.getChiefId()) {
                 case 0:
@@ -111,13 +126,12 @@ public class OrderController {
                     break;
             }
         }
-
-        List<List<Order>> orderListOfAllChef = new ArrayList<>();
         orderListOfAllChef.add(order0);
         orderListOfAllChef.add(order1);
         orderListOfAllChef.add(order2);
         return orderListOfAllChef;
     }
+
     private static long localDateTimeToTimeStamp(LocalDateTime localDateTime) {
         return LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
     }
@@ -159,6 +173,7 @@ public class OrderController {
         }
 
         // if orderList is empty, or reach to the last one
+        // check if it is in open hours
         if (isInOpenHours(startTime, startTime + totalTime)) {
             return startTime;
         }
@@ -196,14 +211,20 @@ public class OrderController {
                         HttpSession httpSession) {
 //        User user = (User)httpSession.getAttribute("USER");
         Date orderTime = Calendar.getInstance().getTime();
+
+        if (submitOrderTO.getPickupTime() - orderTime.getTime() > MAX_TIME) {
+            return new BaseResultTO(1, "Can not exceed 30 days");
+        }
+
         List<OrderTO> orderTOList = submitOrderTO.getOrderTOList();
         int totalTime = calculateTotalTime(orderTOList);
         LocalDateTime idealEarliestStartTime = timestampToLocalDateTime(submitOrderTO.getPickupTime())
                 .minusHours(1).minusSeconds(totalTime / 1000);
 
-        List<List<Order>> orderListOfAllChef = getOrderListOfAllChef(orderDao, localDateTimeToTimeStamp(idealEarliestStartTime));
+        List<List<Order>> orderListOfAllChef = getOrderListOfAllChefByRange(orderDao,
+                localDateTimeToTimeStamp(idealEarliestStartTime),
+                submitOrderTO.getPickupTime());
 
-        // TODO: need to consider the case that order start after 30 days
         long earliestStartTime = Long.MAX_VALUE;
         int chefId = 0;
         for (int i = 0; i < 3; i++) {
@@ -214,25 +235,29 @@ public class OrderController {
                 earliestStartTime = startTimeForThisChef;
             }
         }
-        long earliestPickupTime = earliestStartTime + totalTime;
+        long pickupTime = earliestStartTime + totalTime;
+        if (pickupTime > submitOrderTO.getPickupTime()) {
+            return new BaseResultTO(1, "We are full of orders. Please select another pickup time");
+        }
+
         logger.debug("submit chefId: {}, earliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", chefId, earliestStartTime,
-                totalTime, earliestPickupTime);
+                totalTime, pickupTime);
         logger.debug("submit echefId: {}, arliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", chefId,
                 timestampToString(earliestStartTime),
-                totalTime, timestampToString(earliestPickupTime));
+                totalTime, timestampToString(pickupTime));
 
         double totalPrice = 0.0;
         for (OrderTO orderTO : orderTOList) {
             totalPrice += menuItemDao.findOne(orderTO.getMenuId()).getUnitPrice() * orderTO.getCount();
         }
         List<OrderItem> orderItemList = new ArrayList<>();
-        Order order = new Order(new Date(earliestPickupTime), orderTime, totalPrice, totalTime, orderItemList, null, chefId,
+        Order order = new Order(new Date(pickupTime), orderTime, totalPrice, totalTime, orderItemList, null, chefId,
                 new Date(earliestStartTime), new Date(earliestStartTime + totalTime));
         orderDao.save(order);
 
         for (OrderTO orderTO : orderTOList) {
             MenuItem menuItem = menuItemDao.findOne(orderTO.getMenuId());
-            OrderItem orderItem = new OrderItem(new Date(earliestPickupTime), orderTime, null, order, menuItem,
+            OrderItem orderItem = new OrderItem(new Date(pickupTime), orderTime, null, order, menuItem,
                     new BigDecimal(menuItem.getUnitPrice()), menuItem.getPreparationTime() * orderTO.getCount(),
                     orderTO.getCount());
             orderItemDao.save(orderItem);
