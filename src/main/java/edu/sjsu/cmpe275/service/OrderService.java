@@ -9,5 +9,5 @@ public interface OrderService {
 
     public Order submitOrder(Order order);
 
-    public long getEarliestTime(int totalTime);
+    public long getEarliestPickupTime(int totalTime);
 }
