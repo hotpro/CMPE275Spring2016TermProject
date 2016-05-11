@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.dao.ReflectionSaltSource;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,6 +31,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsService userDetailsService;
 	
+	@Autowired
+    private Md5PasswordEncoder md5PasswordEncoder;
+	
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth
@@ -44,7 +48,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/", "/index", "/upload_images/*").permitAll()
                     .antMatchers("/static_res/**").permitAll()
                     .antMatchers("/upload_images/**").permitAll()
-                    //.anyRequest().authenticated()
+                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/signin")
@@ -71,12 +75,20 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 //		});
 //		auth.authenticationProvider(provider).build();
 		
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setPasswordEncoder(this.md5PasswordEncoder);
+        authProvider.setUserDetailsService(this.userDetailsService);
+        ReflectionSaltSource saltSource = new ReflectionSaltSource();
+        saltSource.setUserPropertyToUse("salt");
+        authProvider.setSaltSource(saltSource);
+        auth.authenticationProvider(authProvider);
 		
-		auth.jdbcAuthentication().passwordEncoder(new Md5PasswordEncoder())
-			.dataSource(dataSource)
-			.usersByUsernameQuery("select email as username, password, active as enabled from user where email=?")
-			.authoritiesByUsernameQuery("select email as username, role from user where email=?");
+		
+//		auth.jdbcAuthentication().passwordEncoder(new Md5PasswordEncoder())
+//			.dataSource(dataSource)
+//			.usersByUsernameQuery("select email as username, password, active as enabled from user where email=?")
+//			.authoritiesByUsernameQuery("select email as username, role from user where email=?");
 	}
-    
+	
     
 }

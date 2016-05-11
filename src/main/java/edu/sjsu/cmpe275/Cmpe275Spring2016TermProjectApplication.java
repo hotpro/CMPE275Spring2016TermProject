@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe275;
 
+import edu.sjsu.cmpe275.config.DaoUserDetailsService;
 import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.dao.OrderDao;
 import edu.sjsu.cmpe275.dao.OrderItemDao;
@@ -14,6 +15,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,7 +31,11 @@ public class Cmpe275Spring2016TermProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Cmpe275Spring2016TermProjectApplication.class, args);
 	}
-
+	
+	@Bean
+	public Md5PasswordEncoder md5PasswordEncoderBean() {
+		return new Md5PasswordEncoder();
+	}
 
     @Bean
     public CommandLineRunner insertOrderData(OrderDao orderDao, UserDao userDao, OrderItemDao orderItemDao,
