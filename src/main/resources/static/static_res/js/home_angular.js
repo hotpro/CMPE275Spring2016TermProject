@@ -5,6 +5,7 @@ angular.module('homeApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
         $scope.submitSuccess = false;
+        $scope.submitFailed = false;
         $scope.popover = {"url": "myPopover"};
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
@@ -163,6 +164,9 @@ angular.module('homeApp').controller('homeCtrl',
                 console.log(data);
                 if (data.code == 0) {
                     $scope.submitSuccess = true;
+                    $scope.submitConfirmation = data.message;
+                } else if (data.code == 1) {
+                    $scope.submitFailed = true;
                     $scope.submitConfirmation = data.message;
                 }
             }).error(function (data, status) {

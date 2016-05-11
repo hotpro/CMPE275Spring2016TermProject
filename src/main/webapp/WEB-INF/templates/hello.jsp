@@ -300,6 +300,7 @@
         </div>
         <div>Total:<span>{{totalPrice}}</span></div>
         <div>
+            <span ng-show="submitFailed" style="color:red">{{submitConfirmation}}</span>
             <button type="button" class="btn  btn-sm btn-primary" ng-click="checkOut()">Check Out</button>
         </div>
         </div>
