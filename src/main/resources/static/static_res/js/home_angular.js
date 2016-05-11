@@ -71,6 +71,11 @@ angular.module('homeApp').controller('homeCtrl',
         //min 1 item
         $scope.min = function (item) {
             if (item.amount == 0) {
+                for (var i = 0; i < $scope.cart.length; i++) {
+                    if ($scope.cart[i].id == item.id) {
+                        $scope.cart.splice(i, 1);
+                    }
+                }
                 return;
             } else {
                 for (var i = 0; i < $scope.cart.length; i++) {
