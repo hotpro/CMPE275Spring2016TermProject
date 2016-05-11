@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +14,7 @@
     <title>YummyTeam9.Food -- lacation</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="static-res/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="static-res/css/full-slider.css" rel="stylesheet">
+    <link href="static_res/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,7 +44,7 @@
                         <a href="/signin">Login</a>
                     </li>
                     <li>
-                        <a href="/signup">Create Account</a>
+                        <a href="/signupform">Create Account</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us<b class="caret"></b></a>
@@ -54,7 +53,7 @@
                                 <a href="#">Contacts</a>
                             </li>
                             <li>
-                                <a href="locations.html">Locations</a>
+                                <a href="/locations">Locations</a>
                             </li>
                         </ul>
                     </li>
@@ -88,10 +87,10 @@
     <!-- /.container -->
 
     <!-- jQuery -->
-    <script src="static-res/js/jquery.js"></script>
+    <script src="static_res/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="static-res/js/bootstrap.min.js"></script>
+    <script src="static_res/js/bootstrap.min.js"></script>
 
     <!-- Script for the map -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
