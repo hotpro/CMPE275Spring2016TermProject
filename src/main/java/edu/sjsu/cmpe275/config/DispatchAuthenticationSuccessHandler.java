@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import edu.sjsu.cmpe275.config.DaoUserDetailsService.UserWithSalt;
 import edu.sjsu.cmpe275.domain.User;
 
 public class DispatchAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -24,7 +25,9 @@ public class DispatchAuthenticationSuccessHandler implements AuthenticationSucce
 		if (session == null) {
 			return;
 		}
+		UserWithSalt principal = (UserWithSalt)authentication.getPrincipal();
 		User u = new User();
+		u.setId(principal.getId());
 		u.setEmail(authentication.getName());
 		session.setAttribute("USER", u);
 		for (GrantedAuthority ga : authCollection) {

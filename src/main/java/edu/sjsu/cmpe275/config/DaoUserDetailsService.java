@@ -44,7 +44,7 @@ public class DaoUserDetailsService implements UserDetailsService{
 		User u = user.get(0);
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(u.getRole()));
-		return new UserWithSalt(u.getEmail(), Constant.SALT, u.getPassword(), authorities);
+		return new UserWithSalt(u.getEmail(), Constant.SALT, u.getPassword(), authorities, u.getId());
 //		return new org.springframework.security.core.userdetails.User(
 //				   u.getEmail(),
 //				   u.getPassword(),
@@ -57,16 +57,30 @@ public class DaoUserDetailsService implements UserDetailsService{
 	
 	
 	public class UserWithSalt extends org.springframework.security.core.userdetails.User {
+		
+		private Long id;
+		
+		
 	    private String salt;
 
-	    public UserWithSalt(String username, String salt, String password, Collection<? extends GrantedAuthority> authorities) {
+	    public UserWithSalt(String username, String salt, String password, Collection<? extends GrantedAuthority> authorities, Long id) {
 	        super(username, password, authorities);
 	        this.salt = salt;
+	        this.id = id;
 	    }
 
 	    public String getSalt() {
 	        return salt;
 	    }
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+	    
 	}
 
 }
