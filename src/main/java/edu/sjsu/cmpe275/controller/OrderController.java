@@ -14,6 +14,7 @@ import edu.sjsu.cmpe275.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,8 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static sun.rmi.transport.TransportConstants.Call;
 
 //import static com.sun.tools.javac.jvm.ByteCodes.ret;
 
@@ -80,6 +83,7 @@ public class OrderController {
         }
 
         long earliestPickupTime = getEarliestPickupTime(totalTime);
+        earliestPickupTime = roundToMinute(earliestPickupTime);
 
         return new PickupTimeTO(earliestPickupTime, "");
     }
@@ -143,7 +147,7 @@ public class OrderController {
     }
 
     private static long localDateTimeToTimeStamp(LocalDateTime localDateTime) {
-        return LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+        return localDateTime.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
     }
 
     private LocalDateTime timestampToLocalDateTime(long timestamp) {
@@ -158,7 +162,7 @@ public class OrderController {
     private int calculateTotalTime(List<OrderTO> orderTOList) {
         int totalTime = 0;
         for (OrderTO orderTO : orderTOList) {
-            totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime();
+            totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime() * orderTO.getCount();
             logger.debug("prepareTime:{}",menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime());
         }
         return totalTime * 60 * 1000;
@@ -219,23 +223,32 @@ public class OrderController {
     public @ResponseBody
     BaseResultTO submit(@RequestBody SubmitOrderTO submitOrderTO,
                         HttpSession httpSession) {
-//        User user = (User)httpSession.getAttribute("USER");
+        User user = (User)httpSession.getAttribute("USER");
         Date orderTime = Calendar.getInstance().getTime();
+        orderTime = new Date(roundToMinute(orderTime.getTime()));
 
-        if (submitOrderTO.getPickupTime() - orderTime.getTime() > MAX_TIME) {
+        if (submitOrderTO.getPickupTime() - roundToMinute(orderTime.getTime()) > MAX_TIME) {
             return new BaseResultTO(1, "Can not exceed 30 days");
         }
 
         List<OrderTO> orderTOList = submitOrderTO.getOrderTOList();
         int totalTime = calculateTotalTime(orderTOList);
 
-        long earliestPickupTime = getEarliestPickupTime(totalTime);
+        long earliestPickupTime = roundToMinute(getEarliestPickupTime(totalTime));
+        earliestPickupTime -= 60000;
+
         if (submitOrderTO.getPickupTime() < earliestPickupTime) {
             return new BaseResultTO(1, "Your pickup time is too early");
         }
 
         LocalDateTime idealEarliestStartTime = timestampToLocalDateTime(submitOrderTO.getPickupTime())
                 .minusHours(1).minusSeconds(totalTime / 1000);
+
+        LocalDateTime localDateTimeNow = LocalDateTime.now().withNano(0).withSecond(0);
+
+        if (idealEarliestStartTime.isBefore(localDateTimeNow)) {
+            idealEarliestStartTime = localDateTimeNow;
+        }
 
         List<List<Order>> orderListOfAllChef = getOrderListOfAllChefByRange(orderDao,
                 localDateTimeToTimeStamp(idealEarliestStartTime),
@@ -251,29 +264,30 @@ public class OrderController {
                 earliestStartTime = startTimeForThisChef;
             }
         }
-        long pickupTime = earliestStartTime + totalTime;
-        if (pickupTime > submitOrderTO.getPickupTime()) {
+        long earliestFinishTime = earliestStartTime + totalTime;
+        if (earliestFinishTime > submitOrderTO.getPickupTime()) {
             return new BaseResultTO(1, "We are full of orders. Please select another pickup time");
         }
 
         logger.debug("submit chefId: {}, earliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", chefId, earliestStartTime,
-                totalTime, pickupTime);
+                totalTime, earliestFinishTime);
         logger.debug("submit echefId: {}, arliestStartTime: {}, totalTime: {}, earliestPickupTime: {}", chefId,
                 timestampToString(earliestStartTime),
-                totalTime, timestampToString(pickupTime));
+                totalTime, timestampToString(earliestFinishTime));
 
         double totalPrice = 0.0;
         for (OrderTO orderTO : orderTOList) {
             totalPrice += menuItemDao.findOne(orderTO.getMenuId()).getUnitPrice() * orderTO.getCount();
         }
         List<OrderItem> orderItemList = new ArrayList<>();
-        Order order = new Order(new Date(pickupTime), orderTime, totalPrice, totalTime, orderItemList, null, chefId,
+        Order order = new Order(new Date(submitOrderTO.getPickupTime()), orderTime, totalPrice, totalTime,
+                orderItemList, user, chefId,
                 new Date(earliestStartTime), new Date(earliestStartTime + totalTime));
         orderDao.save(order);
 
         for (OrderTO orderTO : orderTOList) {
             MenuItem menuItem = menuItemDao.findOne(orderTO.getMenuId());
-            OrderItem orderItem = new OrderItem(new Date(pickupTime), orderTime, null, order, menuItem,
+            OrderItem orderItem = new OrderItem(new Date(submitOrderTO.getPickupTime()), orderTime, user, order, menuItem,
                     new BigDecimal(menuItem.getUnitPrice()), menuItem.getPreparationTime() * orderTO.getCount(),
                     orderTO.getCount());
             orderItemDao.save(orderItem);
@@ -282,13 +296,15 @@ public class OrderController {
         return new BaseResultTO(0, "We've received your order. Have a nice day :)");
     }
 
+    private long roundToMinute(long timestamp) {
+        return timestamp / 60000 * 60000;
+    }
 
     @RequestMapping(value = "/getOrderHistory", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<OrderHistory> orderHistory() {
-//        User user = (User)httpSession.getAttribute("USER");
-        User user = userDao.findOne(1L);
+    List<OrderHistory> orderHistory(HttpSession httpSession) {
+        User user = (User)httpSession.getAttribute("USER");
         List<Order> orderList = orderDao.findByUser(user);
 
         List<OrderHistory> res = new ArrayList<>();

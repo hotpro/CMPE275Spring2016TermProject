@@ -5,6 +5,7 @@ angular.module('homeApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
         $scope.submitSuccess = false;
+        $scope.submitFailed = false;
         $scope.popover = {"url": "myPopover"};
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
@@ -17,8 +18,8 @@ angular.module('homeApp').controller('homeCtrl',
         $scope.categoryCount = {
             "drink": 0,
             "appetizier": 0,
-            "MainCourse": 0,
-            "Dessert": 0
+            "mainCourse": 0,
+            "dessert": 0
         };
         $scope.open = function () {
             $scope.popup.opened = true;
@@ -38,19 +39,18 @@ angular.module('homeApp').controller('homeCtrl',
             $scope.items = data;
             initItems($scope.items);
             for (var i = 0; i < $scope.items.length; i++) {
-                switch ($scope.items[i].category) {
-                    case 0:
-                        $scope.categoryCount.drink += 1;
-                        break;
-                    case 1:
-                        $scope.categoryCount.appetizier += 1;
-                        break;
-                    case 2:
-                        $scope.categoryCount.MainCourse += 1;
-                        break;
-                    case 3:
-                        $scope.categoryCount.Dessert += 1;
-                        break;
+                if ($scope.items[i].category == 0) {
+                    console.log(0);
+                    $scope.categoryCount.drink += 1;
+                } else if ($scope.items[i].category == 1) {
+                    console.log(1);
+                    $scope.categoryCount.appetizier += 1;
+                } else if ($scope.items[i].category == 2) {
+                    console.log(2);
+                    $scope.categoryCount.mainCourse += 1;
+                } else if ($scope.items[i].category == 3) {
+                    console.log(3);
+                    $scope.categoryCount.dessert += 1;
                 }
             }
 
@@ -71,16 +71,19 @@ angular.module('homeApp').controller('homeCtrl',
         //min 1 item
         $scope.min = function (item) {
             if (item.amount == 0) {
+                for (var i = 0; i < $scope.cart.length; i++) {
+                    if ($scope.cart[i].id == item.id) {
+                        $scope.cart.splice(i, 1);
+                    }
+                }
                 return;
             } else {
                 for (var i = 0; i < $scope.cart.length; i++) {
                     if ($scope.cart[i].id == item.id) {
-                        console.log("find");
                         $scope.cart[i].amount--;
                         break;
                     }
                     else if (i == $scope.cart.length - 1) {
-                        console.log("not find");
                         item.amount--;
                         $scope.cart.push(item);
                         break;
@@ -103,12 +106,10 @@ angular.module('homeApp').controller('homeCtrl',
                 } else {
                     for (var i = 0; i < $scope.cart.length; i++) {
                         if ($scope.cart[i].id == item.id) {
-                            console.log("find");
                             $scope.cart[i].amount++;
                             break;
                         }
                         else if (i == $scope.cart.length - 1) {
-                            console.log("not find");
                             item.amount++;
                             $scope.cart.push(item);
                             break;
@@ -122,6 +123,8 @@ angular.module('homeApp').controller('homeCtrl',
         };
         //preview for getting earliest pick up time then let client choose a time
         $scope.getEarliestPickupTime = function () {
+            $scope.submitSuccess = false;
+            $scope.submitFailed = false;
             var tmpCart = [];
             for (var i = 0; i < $scope.cart.length; i++) {
                 var tmp = {};
@@ -135,40 +138,58 @@ angular.module('homeApp').controller('homeCtrl',
                 url: '/order/getEarliestPickupTime',
                 data: tmpCart
             }).success(function (data, status) {
-               $scope.pickupTime = data.earliestPickupTime;
+                $scope.pickupTime = data.earliestPickupTime;
             }).error(function (data, status) {
             });
         }
 
 
-        //wait for Order Controller
+        //order checkout
         $scope.checkOut = function () {
             var checkOut = {};
             var tmpCart = [];
+            var emptyFlag = 0;
             for (var i = 0; i < $scope.cart.length; i++) {
                 var tmp = {};
                 tmp.menuId = $scope.cart[i].id;
                 tmp.count = $scope.cart[i].amount;
+                emptyFlag += $scope.cart[i].amount;
                 tmpCart.push(tmp);
             }
-            checkOut.orderTOList = tmpCart;
-            console.log($scope.pickupTime);
-            checkOut.pickupTime = Date.parse($scope.pickupTime);
-            console.log(checkOut.pickupTime);
-            $http({
-                method: "POST",
-                url: '/order/submit',
-                data: checkOut
-            }).success(function (data, status) {
-                console.log(data);
-                if (data.code == 0) {
-                    $scope.submitSuccess = true;
-                    $scope.submitConfirmation = data.message;
+            if (emptyFlag == 0) {
+                $scope.submitFailed = true;
+                $scope.submitConfirmation = "Please select item before you submit";
+            } else {
+
+                checkOut.orderTOList = tmpCart;
+
+                if (typeof $scope.pickupTime == 'number') {
+                    checkOut.pickupTime = $scope.pickupTime
+                } else {
+                    checkOut.pickupTime = Date.parse($scope.pickupTime);
                 }
-            }).error(function (data, status) {
-            });
+
+                $http({
+                    method: "POST",
+                    url: '/order/submit',
+                    data: checkOut
+                }).success(function (data, status) {
+                    if (data.code == 0) {
+                        $scope.submitSuccess = true;
+                        $scope.submitConfirmation = data.message;
+                        $scope.cart = [];
+                        $scope.itemNumber = 0;
+                        $scope.totalPrice = 0.00;
+                        initItems($scope.items);
+                    } else if (data.code == 1) {
+                        $scope.submitFailed = true;
+                        $scope.submitConfirmation = data.message;
+                    }
+                }).error(function (data, status) {
+                });
+            }
         }
-});
+    });
 
 //add an value to items obj for counting amount
 function initItems(items) {
@@ -176,22 +197,7 @@ function initItems(items) {
         items[i].amount = 0;
     }
 };
-function getCategoryCount(items) {
-    for (var i = 0; i < items.length; i++) {
-        switch (items[i].category) {
-            case 0:
-                $scope.categoryCount.drink += 1;
-                break;
-            case 1:
-                $scope.categoryCount.appetizier += 1;
-                break;
-            case 2:
-                $scope.categoryCount.MainCourse += 1;
-                break;
-            case 3:
-                $scope.categoryCount.Dessert += 1;
-                break;
-        }
-    }
-};
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 

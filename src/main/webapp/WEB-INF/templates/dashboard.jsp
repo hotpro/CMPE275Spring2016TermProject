@@ -31,6 +31,9 @@
                 <h1>YummyTeam 9</h1>
             </div>
             <ul id="nav">
+                <li style="float: right">
+                    <a href="#" ng-click="resetOrder()">Reset</a>
+                </li>
                 <li id="t-signup">
                     <a href="/logout">Logout</a>
                 </li>

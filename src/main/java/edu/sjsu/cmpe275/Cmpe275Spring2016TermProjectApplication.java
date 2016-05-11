@@ -43,6 +43,7 @@ public class Cmpe275Spring2016TermProjectApplication {
         return (args) -> {
 //            addData(orderDao, userDao, orderItemDao, menuItemDao);
 //            addFinishTime(orderDao);
+        	addAdmin(userDao);
         };
     }
 
@@ -114,4 +115,20 @@ public class Cmpe275Spring2016TermProjectApplication {
         orderItemDao.save(orderItem);
         orderItemDao.save(orderItem1);
     }
+    
+
+    private static void addAdmin(UserDao userDao) {
+    	String username = "admin@sjsu.edu";
+    	List<User> list = (List<User>)userDao.findByEmail(username);
+    	if (list != null || list.isEmpty()) {
+    		User user = new User(
+            		username,
+                    "password",
+                    true,
+                    "123"
+            );
+    		userDao.save(user);
+    	}
+    }
+    
 }

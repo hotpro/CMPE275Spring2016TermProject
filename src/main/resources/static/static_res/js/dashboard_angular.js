@@ -107,5 +107,25 @@ angular.module('App').controller('dashboardCtrl', ['$scope', '$http', 'Upload',
 		    		}
 		    	}
 		    }
+
+			$scope.resetOrder = function () {
+
+                var v = confirm("Do you want to reset all orders ?");
+                if (v) {
+                    $http({
+                        "url":"/dashboard/resetOrder",
+                        "method":"POST"
+                    }).success(function(data,status){
+                        if (data.code == 0) {
+                            location.reload();
+                        } else {
+                            console.log("error: " + data.message);
+                        }
+
+                    }).error(function (data,status) {
+
+                    })
+                }
+			}
 		    
 }]);
