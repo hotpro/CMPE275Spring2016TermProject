@@ -143,7 +143,7 @@ public class OrderController {
     }
 
     private static long localDateTimeToTimeStamp(LocalDateTime localDateTime) {
-        return LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+        return localDateTime.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
     }
 
     private LocalDateTime timestampToLocalDateTime(long timestamp) {
@@ -268,13 +268,14 @@ public class OrderController {
             totalPrice += menuItemDao.findOne(orderTO.getMenuId()).getUnitPrice() * orderTO.getCount();
         }
         List<OrderItem> orderItemList = new ArrayList<>();
-        Order order = new Order(new Date(submitOrderTO.getPickupTime()), orderTime, totalPrice, totalTime, orderItemList, null, chefId,
+        Order order = new Order(new Date(submitOrderTO.getPickupTime()), orderTime, totalPrice, totalTime,
+                orderItemList, user, chefId,
                 new Date(earliestStartTime), new Date(earliestStartTime + totalTime));
         orderDao.save(order);
 
         for (OrderTO orderTO : orderTOList) {
             MenuItem menuItem = menuItemDao.findOne(orderTO.getMenuId());
-            OrderItem orderItem = new OrderItem(new Date(submitOrderTO.getPickupTime()), orderTime, null, order, menuItem,
+            OrderItem orderItem = new OrderItem(new Date(submitOrderTO.getPickupTime()), orderTime, user, order, menuItem,
                     new BigDecimal(menuItem.getUnitPrice()), menuItem.getPreparationTime() * orderTO.getCount(),
                     orderTO.getCount());
             orderItemDao.save(orderItem);
@@ -282,7 +283,6 @@ public class OrderController {
 
         return new BaseResultTO(0, "We've received your order. Have a nice day :)");
     }
-
 
     @RequestMapping(value = "/getOrderHistory", method = RequestMethod.GET)
     public
