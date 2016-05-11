@@ -155,8 +155,13 @@ angular.module('homeApp').controller('homeCtrl',
                 tmpCart.push(tmp);
             }
             checkOut.orderTOList = tmpCart;
-            console.log($scope.pickupTime);
-            checkOut.pickupTime = Date.parse($scope.pickupTime);
+            console.log(typeof $scope.pickupTime);
+            if (typeof $scope.pickupTime == 'number') {
+                checkOut.pickupTime = $scope.pickupTime
+            } else {
+                checkOut.pickupTime = Date.parse($scope.pickupTime);
+            }
+
             console.log(checkOut.pickupTime);
             $http({
                 method: "POST",
