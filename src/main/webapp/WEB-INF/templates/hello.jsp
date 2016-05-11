@@ -140,15 +140,15 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="home.html"
+            <a class="navbar-brand" href="/"
                style="font-family: Kokonor;">YummyTeam9.Food</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
         <ul class="nav navbar-nav navbar-right">
-            <li style="width: 15%"><a href="home.html">Home</a></li>
+            <li style="width: 15%"><a href="/">Home</a></li>
             <li style="width: 15%"><a href="#">Login</a></li>
-            <li style="width: 35%"><a href="#">Create Account</a></li>
+            <li style="width: 35%"><a href="/signupform">Create Account</a></li>
             <li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"
                                     data-toggle="dropdown">About Us<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -157,9 +157,9 @@
                 </ul>
             </li>
         </ul>
+         <!-- /.container -->
     </div>
     <!-- /.navbar-collapse -->
-    <!-- /.container -->
 </nav>
 
 <!-- Half Page Image Background Carousel Header -->
