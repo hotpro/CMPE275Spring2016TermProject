@@ -4,6 +4,7 @@ import edu.sjsu.cmpe275.Constant;
 import edu.sjsu.cmpe275.Util;
 import edu.sjsu.cmpe275.dao.UserDao;
 import edu.sjsu.cmpe275.domain.User;
+import edu.sjsu.cmpe275.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class UserController {
 
     @Autowired
     private JavaMailSender javaMailSender;
+
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signup(@ModelAttribute SignupFormTO signupFormTO, Model model) {

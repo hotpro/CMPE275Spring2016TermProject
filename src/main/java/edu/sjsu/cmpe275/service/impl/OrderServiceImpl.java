@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * Created by yutao on 5/5/16.
  */
 @Service
-public class DefaultOrderService implements OrderService {
+public class OrderServiceImpl implements OrderService {
     @Override
     public Order submitOrder(Order order) {
         return null;

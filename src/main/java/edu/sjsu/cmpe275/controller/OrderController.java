@@ -10,6 +10,7 @@ import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
 import edu.sjsu.cmpe275.domain.User;
+import edu.sjsu.cmpe275.service.MailService;
 import edu.sjsu.cmpe275.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static com.sun.tools.doclint.Entity.or;
 import static sun.rmi.transport.TransportConstants.Call;
 
 //import static com.sun.tools.javac.jvm.ByteCodes.ret;
@@ -56,6 +58,10 @@ public class OrderController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MailService mailService;
+
 
     @Autowired
     private OrderService orderService;
@@ -224,6 +230,7 @@ public class OrderController {
     BaseResultTO submit(@RequestBody SubmitOrderTO submitOrderTO,
                         HttpSession httpSession) {
         User user = (User)httpSession.getAttribute("USER");
+        user = userDao.findOne(user.getId());
         Date orderTime = Calendar.getInstance().getTime();
         orderTime = new Date(roundToMinute(orderTime.getTime()));
 
@@ -292,6 +299,15 @@ public class OrderController {
                     orderTO.getCount());
             orderItemDao.save(orderItem);
         }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("You've ordered ");
+        for (OrderItem orderItem : orderItemList) {
+            MenuItem menuItem = menuItemDao.findOne(orderItem.getItem().getId());
+            sb.append(orderItem.getCount()).append(" ").append(menuItem.getName()).append(", ");
+        }
+        String subject = "YummyTeam9.Food Email Order Confirmation";
+        mailService.send("chrishou1109@gmail.com", user.getEmail(), subject, sb.toString());
 
         return new BaseResultTO(0, "We've received your order. Have a nice day :)");
     }
