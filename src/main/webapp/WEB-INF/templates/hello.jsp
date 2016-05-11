@@ -243,7 +243,8 @@
                 <ngcart-summary class="ng-isolate-scope">
                     <div class="row">
                         <div popover-placement="bottom" uib-popover-template="popover.url" popover-title="Cart"
-                             class="col-md-2 col-md-offset-5 text-right" ng-click="getEarliestPickupTime()">
+                             popover-animation="true" class="col-md-2 col-md-offset-5 text-right"
+                             ng-click="getEarliestPickupTime()">
                             <svg version="1.1" class="icon"
                                  xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink" width="30px"
