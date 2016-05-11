@@ -121,9 +121,10 @@ public class Cmpe275Spring2016TermProjectApplication {
     	String username = "admin@sjsu.edu";
     	List<User> list = (List<User>)userDao.findByEmail(username);
     	if (list != null || list.isEmpty()) {
+    		String md5password = Util.md5("password" + "{" + Constant.SALT + "}");
     		User user = new User(
             		username,
-                    "password",
+            		md5password,
                     true,
                     "123"
             );
