@@ -143,7 +143,7 @@ public class OrderController {
     }
 
     private static long localDateTimeToTimeStamp(LocalDateTime localDateTime) {
-        return LocalDateTime.now().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+        return localDateTime.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
     }
 
     private LocalDateTime timestampToLocalDateTime(long timestamp) {
@@ -158,7 +158,7 @@ public class OrderController {
     private int calculateTotalTime(List<OrderTO> orderTOList) {
         int totalTime = 0;
         for (OrderTO orderTO : orderTOList) {
-            totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime();
+            totalTime += menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime() * orderTO.getCount();
             logger.debug("prepareTime:{}",menuItemDao.findOne(orderTO.getMenuId()).getPreparationTime());
         }
         return totalTime * 60 * 1000;
@@ -219,7 +219,7 @@ public class OrderController {
     public @ResponseBody
     BaseResultTO submit(@RequestBody SubmitOrderTO submitOrderTO,
                         HttpSession httpSession) {
-//        User user = (User)httpSession.getAttribute("USER");
+        User user = (User)httpSession.getAttribute("USER");
         Date orderTime = Calendar.getInstance().getTime();
 
         if (submitOrderTO.getPickupTime() - orderTime.getTime() > MAX_TIME) {
@@ -230,6 +230,7 @@ public class OrderController {
         int totalTime = calculateTotalTime(orderTOList);
 
         long earliestPickupTime = getEarliestPickupTime(totalTime);
+        earliestPickupTime -= 60000;
         if (submitOrderTO.getPickupTime() < earliestPickupTime) {
             return new BaseResultTO(1, "Your pickup time is too early");
         }
@@ -267,13 +268,14 @@ public class OrderController {
             totalPrice += menuItemDao.findOne(orderTO.getMenuId()).getUnitPrice() * orderTO.getCount();
         }
         List<OrderItem> orderItemList = new ArrayList<>();
-        Order order = new Order(new Date(pickupTime), orderTime, totalPrice, totalTime, orderItemList, null, chefId,
+        Order order = new Order(new Date(submitOrderTO.getPickupTime()), orderTime, totalPrice, totalTime,
+                orderItemList, user, chefId,
                 new Date(earliestStartTime), new Date(earliestStartTime + totalTime));
         orderDao.save(order);
 
         for (OrderTO orderTO : orderTOList) {
             MenuItem menuItem = menuItemDao.findOne(orderTO.getMenuId());
-            OrderItem orderItem = new OrderItem(new Date(pickupTime), orderTime, null, order, menuItem,
+            OrderItem orderItem = new OrderItem(new Date(submitOrderTO.getPickupTime()), orderTime, user, order, menuItem,
                     new BigDecimal(menuItem.getUnitPrice()), menuItem.getPreparationTime() * orderTO.getCount(),
                     orderTO.getCount());
             orderItemDao.save(orderItem);
@@ -282,13 +284,11 @@ public class OrderController {
         return new BaseResultTO(0, "We've received your order. Have a nice day :)");
     }
 
-
     @RequestMapping(value = "/getOrderHistory", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<OrderHistory> orderHistory() {
-//        User user = (User)httpSession.getAttribute("USER");
-        User user = userDao.findOne(1L);
+    List<OrderHistory> orderHistory(HttpSession httpSession) {
+        User user = (User)httpSession.getAttribute("USER");
         List<Order> orderList = orderDao.findByUser(user);
 
         List<OrderHistory> res = new ArrayList<>();

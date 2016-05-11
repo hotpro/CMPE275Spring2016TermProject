@@ -157,8 +157,13 @@ angular.module('homeApp').controller('homeCtrl',
                 tmpCart.push(tmp);
             }
             checkOut.orderTOList = tmpCart;
-            console.log($scope.pickupTime);
-            checkOut.pickupTime = Date.parse($scope.pickupTime);
+            console.log(new Date($scope.pickupTime));
+            if (typeof $scope.pickupTime == 'number') {
+                checkOut.pickupTime = $scope.pickupTime
+            } else {
+                checkOut.pickupTime = Date.parse($scope.pickupTime);
+            }
+
             console.log(checkOut.pickupTime);
             $http({
                 method: "POST",
@@ -170,6 +175,8 @@ angular.module('homeApp').controller('homeCtrl',
                     $scope.submitSuccess = true;
                     $scope.submitConfirmation = data.message;
                     $scope.cart = [];
+                    $scope.itemNumber = 0;
+                    $scope.totalPrice = 0.00;
                     initItems($scope.items);
                 } else if (data.code == 1) {
                     $scope.submitFailed = true;
@@ -186,4 +193,7 @@ function initItems(items) {
         items[i].amount = 0;
     }
 };
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 

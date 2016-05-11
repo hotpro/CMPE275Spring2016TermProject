@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static javafx.scene.input.KeyCode.R;
-
 /**
  * Created by Lee on 5/5/16.
  */
@@ -25,8 +23,7 @@ public class MenuController {
     public @ResponseBody
     Iterable<MenuItem> getMenuItems() {
         //get MenuItem from database then return the list
-        Iterable<MenuItem> list = this.menuItemDao.findAll();
-
+        Iterable<MenuItem> list = this.menuItemDao.findByDeletedIs(false);
         return list;
     }
     @RequestMapping(value = "/orderHistory", method = RequestMethod.GET)
