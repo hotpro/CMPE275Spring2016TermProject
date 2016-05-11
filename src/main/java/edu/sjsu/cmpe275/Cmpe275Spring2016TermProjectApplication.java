@@ -130,6 +130,7 @@ public class Cmpe275Spring2016TermProjectApplication {
                     true,
                     "123"
             );
+    		user.setRole("ADMIN");
     		userDao.save(user);
     	}
     }
