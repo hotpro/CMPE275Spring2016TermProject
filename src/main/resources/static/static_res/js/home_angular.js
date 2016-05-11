@@ -173,6 +173,8 @@ angular.module('homeApp').controller('homeCtrl',
                     $scope.submitSuccess = true;
                     $scope.submitConfirmation = data.message;
                     $scope.cart = [];
+                    $scope.itemNumber = 0;
+                    $scope.totalPrice = 0.00;
                     initItems($scope.items);
                 } else if (data.code == 1) {
                     $scope.submitFailed = true;
