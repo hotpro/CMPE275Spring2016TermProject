@@ -155,7 +155,7 @@ angular.module('homeApp').controller('homeCtrl',
                 tmpCart.push(tmp);
             }
             checkOut.orderTOList = tmpCart;
-            console.log(typeof $scope.pickupTime);
+            console.log(new Date($scope.pickupTime));
             if (typeof $scope.pickupTime == 'number') {
                 checkOut.pickupTime = $scope.pickupTime
             } else {
@@ -191,4 +191,7 @@ function initItems(items) {
         items[i].amount = 0;
     }
 };
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 
