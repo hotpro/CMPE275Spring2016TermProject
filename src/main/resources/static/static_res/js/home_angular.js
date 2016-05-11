@@ -5,6 +5,7 @@ angular.module('homeApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
         $scope.submitSuccess = false;
+        $scope.submitFailed = false;
         $scope.popover = {"url": "myPopover"};
         $scope.itemNumber = 0;
         $scope.totalPrice = 0.00;
@@ -122,6 +123,8 @@ angular.module('homeApp').controller('homeCtrl',
         };
         //preview for getting earliest pick up time then let client choose a time
         $scope.getEarliestPickupTime = function () {
+            $scope.submitSuccess = false;
+            $scope.submitFailed = false;
             var tmpCart = [];
             for (var i = 0; i < $scope.cart.length; i++) {
                 var tmp = {};
@@ -141,7 +144,7 @@ angular.module('homeApp').controller('homeCtrl',
         }
 
 
-        //wait for Order Controller
+        //order checkout
         $scope.checkOut = function () {
             var checkOut = {};
             var tmpCart = [];
@@ -164,6 +167,11 @@ angular.module('homeApp').controller('homeCtrl',
                 if (data.code == 0) {
                     $scope.submitSuccess = true;
                     $scope.submitConfirmation = data.message;
+                    $scope.cart = [];
+                    initItems($scope.items);
+                } else if (data.code == 1) {
+                    $scope.submitFailed = true;
+                    $scope.submitConfirmation = data.message;
                 }
             }).error(function (data, status) {
             });
@@ -174,24 +182,6 @@ angular.module('homeApp').controller('homeCtrl',
 function initItems(items) {
     for (var i = 0; i < items.length; i++) {
         items[i].amount = 0;
-    }
-};
-function getCategoryCount(items) {
-    for (var i = 0; i < items.length; i++) {
-        switch (items[i].category) {
-            case 0:
-                $scope.categoryCount.drink += 1;
-                break;
-            case 1:
-                $scope.categoryCount.appetizier += 1;
-                break;
-            case 2:
-                $scope.categoryCount.MainCourse += 1;
-                break;
-            case 3:
-                $scope.categoryCount.Dessert += 1;
-                break;
-        }
     }
 };
 

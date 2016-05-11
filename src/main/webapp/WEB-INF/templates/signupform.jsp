@@ -95,13 +95,6 @@
         <h3>Sign Up to <span style="color:#f2f2f2; text-shadow: 2px 2px 4px #000000; font-family:Chalkboard;font-size:30px;margin-left:15px;">YummyTeam9<span></h3>
         <hr />
         <div class="form-group">
-                    <label for="id_username" class="control-label">UserName</label>
-                    <div class="templatemo-input-icon-container">
-                    <i class="fa fa-user"></i>
-                    <input type="text" class="form-control" id="id_username" name="username" placeholder="Enter UserName">
-                </div>
-                </div>
-        <div class="form-group">
             <label for="id_email" >Email</label>
             <div class="templatemo-input-icon-container">
             <i class="fa fa-envelope-o"></i>
