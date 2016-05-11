@@ -219,7 +219,7 @@ public class OrderController {
     public @ResponseBody
     BaseResultTO submit(@RequestBody SubmitOrderTO submitOrderTO,
                         HttpSession httpSession) {
-//        User user = (User)httpSession.getAttribute("USER");
+        User user = (User)httpSession.getAttribute("USER");
         Date orderTime = Calendar.getInstance().getTime();
 
         if (submitOrderTO.getPickupTime() - orderTime.getTime() > MAX_TIME) {
@@ -286,9 +286,8 @@ public class OrderController {
     @RequestMapping(value = "/getOrderHistory", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<OrderHistory> orderHistory() {
-//        User user = (User)httpSession.getAttribute("USER");
-        User user = userDao.findOne(1L);
+    List<OrderHistory> orderHistory(HttpSession httpSession) {
+        User user = (User)httpSession.getAttribute("USER");
         List<Order> orderList = orderDao.findByUser(user);
 
         List<OrderHistory> res = new ArrayList<>();
