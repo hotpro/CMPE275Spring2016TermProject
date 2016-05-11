@@ -26,6 +26,8 @@ public class MenuItem {
 	
 	private boolean deleted;
 
+	private int rating;
+
 	public MenuItem() {
 	}
 
@@ -102,4 +104,11 @@ public class MenuItem {
 		this.deleted = deleted;
 	}
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 }
