@@ -1,3 +1,4 @@
+<%@page import="edu.sjsu.cmpe275.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -143,16 +144,25 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
         <ul class="nav navbar-nav navbar-right">
-            <li style="width: 15%"><a href="/">Home</a></li>
-            <li style="width: 15%"><a href="/signin">Login</a></li>
-            <li style="width: 35%"><a href="/signupform">Create Account</a></li>
-            <li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"
+        
+        	<% User user = (User)session.getAttribute("USER");  %>
+        	<% if (user == null) { %>
+            	<li style="width: 20%"><a href="">Home</a></li>
+            	<li style="width: 20%"><a href="/signin">Login</a></li>
+            	<li style="width: 60%"><a href="/signupform">Create Account</a></li>
+            <% } else { %>
+            	<li><a>Welcome  <%=user.getEmail() %></a></li>
+            	<li style="width: 15%"><a href="/logout">logout</a></li>
+            <% } %>
+            <!-- <li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"
                                     data-toggle="dropdown">About Us<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Contacts</a></li>
                     <li><a href="locations.html">Locations</a></li>
                 </ul>
-            </li>
+            </li> -->
+            
+            
         </ul>
          <!-- /.container -->
     </div>
