@@ -4,6 +4,7 @@ import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,7 +39,7 @@ public class MenuController {
 //    public  @ResponseBody String comfirmOrder(@RequestBody List<Order> order)
 
     @RequestMapping(value = "/submitRating", method = RequestMethod.POST)
-    public OrderController.BaseResultTO submitRating() {
+    public OrderController.BaseResultTO submitRating(@RequestBody UserMenuRating userMenuRating) {
         return new OrderController.BaseResultTO(1, "");
     }
 
