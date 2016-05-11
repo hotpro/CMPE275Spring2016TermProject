@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe275.service;
 
+import org.springframework.scheduling.annotation.Async;
+
 /**
  * Created by yutao on 5/11/16.
  */
