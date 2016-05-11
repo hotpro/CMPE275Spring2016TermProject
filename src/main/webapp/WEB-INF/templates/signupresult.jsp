@@ -14,10 +14,10 @@
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
     <title>YummyTeam9.Food -- Sign up Result</title>
-    <link href="static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static_res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="static_res/js/jquery.js"></script>
-    <script src="static_res/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static_res/js/jquery.js"></script>
+    <script src="/static_res/bootstrap/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: 'Oswald', sans-serif;
