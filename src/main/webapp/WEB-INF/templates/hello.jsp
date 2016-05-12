@@ -324,7 +324,7 @@
         <div class="col-lg-2 menu-nav"
              style="background-color: black; height: 100%; overflow: auto; padding-top: 20px;">
             <ul class="nav nav-stacked" style="color: white;" ng-model="categoryCount">
-                <li class="active"><a data-toggle="pill" href="#drink">
+                <li><a data-toggle="pill" href="#drink">
                     Drink<span class="badge">{{categoryCount.drink}}</span>
                     <span style="float: right" class="glyphicon glyphicon-glass" aria-hidden="true"></span></a>
                 </li>
