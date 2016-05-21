@@ -35,15 +35,17 @@ public class ScheduledTasks {
     @Autowired
     private MailService mailService;
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd yyyy HH:mm");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd yyyy HH:mm:ss");
 
 //    @Scheduled(fixedRate = 5000)
     @Scheduled(cron = "*/5 * 6-21 * * *")
     public void monitorOrderStatus() {
-        logger.debug("monitorOrderStatus");
         long now = Calendar.getInstance().getTime().getTime();
+        logger.debug("monitorOrderStatus, now: {}", dateFormat.format(new Date(now)));
         for (Order order : orderDao.findAll()) {
             long start = order.getStartPrepareTime().getTime();
+
+            logger.debug("monitorOrderStatus, order: {}, start prepare time: {}", order.getId(), dateFormat.format(start));
             if (start <= now && start + 5000 >= now) {
                 User user = order.getUser();
                 String to = user.getEmail();
