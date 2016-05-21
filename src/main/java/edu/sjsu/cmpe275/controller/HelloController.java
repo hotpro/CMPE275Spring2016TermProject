@@ -32,4 +32,8 @@ public class HelloController {
     public String location() {
         return "locations";
     }
+
+
+
+
 }
