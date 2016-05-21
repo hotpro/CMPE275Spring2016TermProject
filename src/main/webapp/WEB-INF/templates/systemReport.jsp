@@ -134,7 +134,7 @@
 <body ng-controller="systemReportCtrl">
 
 <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 130px;">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 160px;">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -166,8 +166,60 @@
         <div align="center">
             <h2 style="color: #fff;">System Report</h2>
         </div>
-        <div align="center">
-
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <td style="color: white"> start time</td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       ng-model="startTime"
+                                       is-open="popup.start" datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close"
+                                       alt-input-formats="altInputFormats" ng-change="selectedStartTime(startTime)"/>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="start()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <uib-timepicker ng-model="startTime"
+                                            show-meridian="false"
+                                            ng-change="selectedStartTime(startTime)"></uib-timepicker>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <td style="color: white"> End time</td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       ng-model="endTime"
+                                       is-open="popup.end" datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close"
+                                       alt-input-formats="altInputFormats" ng-change="selectedEndTime(endTime)"/>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="end()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <uib-timepicker ng-model="endTime"
+                                            show-meridian="false"
+                                            ng-change="selectedPEndTime(endTime)"></uib-timepicker>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" ng-click="getSystemReport()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
     <!-- /.navbar-collapse -->
@@ -175,7 +227,7 @@
 </nav>
 
 <!-- content -->
-<div align="center" style="margin-top: 130px; min-height: 100%; margin-bottom: -142px;">
+<div align="center" style="margin-top: 160px; min-height: 100%; margin-bottom: -142px;">
     <table class="table" style="width:80%; margin:0 auto;" ng-model="orderHistory">
         <thead>
         <tr>
@@ -200,7 +252,7 @@
             <td align="left" style="width: 200px">
                 <button popover-placement="bottom" uib-popover-template="itemsInOrder" popover-title="Order in Items"
                         type="button"
-                        class="btn btn-default">See and Rate !
+                        class="btn btn-default">Order Content
                 </button>
                 <script type="text/ng-template" id="itemsInOrder" style="width: 350px">
                     <div>
@@ -208,17 +260,6 @@
                             <tr ng-repeat="item in historyItem.itemAndCount">
                                 <td align="left">{{item.itemName}}</td>
                                 <td align="left">x {{item.count}}</td>
-                                <td align="left">
-                                    <uib-rating ng-model="rating" max="5" read-only="readOnly"
-                                                state-on="'glyphicon-heart'"
-                                                state-off="'glyphicon-heart-empty'"
-                                                aria-labelledby="default-rating"></uib-rating>
-                                </td>
-                                <td align="right">
-                                    <button type="button" class="btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                    </button>
-                                </td>
                             </tr>
                         </table>
                     </div>
