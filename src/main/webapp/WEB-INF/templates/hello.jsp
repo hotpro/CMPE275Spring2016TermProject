@@ -39,6 +39,7 @@
     <script src="static_res/angular/angular-animate.js"></script>
     <script src="static_res/angular/ui-bootstrap-tpls-0.13.4.min.js"></script>
     <script src="static_res/angular/ui-bootstrap-tpls-0.14.2.min.js"></script>
+    <script src="static_res/angular/ui-bootstrap-tpls-1.3.2.js"></script>
     <script src="static_res/js/home_angular.js"></script>
         <!-- Script to Activate the Carousel
         <!-- <script>
@@ -290,7 +291,8 @@
                     <td ng-if="preview.amount != 0" align="right">X</td>
                     <td ng-if="preview.amount != 0" align="right">{{item.amount}}</td>
                     <td ng-if="preview.amount != 0" align="right">
-                        <button type="button" class="btn btn-xs btn-danger" ng-click="deleteItem(item)">x</button>
+                        <button type="button" class="btn btn-xs btn-danger" ng-click="deleteItem(item)"><span
+                                class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                     </td>
                 </tr>
             </table>
@@ -353,6 +355,11 @@
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
+                            <div align="center">
+                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                                            state-off="'glyphicon-heart-empty'"
+                                            aria-labelledby="default-rating"></uib-rating>
+                            </div>
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -376,6 +383,11 @@
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
+                            <div align="center">
+                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                                            state-off="'glyphicon-heart-empty'"
+                                            aria-labelledby="default-rating"></uib-rating>
+                            </div>
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -398,6 +410,11 @@
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
+                            <div align="center">
+                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                                            state-off="'glyphicon-heart-empty'"
+                                            aria-labelledby="default-rating"></uib-rating>
+                            </div>
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
@@ -420,6 +437,11 @@
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
+                            <div align="center">
+                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                                            state-off="'glyphicon-heart-empty'"
+                                            aria-labelledby="default-rating"></uib-rating>
+                            </div>
                             <p class="item">
                                 {{item.name}}<br> Calories : {{item.calories}}<br>
                                 Unit Price : $ {{item.unitPrice}}
