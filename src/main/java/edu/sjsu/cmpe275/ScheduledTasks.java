@@ -37,7 +37,8 @@ public class ScheduledTasks {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd yyyy HH:mm");
 
-    @Scheduled(fixedRate = 5000)
+//    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "*/5 * 6-21 * * *")
     public void monitorOrderStatus() {
         logger.debug("monitorOrderStatus");
         long now = Calendar.getInstance().getTime().getTime();
