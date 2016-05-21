@@ -38,8 +38,13 @@ public class OrderItem {
 	private int totalTime;
 	
 	private int count;
+	
+	@OneToOne
+	@JoinColumn(name = "OrderItemRating_id")
+	private OrderItemRating orderItemRating;
 
     public OrderItem() {
+    	
     }
 
     public OrderItem(Date pickUpTime, Date orderTime, User user, Order order, MenuItem item, BigDecimal price,
@@ -125,5 +130,14 @@ public class OrderItem {
 	public void setCount(int count) {
 		this.count = count;
 	}
+
+	public OrderItemRating getOrderItemRating() {
+		return orderItemRating;
+	}
+
+	public void setOrderItemRating(OrderItemRating orderItemRating) {
+		this.orderItemRating = orderItemRating;
+	}
+
 	
 }

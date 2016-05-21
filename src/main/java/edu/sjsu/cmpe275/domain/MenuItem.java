@@ -27,8 +27,11 @@ public class MenuItem {
 	private boolean deleted;
 
 	private int rating;
+	
+	private int rateCount;
 
 	public MenuItem() {
+		
 	}
 
     public MenuItem(byte category, String name, String pictureURL, double unitPrice, int calories, int preparationTime) {
@@ -111,4 +114,13 @@ public class MenuItem {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+	public int getRateCount() {
+		return rateCount;
+	}
+
+	public void setRateCount(int rateCount) {
+		this.rateCount = rateCount;
+	}
+    
 }
