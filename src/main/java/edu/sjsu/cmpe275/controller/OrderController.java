@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.dao.OrderDao;
 import edu.sjsu.cmpe275.dao.OrderItemDao;
+import edu.sjsu.cmpe275.dao.OrderItemRatingDao;
 import edu.sjsu.cmpe275.dao.UserDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
+import edu.sjsu.cmpe275.domain.OrderItemRating;
 import edu.sjsu.cmpe275.domain.User;
 import edu.sjsu.cmpe275.service.MailService;
 import edu.sjsu.cmpe275.service.OrderService;
@@ -64,6 +66,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    
+    @Autowired
+    private OrderItemRatingDao ratingDao;
 
     @RequestMapping(value = "/getEarliestPickupTime", method = RequestMethod.POST)
     public @ResponseBody
@@ -328,7 +333,13 @@ public class OrderController {
         for (Order order : orderList) {
             List<ItemAndCount> itemAndCountList = new ArrayList<>();
             for (OrderItem orderItem : order.getItemList()) {
-                ItemAndCount itemAndCount = new ItemAndCount(orderItem.getItem().getName(), orderItem.getCount());
+            	OrderItemRating orderItemRating = orderItem.getOrderItemRating();
+            	ItemAndCount itemAndCount = null;
+            	if (orderItemRating == null) {
+            		itemAndCount = new ItemAndCount(orderItem.getId(), orderItem.getItem().getName(), orderItem.getCount());
+            	} else {
+            		itemAndCount = new ItemAndCount(orderItem.getId(), orderItem.getItem().getName(), orderItem.getCount(), orderItemRating.getRating());
+            	}
                 itemAndCountList.add(itemAndCount);
             }
             int status = 0;
@@ -368,6 +379,63 @@ public class OrderController {
         orderItemDao.delete(orderItemList);
         orderDao.delete(order);
         return new BaseResultTO(0, "Your order is canceled");
+    }
+    
+    @RequestMapping(value = "/rating", method = RequestMethod.POST)
+    @ResponseBody
+    public Object rating(@RequestBody RatingTO ratingTO, HttpSession httpSession) {
+    	User user = (User)httpSession.getAttribute("USER");
+        OrderItem orderItem = this.orderItemDao.findOne(ratingTO.getOrderItem());
+        int rating = ratingTO.getRating();
+        if (rating < 0 || rating > 5) {
+        	return BaseResultTO.generateBaseResultTO(0, "error:rating exceed limitation");
+        }
+        if (orderItem == null) {
+        	return BaseResultTO.generateBaseResultTO(0, "error:cannot found order item id : " + ratingTO.getOrderItem());
+        }
+        if (!orderItem.getUser().getId().equals(user.getId())) {
+        	return BaseResultTO.generateBaseResultTO(0, "error:you cannot rate this order item");
+        }
+        if (orderItem.getOrderItemRating() != null) {
+        	return BaseResultTO.generateBaseResultTO(0, "error:This order item already rated");
+        }
+        OrderItemRating orderItemRating = new OrderItemRating();
+        orderItemRating.setItem(orderItem.getItem());
+        orderItemRating.setOrder(orderItem.getOrder());
+        orderItemRating.setOrderItem(orderItem);
+        orderItemRating.setRating(rating);
+        orderItemRating.setUser(user);
+        this.ratingDao.save(orderItemRating);
+        orderItem.setOrderItemRating(orderItemRating);
+        this.orderItemDao.save(orderItem);
+        orderItem.getItem().setRating(orderItem.getItem().getRating() + rating);
+        orderItem.getItem().setRateCount(orderItem.getItem().getRateCount() + 1);
+        this.menuItemDao.save(orderItem.getItem());
+        return BaseResultTO.generateBaseResultTO(1, "" + rating);
+    }
+    
+    public static class RatingTO {
+    	
+    	private long orderItem;
+    	
+    	private int rating;
+
+		public long getOrderItem() {
+			return orderItem;
+		}
+
+		public void setOrderItem(long orderItem) {
+			this.orderItem = orderItem;
+		}
+
+		public int getRating() {
+			return rating;
+		}
+
+		public void setRating(int rating) {
+			this.rating = rating;
+		}
+    	
     }
 
     static class SubmitOrderTO {
@@ -455,6 +523,10 @@ public class OrderController {
         public void setMessage(String message) {
             this.message = message;
         }
+        
+        public static BaseResultTO generateBaseResultTO(int code, String message) {
+        	return new BaseResultTO(code, message);
+        }
     }
 
     static class PickupTimeTO {
@@ -487,12 +559,22 @@ public class OrderController {
     }
 
     static class ItemAndCount {
+    	long id;
         String itemName;
         int count;
+        int rating = -1;
 
-        public ItemAndCount(String itemName, int count) {
-            this.itemName = itemName;
+        public ItemAndCount(long id,String itemName, int count) {
+            this.id = id;
+        	this.itemName = itemName;
             this.count = count;
+        }
+        
+        public ItemAndCount(long id,String itemName, int count, int rating) {
+            this.id = id;
+        	this.itemName = itemName;
+            this.count = count;
+            this.rating = rating;
         }
 
         public String getItemName() {
@@ -510,6 +592,24 @@ public class OrderController {
         public void setCount(int count) {
             this.count = count;
         }
+
+		public long getId() {
+			return id;
+		}
+
+		public void setId(long id) {
+			this.id = id;
+		}
+
+		public int getRating() {
+			return rating;
+		}
+
+		public void setRating(int rating) {
+			this.rating = rating;
+		}
+        
+        
     }
 
     static class OrderHistory {

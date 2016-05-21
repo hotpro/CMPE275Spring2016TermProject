@@ -40,6 +40,7 @@ angular.module('homeApp').controller('homeCtrl',
         }).success(function (data, status) {
             $scope.items = data;
             initItems($scope.items);
+            console.log($scope.items);
             for (var i = 0; i < $scope.items.length; i++) {
                 if ($scope.items[i].category == 0) {
                     console.log(0);
@@ -53,6 +54,12 @@ angular.module('homeApp').controller('homeCtrl',
                 } else if ($scope.items[i].category == 3) {
                     console.log(3);
                     $scope.categoryCount.dessert += 1;
+                }
+                //rating number
+                if ($scope.items[i].rateCount == 0) {
+                	$scope.items[i].ratingNum = -1;
+                } else {
+                	$scope.items[i].ratingNum = parseInt($scope.items[i].rating/$scope.items[i].rateCount);
                 }
             }
 

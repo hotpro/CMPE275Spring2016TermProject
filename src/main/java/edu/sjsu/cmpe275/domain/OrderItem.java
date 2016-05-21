@@ -39,7 +39,7 @@ public class OrderItem {
 	
 	private int count;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "OrderItemRating_id")
 	private OrderItemRating orderItemRating;
 

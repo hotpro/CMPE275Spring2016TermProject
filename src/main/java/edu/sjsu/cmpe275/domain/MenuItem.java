@@ -26,9 +26,9 @@ public class MenuItem {
 	
 	private boolean deleted;
 
-	private int rating;
+	private int rating = 0;
 	
-	private int rateCount;
+	private int rateCount = 0;
 
 	public MenuItem() {
 		
