@@ -124,9 +124,9 @@ public class DashboardController {
         List<OrderHistory> res = new ArrayList<>();
         List<Order> orderList = orderDao.findByOrderTimeBetween(new Date(startTime), new Date(endTime));
         for (Order order : orderList) {
-            List<OrderController.ItemAndCount> itemAndCountList = new ArrayList<>();
+            List<ItemAndCount> itemAndCountList = new ArrayList<>();
             for (OrderItem orderItem : order.getItemList()) {
-                OrderController.ItemAndCount itemAndCount = new OrderController.ItemAndCount(orderItem.getItem().getName(), orderItem.getCount());
+                ItemAndCount itemAndCount = new ItemAndCount(orderItem.getItem().getName(), orderItem.getCount());
                 itemAndCountList.add(itemAndCount);
             }
             int status = 0;
@@ -178,7 +178,7 @@ public class DashboardController {
 	static class OrderHistory {
 		long orderId;
 
-		List<OrderController.ItemAndCount> itemAndCount;
+		List<ItemAndCount> itemAndCount;
 		double totalPrice;
 
         Date orderTime;
@@ -193,7 +193,7 @@ public class DashboardController {
 		 */
 		int status;
 
-        public OrderHistory(long orderId, List<OrderController.ItemAndCount> itemAndCount, double totalPrice,
+        public OrderHistory(long orderId, List<ItemAndCount> itemAndCount, double totalPrice,
                             Date orderTime, Date startTime, Date readyTime, Date pickupTime, String customerEmail, int status) {
             this.orderId = orderId;
             this.itemAndCount = itemAndCount;
@@ -214,11 +214,11 @@ public class DashboardController {
 			this.orderId = orderId;
 		}
 
-		public List<OrderController.ItemAndCount> getItemAndCount() {
+		public List<ItemAndCount> getItemAndCount() {
 			return itemAndCount;
 		}
 
-		public void setItemAndCount(List<OrderController.ItemAndCount> itemAndCount) {
+		public void setItemAndCount(List<ItemAndCount> itemAndCount) {
 			this.itemAndCount = itemAndCount;
 		}
 
