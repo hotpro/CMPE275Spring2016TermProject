@@ -33,6 +33,10 @@ public class HelloController {
         return "locations";
     }
 
+    @RequestMapping("/systemReport")
+    public String systemReport() {
+        return "systemReport";
+    }
 
 
 

@@ -96,11 +96,6 @@ public class DashboardController {
         orderDao.deleteAll();
 		return new OrderController.BaseResultTO(0, "Reset success");
 	}
-
-	@RequestMapping("/systemReport")
-	public String systemReport() {
-		return "systemReport";
-	}
 	
 	public static class ImageVO {
 		private String url;

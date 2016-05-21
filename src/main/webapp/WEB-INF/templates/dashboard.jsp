@@ -32,6 +32,9 @@
             </div>
             <ul id="nav">
                 <li style="float: right">
+                    <a href="/systemReport">System Report</a>
+                </li>
+                <li style="float: right">
                     <a href="#" ng-click="resetOrder()">Reset</a>
                 </li>
                 <li id="t-signup">

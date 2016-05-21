@@ -141,27 +141,10 @@
             <a class="navbar-brand" href="/"
                style="font-family: Kokonor;">YummyTeam9.Food</a>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
         <ul class="nav navbar-nav navbar-right">
-            <% User user = (User) session.getAttribute("USER"); %>
-            <% if (user == null) { %>
-            <li style="width: 20%"><a href="">Home</a></li>
-            <li style="width: 20%"><a href="/signin">Login</a></li>
-            <li style="width: 60%"><a href="/signupform">Create Account</a></li>
-            <% } else { %>
-            <li><a>Welcome  <%=user.getEmail() %>
-            </a></li>
-            <li><a href="/menu/orderHistory">Order History</a></li>
-            <li><a href="/logout">logout</a></li>
-            <% } %>
-            <%--<li class="dropdown" style="width: 35%"><a href="#" class="dropdown-toggle"--%>
-            <%--data-toggle="dropdown">About Us<b class="caret"></b></a>--%>
-            <%--<ul class="dropdown-menu">--%>
-            <%--<li><a href="#">Contacts</a></li>--%>
-            <%--<li><a href="locations.html">Locations</a></li>--%>
-            <%--</ul>--%>
-            <%--</li>--%>
+            <li style="width: 30%"><a href="">Dashboard</a></li>
+            <li style="width: 50%"><a href="/systemReport">System Report</a></li>
+            <li style="width: 10%"><a href="/logout">Logout</a></li>
         </ul>
         <div align="center">
             <h2 style="color: #fff;">System Report</h2>
