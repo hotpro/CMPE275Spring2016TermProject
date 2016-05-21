@@ -134,7 +134,7 @@
 <body ng-controller="systemReportCtrl">
 
 <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 160px;">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 200px;">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -167,7 +167,7 @@
             <h2 style="color: #fff;">System Report</h2>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <table>
                     <tr>
                         <td style="color: white"> start time</td>
@@ -192,7 +192,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <table>
                     <tr>
                         <td style="color: white"> End time</td>
@@ -217,9 +217,55 @@
                         <td>
                             <button type="button" class="btn btn-success" ng-click="getSystemReport()">Submit</button>
                         </td>
+                        <td>
+                            <font color=white>Order By:</font>
+                        </td>
+                        <td>
+                            <div ng-if="historyItem.status == null">
+                                <button uib-popover="Submit First"
+                                        popover-trigger="mouseenter" type="button" class="btn btn-info disabled"
+                                        ng-click="sortByOrderTime()">By
+                                    Order Time
+                                </button>
+                            </div>
+                            <div ng-if="historyItem.status != null">
+                                <button type="button" class="btn btn-info" ng-click="sortByOrderTime()">Order Time
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="historyItem.status == null">
+                                <button uib-popover="Submit First"
+                                        popover-trigger="mouseenter" type="button" class="btn btn-primary disabled"
+                                        ng-click="sortByStartTime()">By
+                                    Start Time
+                                </button>
+                            </div>
+                            <div ng-if="historyItem.status != null">
+                                <button type="button" class="btn btn-primary" ng-click="sortByStartTime()">tart Time
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </div>
+        </div>
+        <div align="center">
+            <table class="table" style="width:100%; margin:0 auto;">
+                <tbody style="font-size: small;">
+                <tr>
+                    <th align="left" style="width: 50px"><font color=white>ID</font></th>
+                    <th align="left" style="width: 220px"><font color=white>Order Time</font></th>
+                    <th align="left" style="width: 220px"><font color=white>Start Time</font></th>
+                    <th align="left" style="width: 220px"><font color=white>Ready Time</font></th>
+                    <th align="left" style="width: 220px"><font color=white>Pickup Time</font></th>
+                    <th align="left" style="width: 150px"><font color=white>Items</font></th>
+                    <th align="left" style="width: 50px"><font color=white>Total</font></th>
+                    <th align="left" style="width: 150px"><font color=white>Email</font></th>
+                    <th align="left" style="width: 150px"><font color=white>Status</font></th>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <!-- /.navbar-collapse -->
@@ -227,29 +273,16 @@
 </nav>
 
 <!-- content -->
-<div align="center" style="margin-top: 160px; min-height: 100%; margin-bottom: -142px;">
-    <table class="table" style="width:80%; margin:0 auto;" ng-model="orderHistory">
-        <thead>
-        <tr>
-            <th align="left" style="width: 50px"><font color=black>ID</font></th>
-            <th align="left" style="width: 220px"><font color=black>Order Time</font></th>
-            <th align="left" style="width: 220px"><font color=black>Start Time</font></th>
-            <th align="left" style="width: 220px"><font color=black>Ready Time</font></th>
-            <th align="left" style="width: 220px"><font color=black>Pickup Time</font></th>
-            <th align="left" style="width: 150px"><font color=black>Items</font></th>
-            <th align="left" style="width: 50px"><font color=black>Total</font></th>
-            <th align="left" style="width: 150px"><font color=black>Email</font></th>
-            <th align="left" style="width: 150px"><font color=black>Status</font></th>
-        </tr>
-        </thead>
+<div align="center" style="margin-top: 200px; min-height: 100%; margin-bottom: -142px;">
+    <table class="table" style="width:100%; margin:0 auto;" ng-model="orderHistory">
         <tbody ng-model="trStatus" style="font-size: larger;">
         <tr ng-repeat="historyItem in orderHistory" class="{{historyItem.status}}">
-            <td align="left" style="width: 100px">{{historyItem.orderId}}</td>
-            <td align="left" style="width: 100px">{{historyItem.orderTime}}</td>
-            <td align="left" style="width: 100px">{{historyItem.startTime}}</td>
-            <td align="left" style="width: 100px">{{historyItem.readyTime}}</td>
-            <td align="left" style="width: 200px">{{historyItem.pickupTime}}</td>
-            <td align="left" style="width: 200px">
+            <td align="left" style="width: 50px">{{historyItem.orderId}}</td>
+            <td align="left" style="width: 220px">{{historyItem.orderTime}}</td>
+            <td align="left" style="width: 220px">{{historyItem.startTime}}</td>
+            <td align="left" style="width: 220px">{{historyItem.readyTime}}</td>
+            <td align="left" style="width: 220px">{{historyItem.pickupTime}}</td>
+            <td align="left" style="width: 150px">
                 <button popover-placement="bottom" uib-popover-template="itemsInOrder" popover-title="Order in Items"
                         type="button"
                         class="btn btn-default">Order Content
@@ -265,8 +298,8 @@
                     </div>
                 </script>
             </td>
-            <td align="left" style="width: 100px">$ {{historyItem.totalPrice}}</td>
-            <td align="left" style="width: 200px">{{historyItem.email}}</td>
+            <td align="left" style="width: 50px">$ {{historyItem.totalPrice}}</td>
+            <td align="left" style="width: 150px">{{historyItem.customerEmail}}</td>
             <td align="left" style="width: 150px;">
                 <div ng-if="historyItem.status == 'warning'">
                     <uib-progressbar class="progress-striped active" value="40"
