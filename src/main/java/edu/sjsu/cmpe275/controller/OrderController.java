@@ -307,7 +307,7 @@ public class OrderController {
         }
         String subject = "YummyTeam9.Food Email Order Confirmation";
         logger.debug("send mail async start {}", System.currentTimeMillis());
-        mailService.send("chrishou1109@gmail.com", user.getEmail(), subject, sb.toString());
+        mailService.send(user.getEmail(), subject, sb.toString());
         logger.debug("send mail async end {}", System.currentTimeMillis());
 
         return new BaseResultTO(0, "We've received your order. Have a nice day :)");

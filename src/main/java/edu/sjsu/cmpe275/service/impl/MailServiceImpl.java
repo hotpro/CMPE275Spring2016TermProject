@@ -28,14 +28,14 @@ public class MailServiceImpl implements MailService {
 
     @Async
     @Override
-    public void send(String from , String to, String subject, String text) {
+    public void send(String to, String subject, String text) {
         logger.debug("Sending email...");
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper mail = null;
         try {
             mail = new MimeMessageHelper(message, true);
-            mail.setFrom(from);
+            mail.setFrom("chrishou1109@gmail.com");
             mail.setTo(to);
             mail.setSubject(subject);
             logger.debug("Email text: {}", text);
