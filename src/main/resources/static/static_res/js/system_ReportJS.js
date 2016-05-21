@@ -27,6 +27,25 @@ angular.module('systemReportApp').controller('systemReportCtrl',
             $scope.endTime = endTime;
 
         }
+        function sortBy(time) {
+            return function (a, b) {
+                if (a[time] > b[time]) {
+                    return 1;
+                } else if (a[time] < b[time]) {
+                    return -1;
+                }
+                return 0;
+            }
+        }
+
+        $scope.sortByOrderTime = function () {
+            $scope.orderHistory.sort(sortBy("orderTime"))
+            location.reload()
+        }
+        $scope.sortByStartTime = function () {
+            $scope.orderHistory.sort(sortBy("startTime"))
+            location.reload()
+        }
         $scope.getSystemReport = function () {
             var startTime;
             var endTime;
