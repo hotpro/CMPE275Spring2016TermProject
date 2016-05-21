@@ -4,7 +4,7 @@
 angular.module('orderHistoryApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('orderHistoryApp').controller('orderHistoryCtrl',
     function ($scope, $http) {
-        $scope.readOnly = false;
+        $scope.readOnly = true;
         $scope.rating = 3;
         $scope.itemsInOrder = "itemsInOrder";
         $scope.itemsInOrder
@@ -58,6 +58,23 @@ angular.module('orderHistoryApp').controller('orderHistoryCtrl',
                     location.reload();
                 }
             }).error(function (data, status) {
+            });
+        }
+        
+        
+        $scope.rateOrderItem = function (orderItem, itemAndCountList) {
+        	$http({
+                method: "POST",
+                url: '/order/rating',
+                data: {'orderItem' : orderItem.id, 'rating' : orderItem.rating}
+            }).success(function (data, status) {
+                console.log(data);
+                if (data.code != 0) {
+                	orderItem.rating = data.message;
+                	$scope.orderHistory = angular.copy($scope.orderHistory);
+                }
+            }).error(function (data, status) {
+            	
             });
         }
 

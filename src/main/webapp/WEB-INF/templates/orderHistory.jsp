@@ -71,6 +71,7 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
+            min-height: 1200px;
         }
 
         p.item {
@@ -204,12 +205,13 @@
                         <td align="left">{{item.itemName}}</td>
                         <td align="left">x {{item.count}}</td>
                         <td align="left">
-                            <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
-                                        state-off="'glyphicon-heart-empty'"
-                                        aria-labelledby="default-rating"></uib-rating>
+                            <uib-rating ng-model="item.rating" max="5" read-only="item.rating != -1" state-on="'glyphicon-heart'"
+                                            state-off="'glyphicon-heart-empty'"
+                                            aria-labelledby="default-rating"  ng-hide="{{item.rating != -1}}"></uib-rating>
+							<span ng-hide="{{item.rating == -1}}">{{item.rating + ' Stars'}}</span>
                         </td>
                         <td align="right">
-                            <button type="button" class="btn btn-default btn-xs">
+                            <button type="button" class="btn btn-default btn-xs" ng-click="rateOrderItem(item, historyItem.itemAndCount)" ng-hide="{{item.rating != -1}}">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </td>

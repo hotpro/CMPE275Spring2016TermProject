@@ -355,8 +355,8 @@
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
-                            <div align="center">
-                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                            <div align="center" >
+                                <uib-rating ng-model="item.ratingNum" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
                                             state-off="'glyphicon-heart-empty'"
                                             aria-labelledby="default-rating"></uib-rating>
                             </div>
@@ -383,8 +383,8 @@
                             <img ng-src="{{'/upload_images/' + item.pictureURL}}"
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
-                            <div align="center">
-                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                            <div align="center" >
+                                <uib-rating ng-model="item.ratingNum" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
                                             state-off="'glyphicon-heart-empty'"
                                             aria-labelledby="default-rating"></uib-rating>
                             </div>
@@ -411,7 +411,7 @@
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
                             <div align="center">
-                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                                <uib-rating ng-model="item.ratingNum" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
                                             state-off="'glyphicon-heart-empty'"
                                             aria-labelledby="default-rating"></uib-rating>
                             </div>
@@ -438,7 +438,7 @@
                                  class="img-thumbnail" alt="{{item.name}}"
                                  style="width: 190px; height: 180px;">
                             <div align="center">
-                                <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                                <uib-rating ng-model="item.ratingNum" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
                                             state-off="'glyphicon-heart-empty'"
                                             aria-labelledby="default-rating"></uib-rating>
                             </div>
