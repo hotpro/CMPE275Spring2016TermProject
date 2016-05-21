@@ -347,7 +347,7 @@ public class OrderController {
             long startTime = order.getStartPrepareTime().getTime();
             long finishTime = order.getFinishTime().getTime();
             if (now < startTime) {
-                startTime = 0;
+                status = 0;
             } else if (now >= startTime && now <= finishTime) {
                 status = 1;
             } else {
