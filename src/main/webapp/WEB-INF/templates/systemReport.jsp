@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en" ng-app="orderHistoryApp">
+<html lang="en" ng-app="systemReportApp">
 
 <head>
 
@@ -38,7 +38,7 @@
     <script src="/static_res/angular/ui-bootstrap-tpls-0.13.4.min.js"></script>
     <script src="/static_res/angular/ui-bootstrap-tpls-1.3.2.js"></script>
     <script src="/static_res/angular/ui-bootstrap-tpls-0.14.2.min.js"></script>
-    <script src="/static_res/js/orderHistory_angular.js"></script>
+    <script src="/static_res/js/system_ReportJS.js"></script>
     <!-- Script to Activate the Carousel
     <!-- <script>
         $('#myCarousel').carousel({
@@ -58,6 +58,7 @@
             url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.ttf") format("truetype"),
             url("http://db.onlinewebfonts.com/t/8bc773512e829a52d207976b43c0ecca.svg#Bodoni SvtyTwo ITC TT") format("svg");
         }
+
         div.one {
             border: 1px darkgrey solid;
             height: 650px;
@@ -71,7 +72,6 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
-            min-height: 1200px;
         }
 
         p.item {
@@ -131,10 +131,10 @@
     </style>
 </head>
 
-<body ng-controller="orderHistoryCtrl">
+<body ng-controller="systemReportCtrl">
 
 <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 130px;">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 160px;">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -164,64 +164,109 @@
             <%--</li>--%>
         </ul>
         <div align="center">
-            <h2 style="color: #fff;">Order History</h2>
+            <h2 style="color: #fff;">System Report</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <td style="color: white"> start time</td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       ng-model="startTime"
+                                       is-open="popup.start" datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close"
+                                       alt-input-formats="altInputFormats" ng-change="selectedStartTime(startTime)"/>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="start()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <uib-timepicker ng-model="startTime"
+                                            show-meridian="false"
+                                            ng-change="selectedStartTime(startTime)"></uib-timepicker>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table>
+                    <tr>
+                        <td style="color: white"> End time</td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       ng-model="endTime"
+                                       is-open="popup.end" datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close"
+                                       alt-input-formats="altInputFormats" ng-change="selectedEndTime(endTime)"/>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="end()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <uib-timepicker ng-model="endTime"
+                                            show-meridian="false"
+                                            ng-change="selectedPEndTime(endTime)"></uib-timepicker>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" ng-click="getSystemReport()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-    <div align="center">
-        <table class="table" style="width:80%; margin:0 auto;">
-            <tbody style="font-size: x-large;">
-            <tr>
-                <th align="left" style="width: 100px"><font color="#fff">Order ID</font></th>
-                <th align="left" style="width: 200px"><font color="#fff">Items</font></th>
-                <th align="left" style="width: 200px"><font color="#fff">Pickup Time</font></th>
-                <th align="left" style="width: 100px"><font color="#fff">Total Price</font></th>
-                <th align="left" style="width: 150px"><font color="#fff">Status</font></th>
-                <th style="width: 100px;"><font color="#fff">Cancel</font></th>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-
     <!-- /.navbar-collapse -->
     <!-- /.container -->
 </nav>
 
 <!-- content -->
-<div align="center" style="margin-top: 130px; min-height: 100%; margin-bottom: -142px;">
+<div align="center" style="margin-top: 160px; min-height: 100%; margin-bottom: -142px;">
     <table class="table" style="width:80%; margin:0 auto;" ng-model="orderHistory">
+        <thead>
+        <tr>
+            <th align="left" style="width: 50px"><font color=black>ID</font></th>
+            <th align="left" style="width: 220px"><font color=black>Order Time</font></th>
+            <th align="left" style="width: 220px"><font color=black>Start Time</font></th>
+            <th align="left" style="width: 220px"><font color=black>Ready Time</font></th>
+            <th align="left" style="width: 220px"><font color=black>Pickup Time</font></th>
+            <th align="left" style="width: 150px"><font color=black>Items</font></th>
+            <th align="left" style="width: 50px"><font color=black>Total</font></th>
+            <th align="left" style="width: 150px"><font color=black>Email</font></th>
+            <th align="left" style="width: 150px"><font color=black>Status</font></th>
+        </tr>
+        </thead>
         <tbody ng-model="trStatus" style="font-size: larger;">
         <tr ng-repeat="historyItem in orderHistory" class="{{historyItem.status}}">
             <td align="left" style="width: 100px">{{historyItem.orderId}}</td>
+            <td align="left" style="width: 100px">{{historyItem.orderTime}}</td>
+            <td align="left" style="width: 100px">{{historyItem.startTime}}</td>
+            <td align="left" style="width: 100px">{{historyItem.readyTime}}</td>
+            <td align="left" style="width: 200px">{{historyItem.pickupTime}}</td>
             <td align="left" style="width: 200px">
                 <button popover-placement="bottom" uib-popover-template="itemsInOrder" popover-title="Order in Items"
                         type="button"
-                        class="btn btn-default">See and Rate !
+                        class="btn btn-default">Order Content
                 </button>
                 <script type="text/ng-template" id="itemsInOrder" style="width: 350px">
                     <div>
                         <table class="table table-hover" style="margin: 0 auto">
-                    <tr ng-repeat="item in historyItem.itemAndCount">
-                        <td align="left">{{item.itemName}}</td>
-                        <td align="left">x {{item.count}}</td>
-                        <td align="left">
-                            <uib-rating ng-model="item.rating" max="5" read-only="item.rating != -1" state-on="'glyphicon-heart'"
-                                            state-off="'glyphicon-heart-empty'"
-                                            aria-labelledby="default-rating"  ng-hide="{{item.rating != -1}}"></uib-rating>
-							<span ng-hide="{{item.rating == -1}}">{{item.rating + ' Stars'}}</span>
-                        </td>
-                        <td align="right">
-                            <button type="button" class="btn btn-default btn-xs" ng-click="rateOrderItem(item, historyItem.itemAndCount)" ng-hide="{{item.rating != -1}}">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                            </button>
-                        </td>
-                    </tr>
+                            <tr ng-repeat="item in historyItem.itemAndCount">
+                                <td align="left">{{item.itemName}}</td>
+                                <td align="left">x {{item.count}}</td>
+                            </tr>
                         </table>
                     </div>
                 </script>
             </td>
-            <td align="left" style="width: 200px">{{historyItem.pickupTime}}</td>
             <td align="left" style="width: 100px">$ {{historyItem.totalPrice}}</td>
+            <td align="left" style="width: 200px">{{historyItem.email}}</td>
             <td align="left" style="width: 150px;">
                 <div ng-if="historyItem.status == 'warning'">
                     <uib-progressbar class="progress-striped active" value="40"
@@ -230,27 +275,13 @@
                 </div>
                 <div ng-if="historyItem.status == 'info'">
                     <uib-progressbar class="progress-striped active" value="70"
-                                     type="info"> Processing</uib-progressbar>
+                                     type="info"> Processing
+                    </uib-progressbar>
                 </div>
                 <div ng-if="historyItem.status == 'success'">
                     <uib-progressbar class="progress-striped active"
-                                     type="success">Done</uib-progressbar>
-                </div>
-            </td>
-            <td style="width: 100px;">
-                <div ng-if="historyItem.status == 'warning'">
-                    <button type="button" class="btn btn-danger active" ng-click="cancelOrder(historyItem)">Cancel
-                    </button>
-                </div>
-                <div ng-if="historyItem.status == 'info'">
-                    <button uib-popover="Cannot cancel because order is processing" popover-trigger="mouseenter"
-                            type="button" class="btn btn-danger disabled">Cancel
-                    </button>
-                </div>
-                <div ng-if="historyItem.status == 'success'">
-                    <button uib-popover="Cannot cancel because order is done" popover-trigger="mouseenter"
-                            type="button" class="btn btn-danger disabled">Cancel
-                    </button>
+                                     type="success">Done
+                    </uib-progressbar>
                 </div>
             </td>
         </tr>
