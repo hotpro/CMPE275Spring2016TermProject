@@ -128,7 +128,7 @@ public class DashboardController {
     @RequestMapping(value = "/getSystemReport", method = RequestMethod.GET)
     @ResponseBody
     public List<OrderHistory> getOrderHistory(@RequestParam long startTime, @RequestParam long endTime,
-                                              @RequestParam(required = false) int orderBy) {
+                                              @RequestParam(required = false) Integer orderBy) {
         List<OrderHistory> res = new ArrayList<>();
         List<Order> orderList = orderDao.findByOrderTimeBetween(new Date(startTime), new Date(endTime));
         for (Order order : orderList) {
