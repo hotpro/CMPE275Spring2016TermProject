@@ -59,8 +59,8 @@ angular.module('systemReportApp').controller('systemReportCtrl',
             } else {
                 endTime = Date.parse($scope.endTime);
             }
-            console.log("startTime parameter " + typeof startTime + " " + startTime);
-            console.log("endTime parameter " + typeof endTime + " " + endTime);
+            console.log("startTime parameter " + typeof startTime + " " + Date(startTime));
+            console.log("endTime parameter " + typeof endTime + " " + Date(endTime));
             $http({
                 method: "GET",
                 url: '/dashboard/getSystemReport?startTime=' + startTime + '&endTime=' + endTime,
