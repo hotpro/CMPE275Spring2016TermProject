@@ -15,9 +15,11 @@ import edu.sjsu.cmpe275.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -27,8 +29,6 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static sun.rmi.transport.TransportConstants.Call;
 
 //import static com.sun.tools.javac.jvm.ByteCodes.ret;
 
@@ -336,7 +336,7 @@ public class OrderController {
             long startTime = order.getStartPrepareTime().getTime();
             long finishTime = order.getFinishTime().getTime();
             if (now < startTime) {
-                startTime = 0;
+                status = 0;
             } else if (now >= startTime && now <= finishTime) {
                 status = 1;
             } else {

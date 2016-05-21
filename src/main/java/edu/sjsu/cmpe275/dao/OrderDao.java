@@ -20,6 +20,8 @@ public interface OrderDao extends CrudRepository<Order, Long> {
     List<Order> findByFinishTimeGreaterThanAndStartPrepareTimeLessThanEqual(
             Date startPrepareTime, Date finishTime);
 
+    List<Order> findByOrderTimeBetween(Date startTime, Date endTime);
+
     List<Order> findByUser(User user);
 
 }
