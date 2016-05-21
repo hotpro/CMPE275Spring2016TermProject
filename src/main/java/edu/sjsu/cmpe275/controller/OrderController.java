@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -304,6 +305,17 @@ public class OrderController {
             orderItemDao.save(orderItem);
         }
 
+        sendOrderMail(user, orderTOList);
+
+        // if this order is starting, send on progress notification mail as well.
+        if (earliestStartTime <= Calendar.getInstance().getTime().getTime()) {
+            sendOnProgressMail(order);
+        }
+
+        return new BaseResultTO(0, "We've received your order. Have a nice day :)");
+    }
+
+    private void sendOrderMail(User user, List<OrderTO> orderTOList) {
         StringBuilder sb = new StringBuilder();
         sb.append("You've ordered ");
         for (OrderTO orderTO : orderTOList) {
@@ -314,8 +326,15 @@ public class OrderController {
         logger.debug("send mail async start {}", System.currentTimeMillis());
         mailService.send(user.getEmail(), subject, sb.toString());
         logger.debug("send mail async end {}", System.currentTimeMillis());
+    }
 
-        return new BaseResultTO(0, "We've received your order. Have a nice day :)");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd yyyy HH:mm:ss");
+    private void sendOnProgressMail(Order order) {
+        User user = order.getUser();
+        String to = user.getEmail();
+        Date finish = order.getFinishTime();
+        String text = "order ready to pick up soon with predicted ready time: " + dateFormat.format(finish);
+        mailService.send(to, "Order On Progress", text);
     }
 
     private long roundToMinute(long timestamp) {
