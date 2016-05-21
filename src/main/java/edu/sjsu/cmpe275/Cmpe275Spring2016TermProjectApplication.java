@@ -16,6 +16,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -27,6 +28,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableAsync
+@EnableScheduling
 public class Cmpe275Spring2016TermProjectApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(Cmpe275Spring2016TermProjectApplication.class);
