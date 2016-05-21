@@ -121,14 +121,11 @@
             background: #ea4c89
         }
 
-        #popoverMenu {
-            display: none;
-            float: right;
+        .popover-content {
+            margin: 0 auto;
+            width: 280px;
         }
 
-        .popover {
-            width: 700px;
-        }
 
     </style>
 </head>
@@ -198,14 +195,24 @@
             <td align="left" style="width: 200px">
                 <button popover-placement="bottom" uib-popover-template="itemsInOrder" popover-title="Order in Items"
                         type="button"
-                        class="btn btn-default">Click yo See Details
+                        class="btn btn-default">See and Rate !
                 </button>
-                <script type="text/ng-template" id="itemsInOrder">
+                <script type="text/ng-template" id="itemsInOrder" style="width: 350px">
                     <div>
-                        <table class="table table-hover" style="width: 100%">
+                        <table class="table table-hover" style="margin: 0 auto">
                     <tr ng-repeat="item in historyItem.itemAndCount">
                         <td align="left">{{item.itemName}}</td>
-                        <td align="center">x {{item.count}}</td>
+                        <td align="left">x {{item.count}}</td>
+                        <td align="left">
+                            <uib-rating ng-model="rating" max="5" read-only="readOnly" state-on="'glyphicon-heart'"
+                                        state-off="'glyphicon-heart-empty'"
+                                        aria-labelledby="default-rating"></uib-rating>
+                        </td>
+                        <td align="right">
+                            <button type="button" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </td>
                     </tr>
                         </table>
                     </div>

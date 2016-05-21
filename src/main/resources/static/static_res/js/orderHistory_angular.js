@@ -4,7 +4,10 @@
 angular.module('orderHistoryApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('orderHistoryApp').controller('orderHistoryCtrl',
     function ($scope, $http) {
+        $scope.readOnly = false;
+        $scope.rating = 3;
         $scope.itemsInOrder = "itemsInOrder";
+        $scope.itemsInOrder
         $scope.orderHistory = [];
         $http({
             method: "GET",

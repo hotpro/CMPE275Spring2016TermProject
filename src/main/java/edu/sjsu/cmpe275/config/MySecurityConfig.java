@@ -49,7 +49,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 "/user/signup", "/user/activate/**").permitAll()
                     .antMatchers("/static_res/**").permitAll()
                     .antMatchers("/upload_images/**").permitAll()
-                    .anyRequest().authenticated()
+//                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/signin")

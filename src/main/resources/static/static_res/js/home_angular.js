@@ -4,6 +4,8 @@
 angular.module('homeApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('homeApp').controller('homeCtrl',
     function ($scope, $http) {
+        $scope.readOnly = true;
+        $scope.rating = 3;
         $scope.submitSuccess = false;
         $scope.submitFailed = false;
         $scope.popover = {"url": "myPopover"};
