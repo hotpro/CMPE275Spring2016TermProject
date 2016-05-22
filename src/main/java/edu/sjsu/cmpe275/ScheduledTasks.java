@@ -14,9 +14,6 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
-import static com.sun.tools.doclint.Entity.or;
 
 /**
  * Created by yutao on 5/20/16.
