@@ -195,7 +195,7 @@
                         <td>
                             <uib-timepicker ng-model="endTime"
                                             show-meridian="false"
-                                            ng-change="selectedPEndTime(endTime)"></uib-timepicker>
+                                            ng-change="selectedEndTime(endTime)"></uib-timepicker>
                         </td>
                         <td>
                             <button type="button" class="btn btn-success" ng-click="getSystemReport()">Submit</button>
@@ -204,30 +204,14 @@
                             <font color=white>Order By:</font>
                         </td>
                         <td>
-                            <div ng-if="historyItem.status == null">
-                                <button uib-popover="Submit First"
-                                        popover-trigger="mouseenter" type="button" class="btn btn-info disabled"
-                                        ng-click="sortByOrderTime()">By
-                                    Order Time
+                            <button type="button" class="btn btn-info" ng-click="sortByOrderTime()">Order Time
                                 </button>
-                            </div>
-                            <div ng-if="historyItem.status != null">
-                                <button type="button" class="btn btn-info" ng-click="sortByOrderTime()">Order Time
-                                </button>
-                            </div>
                         </td>
                         <td>
-                            <div ng-if="historyItem.status == null">
-                                <button uib-popover="Submit First"
-                                        popover-trigger="mouseenter" type="button" class="btn btn-primary disabled"
-                                        ng-click="sortByStartTime()">By
-                                    Start Time
+
+                            <button type="button" class="btn btn-primary" ng-click="sortByStartTime()">Start Time
                                 </button>
-                            </div>
-                            <div ng-if="historyItem.status != null">
-                                <button type="button" class="btn btn-primary" ng-click="sortByStartTime()">tart Time
-                                </button>
-                            </div>
+
                         </td>
                     </tr>
                 </table>
@@ -237,15 +221,15 @@
             <table class="table" style="width:100%; margin:0 auto;">
                 <tbody style="font-size: small;">
                 <tr>
-                    <th align="left" style="width: 50px"><font color=white>ID</font></th>
-                    <th align="left" style="width: 220px"><font color=white>Order Time</font></th>
-                    <th align="left" style="width: 220px"><font color=white>Start Time</font></th>
-                    <th align="left" style="width: 220px"><font color=white>Ready Time</font></th>
-                    <th align="left" style="width: 220px"><font color=white>Pickup Time</font></th>
-                    <th align="left" style="width: 150px"><font color=white>Items</font></th>
-                    <th align="left" style="width: 50px"><font color=white>Total</font></th>
-                    <th align="left" style="width: 150px"><font color=white>Email</font></th>
-                    <th align="left" style="width: 150px"><font color=white>Status</font></th>
+                    <td align="left" style="width: 50px"><font color=white>ID</font></td>
+                    <td align="left" style="width: 220px"><font color=white>Order Time</font></td>
+                    <td align="left" style="width: 220px"><font color=white>Start Time</font></td>
+                    <td align="left" style="width: 220px"><font color=white>Ready Time</font></td>
+                    <td align="left" style="width: 220px"><font color=white>Pickup Time</font></td>
+                    <td align="left" style="width: 100px"><font color=white>Items</font></td>
+                    <td align="left" style="width: 80px"><font color=white>Total</font></td>
+                    <td align="left" style="width: 150px"><font color=white>Email</font></td>
+                    <td align="left" style="width: 150px"><font color=white>Status</font></td>
                 </tr>
                 </tbody>
             </table>
@@ -257,8 +241,8 @@
 
 <!-- content -->
 <div align="center" style="margin-top: 200px; min-height: 100%; margin-bottom: -142px;">
-    <table class="table" style="width:100%; margin:0 auto;" ng-model="orderHistory">
-        <tbody ng-model="trStatus" style="font-size: larger;">
+    <table class="table" style="width:80%; margin:0 auto;" ng-model="orderHistory">
+        <tbody ng-model="trStatus" style="font-size: small;">
         <tr ng-repeat="historyItem in orderHistory" class="{{historyItem.status}}">
             <td align="left" style="width: 50px">{{historyItem.orderId}}</td>
             <td align="left" style="width: 220px">{{historyItem.orderTime}}</td>
