@@ -4,6 +4,21 @@
 angular.module('orderReportApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('orderReportApp').controller('orderReportCtrl',
     function ($scope, $http) {
+	
+		$scope.menuCategories = [{"id": 0, "name": "Drink"}, 
+	                         {"id": 1, "name": "Appetizer"}, 
+	                         {"id": 2, "name": "Main course"}, 
+	                         {"id": 3, "name": "Desert"},];
+		
+		$scope.getCategoryName = function(id) {
+			for (var i = 0; i < $scope.menuCategories.length; i++) {
+				if (id == $scope.menuCategories[i].id) {
+					return $scope.menuCategories[i].name;
+				}
+			}
+		}
+	
+	
         $scope.itemsInOrder = "itemsInOrder";
         $scope.itemsInOrder
         $scope.orderReports = [];

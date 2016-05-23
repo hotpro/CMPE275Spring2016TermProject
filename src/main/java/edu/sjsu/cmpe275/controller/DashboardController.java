@@ -121,7 +121,8 @@ public class DashboardController {
 				int ic1 = o1.getItem().getCategory();
 				int ic2 = o2.getItem().getCategory();
 				if (ic1 == ic2) {
-					return o1.getItem().getId().compareTo(o2.getItem().getId());
+					return o2.getOrderCounter() - o1.getOrderCounter();
+					//return o1.getItem().getId().compareTo(o2.getItem().getId());
 				} else {
 					return ic2 - ic1;
 				}

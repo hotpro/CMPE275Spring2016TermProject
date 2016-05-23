@@ -208,6 +208,7 @@
             <table class="table" style="width:100%; margin:0 auto;">
                 <tbody style="font-size: small;">
                 <tr>
+                	<td align="left" style="width: 50px"><font color=white>Category</font></td>
                     <td align="left" style="width: 50px"><font color=white>ID</font></td>
                     <td align="left" style="width: 220px"><font color=white>Picture</font></td>
                     <td align="left" style="width: 220px"><font color=white>Name</font></td>
@@ -226,6 +227,7 @@
     <table class="table" style="width:80%; margin:0 auto;background-color: rgba(221,221,221,0.4)" ng-model="orderHistory">
         <tbody ng-model="trStatus" style="font-size: small;">
         <tr ng-repeat="order in orderReports">
+        	<td align="left" style="width: 50px;border-bottom: 1px solid #000;">{{getCategoryName(order.item.category)}}</td>
             <td align="left" style="width: 50px;border-bottom: 1px solid #000;">{{order.item.id}}</td>
             <td align="left" style="width: 220px;border-bottom: 1px solid #000;">
             	<img ng-src="/upload_images/{{order.item.pictureURL}}" width="100px" height="100px">
