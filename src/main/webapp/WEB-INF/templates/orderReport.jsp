@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en" ng-app="systemReportApp">
+<html lang="en" ng-app="orderReportApp">
 
 <head>
 
@@ -38,7 +38,7 @@
     <script src="/static_res/angular/ui-bootstrap-tpls-0.13.4.min.js"></script>
     <script src="/static_res/angular/ui-bootstrap-tpls-1.3.2.js"></script>
     <script src="/static_res/angular/ui-bootstrap-tpls-0.14.2.min.js"></script>
-    <script src="/static_res/js/system_ReportJS.js"></script>
+    <script src="/static_res/js/orderReport_angular.js"></script>
     <!-- Script to Activate the Carousel
     <!-- <script>
         $('#myCarousel').carousel({
@@ -131,7 +131,7 @@
     </style>
 </head>
 
-<body ng-controller="systemReportCtrl">
+<body ng-controller="orderReportCtrl">
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 200px;">
@@ -198,20 +198,7 @@
                                             ng-change="selectedEndTime(endTime)"></uib-timepicker>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-success" ng-click="getSystemReport()">Submit</button>
-                        </td>
-                        <td>
-                            <font color=white>Order By:</font>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-info" ng-click="sortByOrderTime()">Order Time
-                                </button>
-                        </td>
-                        <td>
-
-                            <button type="button" class="btn btn-primary" ng-click="sortByStartTime()">Start Time
-                                </button>
-
+                            <button type="button" class="btn btn-success" ng-click="find()">Submit</button>
                         </td>
                     </tr>
                 </table>
@@ -222,14 +209,9 @@
                 <tbody style="font-size: small;">
                 <tr>
                     <td align="left" style="width: 50px"><font color=white>ID</font></td>
-                    <td align="left" style="width: 220px"><font color=white>Order Time</font></td>
-                    <td align="left" style="width: 220px"><font color=white>Start Time</font></td>
-                    <td align="left" style="width: 220px"><font color=white>Ready Time</font></td>
-                    <td align="left" style="width: 220px"><font color=white>Pickup Time</font></td>
-                    <td align="left" style="width: 100px"><font color=white>Items</font></td>
-                    <td align="left" style="width: 80px"><font color=white>Total</font></td>
-                    <td align="left" style="width: 150px"><font color=white>Email</font></td>
-                    <td align="left" style="width: 150px"><font color=white>Status</font></td>
+                    <td align="left" style="width: 220px"><font color=white>Picture</font></td>
+                    <td align="left" style="width: 220px"><font color=white>Name</font></td>
+                    <td align="left" style="width: 220px"><font color=white>Count</font></td>
                 </tr>
                 </tbody>
             </table>
@@ -241,49 +223,15 @@
 
 <!-- content -->
 <div align="center" style="margin-top: 200px; min-height: 100%; margin-bottom: -142px;">
-    <table class="table" style="width:80%; margin:0 auto;" ng-model="orderHistory">
+    <table class="table" style="width:80%; margin:0 auto;background-color: rgba(221,221,221,0.4)" ng-model="orderHistory">
         <tbody ng-model="trStatus" style="font-size: small;">
-        <tr ng-repeat="historyItem in orderHistory" class="{{historyItem.status}}">
-            <td align="left" style="width: 50px">{{historyItem.orderId}}</td>
-            <td align="left" style="width: 220px">{{historyItem.orderTime}}</td>
-            <td align="left" style="width: 220px">{{historyItem.startTime}}</td>
-            <td align="left" style="width: 220px">{{historyItem.readyTime}}</td>
-            <td align="left" style="width: 220px">{{historyItem.pickupTime}}</td>
-            <td align="left" style="width: 150px">
-                <button popover-placement="bottom" uib-popover-template="itemsInOrder" popover-title="Order in Items"
-                        type="button"
-                        class="btn btn-default">Order Content
-                </button>
-                <script type="text/ng-template" id="itemsInOrder" style="width: 350px">
-                    <div>
-                        <table class="table table-hover" style="margin: 0 auto">
-                            <tr ng-repeat="item in historyItem.itemAndCount">
-                                <td align="left">{{item.itemName}}</td>
-                                <td align="left">x {{item.count}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </script>
+        <tr ng-repeat="order in orderReports">
+            <td align="left" style="width: 50px;border-bottom: 1px solid #000;">{{order.item.id}}</td>
+            <td align="left" style="width: 220px;border-bottom: 1px solid #000;">
+            	<img ng-src="/upload_images/{{order.item.pictureURL}}" width="100px" height="100px">
             </td>
-            <td align="left" style="width: 50px">$ {{historyItem.totalPrice}}</td>
-            <td align="left" style="width: 150px">{{historyItem.customerEmail}}</td>
-            <td align="left" style="width: 150px;">
-                <div ng-if="historyItem.status == 'warning'">
-                    <uib-progressbar class="progress-striped active" value="40"
-                                     type="warning">Preparing
-                    </uib-progressbar>
-                </div>
-                <div ng-if="historyItem.status == 'info'">
-                    <uib-progressbar class="progress-striped active" value="70"
-                                     type="info"> Processing
-                    </uib-progressbar>
-                </div>
-                <div ng-if="historyItem.status == 'success'">
-                    <uib-progressbar class="progress-striped active"
-                                     type="success">Done
-                    </uib-progressbar>
-                </div>
-            </td>
+            <td align="left" style="width: 220px;border-bottom: 1px solid #000;">{{order.item.name}}</td>
+            <td align="left" style="width: 220px;border-bottom: 1px solid #000;">{{order.orderCounter}}</td>
         </tr>
         </tbody>
     </table>
