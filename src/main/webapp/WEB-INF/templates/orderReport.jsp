@@ -147,7 +147,7 @@
             <li style="width: 10%"><a href="/logout">Logout</a></li>
         </ul>
         <div align="center">
-            <h2 style="color: #fff;">System Report</h2>
+            <h2 style="color: #fff;">Order Report</h2>
         </div>
         <div class="row">
             <div class="col-md-4">
