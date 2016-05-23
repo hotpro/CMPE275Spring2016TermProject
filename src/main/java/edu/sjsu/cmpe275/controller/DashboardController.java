@@ -17,8 +17,13 @@ import java.io.File;
 import java.security.MessageDigest;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yutao on 5/5/16.
@@ -95,6 +100,93 @@ public class DashboardController {
 		orderItemDao.deleteAll();
         orderDao.deleteAll();
 		return new OrderController.BaseResultTO(0, "Reset success");
+	}
+	
+	@RequestMapping(value = "/getOrderReport", method = RequestMethod.GET)
+    @ResponseBody
+	public Object getOrderReport(@RequestParam(name = "startTime") long startTime, @RequestParam(name = "endTime") long endTime) {
+		List<OrderItem> orderItemList = this.orderItemDao.findByOrderTimeBetween(new Date(startTime), new Date(endTime));
+		Map<MenuItem, OrderReport> map = new HashMap<MenuItem, OrderReport>();
+		for (OrderItem item : orderItemList) {
+			if (!map.containsKey(item.getItem())) {
+				map.put(item.getItem(), new OrderReport(new Date(startTime), new Date(endTime), item.getItem(), 0));
+			}
+			map.get(item.getItem()).addOrderCounter(item.getCount());
+		}
+		List<OrderReport> orderReports = new ArrayList<>(map.values());
+		Collections.sort(orderReports, new Comparator<OrderReport>() {
+
+			@Override
+			public int compare(OrderReport o1, OrderReport o2) {
+				int ic1 = o1.getItem().getCategory();
+				int ic2 = o2.getItem().getCategory();
+				if (ic1 == ic2) {
+					return o1.getItem().getId().compareTo(o2.getItem().getId());
+				} else {
+					return ic2 - ic1;
+				}
+			}
+			
+		});
+		return orderReports;
+	}
+	
+	public static class OrderReport {
+		
+		private Date startTime;
+		
+		private Date endTime;
+		
+		private MenuItem item;
+		
+		private int orderCounter;
+		
+		public OrderReport() {};
+		
+		public OrderReport(Date startTime, Date endTime, MenuItem item, int orderCounter) {
+			super();
+			this.startTime = startTime;
+			this.endTime = endTime;
+			this.item = item;
+			this.orderCounter = orderCounter;
+		}
+
+		public Date getStartTime() {
+			return startTime;
+		}
+
+		public void setStartTime(Date startTime) {
+			this.startTime = startTime;
+		}
+
+		public Date getEndTime() {
+			return endTime;
+		}
+
+		public void setEndTime(Date endTime) {
+			this.endTime = endTime;
+		}
+
+		public MenuItem getItem() {
+			return item;
+		}
+
+		public void setItem(MenuItem item) {
+			this.item = item;
+		}
+
+		public int getOrderCounter() {
+			return orderCounter;
+		}
+
+		public void setOrderCounter(int orderCounter) {
+			this.orderCounter = orderCounter;
+		}
+		
+		public void addOrderCounter(int count) {
+			this.orderCounter += count;
+		}
+		
 	}
 	
 	public static class ImageVO {

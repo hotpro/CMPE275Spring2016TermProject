@@ -28,7 +28,7 @@ public class OrderItem {
 	@JoinColumn(name = "order_id")
 	private Order order;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "item_id")
 	private MenuItem item;
 	

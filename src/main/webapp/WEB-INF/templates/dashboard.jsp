@@ -31,8 +31,11 @@
                 <h1>YummyTeam 9</h1>
             </div>
             <ul id="nav">
+            	<li style="float: right">
+                    <a href="/admin/orderReport" target="_blank">Order Report</a>
+                </li>
                 <li style="float: right">
-                    <a href="/systemReport">System Report</a>
+                    <a href="/admin/systemReport" target="_blank">System Report</a>
                 </li>
                 <li style="float: right">
                     <a href="#" ng-click="resetOrder()">Reset</a>
