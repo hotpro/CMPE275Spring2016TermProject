@@ -3,6 +3,7 @@ package edu.sjsu.cmpe275.controller;
 import edu.sjsu.cmpe275.dao.MenuItemDao;
 import edu.sjsu.cmpe275.dao.OrderDao;
 import edu.sjsu.cmpe275.dao.OrderItemDao;
+import edu.sjsu.cmpe275.dao.OrderItemRatingDao;
 import edu.sjsu.cmpe275.domain.MenuItem;
 import edu.sjsu.cmpe275.domain.Order;
 import edu.sjsu.cmpe275.domain.OrderItem;
@@ -42,6 +43,9 @@ public class DashboardController {
 
 	@Autowired
 	private OrderItemDao orderItemDao;
+
+	@Autowired
+	private OrderItemRatingDao orderItemRatingDao;
 	
 	public void setMenuItemDao(MenuItemDao menuItemDao) {
 		this.menuItemDao = menuItemDao;
@@ -98,6 +102,7 @@ public class DashboardController {
 	@ResponseBody
 	public OrderController.BaseResultTO resetOrder() {
 		orderItemDao.deleteAll();
+		orderItemRatingDao.deleteAll();
         orderDao.deleteAll();
 		return new OrderController.BaseResultTO(0, "Reset success");
 	}
